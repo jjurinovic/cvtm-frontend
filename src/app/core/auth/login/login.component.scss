@@ -1,0 +1,15 @@
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .login-form {
+    max-width: 500px;
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
+  }
+}
