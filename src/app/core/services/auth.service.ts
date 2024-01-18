@@ -20,4 +20,8 @@ export class AuthService {
     formData.append('password', password);
     return this.http.post(this.BASE_URL + 'login', formData);
   }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
 }
