@@ -10,6 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   public form: FormGroup;
+  public hide: boolean = true;
+
   constructor(private store: Store, private fb: FormBuilder) {
     this.form = this.fb.group({
       username: ['', Validators.required],
