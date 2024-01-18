@@ -19,5 +19,6 @@ export const authReducer = createReducer(
   }),
   on(LoginActions.loginFailure, (state) => {
     return { ...state, error: 'Login error' };
-  })
+  }),
+  on(LoginActions.logout, (state) => initialState)
 );
