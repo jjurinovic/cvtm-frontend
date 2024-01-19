@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatIconModule,
     MatToolbarModule,
     MatSidenavModule,
+    RouterModule,
   ],
 })
 export class CoreModule {}
