@@ -1,6 +1,10 @@
 <mat-nav-list>
   @for (link of links; track link) {
-  <a [routerLink]="[link.link]" routerLinkActive="router-link-active">
+  <a
+    [routerLink]="[link.link]"
+    routerLinkActive="router-link-active"
+    class="navigation-item"
+  >
     <mat-list-item>
       <span matListItemTitle>{{ link.title }}</span>
     </mat-list-item></a
