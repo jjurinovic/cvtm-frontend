@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,21 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(private _auth: AuthService) {}
+  constructor(private _auth: AuthService, public dialog: MatDialog) {}
 
   logout(): void {
     this._auth.logout();
+  }
+
+  openDialog(): void {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Logout',
+        message: 'Are you sure you want to logout?',
+        onYes: () => {
+          this.logout();
+        },
+      },
+    });
   }
 }
