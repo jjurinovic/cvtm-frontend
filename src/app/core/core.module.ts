@@ -12,9 +12,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
+import { NavigationComponent } from './layout/navigation/navigation.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
-  declarations: [BaseComponent, HeaderComponent, MainComponent, LoginComponent],
+  declarations: [
+    BaseComponent,
+    HeaderComponent,
+    MainComponent,
+    LoginComponent,
+    NavigationComponent,
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -25,6 +33,7 @@ import { RouterModule } from '@angular/router';
     MatToolbarModule,
     MatSidenavModule,
     RouterModule,
+    MatListModule,
   ],
 })
 export class CoreModule {}
