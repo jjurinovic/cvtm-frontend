@@ -2,14 +2,14 @@ import { Component, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss',
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrl: './main.component.scss',
 })
-export class SidebarComponent {
+export class MainComponent {
   @ViewChild(MatDrawer) drawer: any;
 
-  open(): void {
+  toggleSidebar(): void {
     this.drawer.toggle();
   }
 }
