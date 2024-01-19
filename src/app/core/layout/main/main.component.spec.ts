@@ -7,6 +7,7 @@ import { NavigationComponent } from '../navigation/navigation.component';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
+import { By } from '@angular/platform-browser';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -40,5 +41,44 @@ describe('MainComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render Material Drawer', () => {
+    const drawerContainer = fixture.debugElement.query(
+      By.css('mat-drawer-container')
+    );
+
+    expect(drawerContainer).toBeTruthy();
+  });
+
+  it('should toggleSidebar() toggle sidebar', () => {
+    let drawer = fixture.debugElement.query(By.css('.mat-drawer-opened'));
+
+    // by default should be false
+    expect(drawer).toBeFalsy();
+
+    // should open sidebar
+    component.toggleSidebar();
+    fixture.detectChanges();
+
+    drawer = fixture.debugElement.query(By.css('.mat-drawer-opened'));
+
+    expect(drawer).toBeTruthy();
+
+    // should close sidebar
+    component.toggleSidebar();
+    fixture.detectChanges();
+
+    drawer = fixture.debugElement.query(By.css('.mat-drawer-opened'));
+
+    expect(drawer).toBeFalsy();
+  });
+
+  it('should render app-navigation', () => {
+    component.toggleSidebar();
+    fixture.detectChanges();
+
+    let navigation = fixture.debugElement.query(By.css('app-navigation'));
+    expect(navigation).toBeTruthy();
   });
 });
