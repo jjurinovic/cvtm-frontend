@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
+import {
+  map,
+  exhaustMap,
+  catchError,
+  tap,
+  withLatestFrom,
+  filter,
+  switchMap,
+} from 'rxjs/operators';
 import {
   AuthActionTypes,
   loginSuccess,
@@ -12,6 +20,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { Auth } from 'src/app/core/models/auth.model';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/features/users/services/users.service';
+import { Store } from '@ngrx/store';
+import { selectCurrentUser } from './auth.selectors';
 
 @Injectable()
 export class AuthEffects {
@@ -63,7 +73,12 @@ export class AuthEffects {
   currentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.CurrentUser),
-      exhaustMap(() =>
+      withLatestFrom(this.store.select(selectCurrentUser)),
+      filter(([_, curr]) => {
+        console.log(curr);
+        return !curr;
+      }),
+      switchMap(() =>
         this._users.getCurrentUser().pipe(
           map((data) => ({
             type: AuthActionTypes.CurrentUserSuccess,
@@ -85,6 +100,7 @@ export class AuthEffects {
     private actions$: Actions,
     private _auth: AuthService,
     private router: Router,
-    private _users: UsersService
+    private _users: UsersService,
+    private store: Store
   ) {}
 }

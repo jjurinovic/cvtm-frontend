@@ -32,7 +32,7 @@ export const reducer = createReducer(
     isLoading: false,
   })),
   on(LoginActions.currentUser, (state) => ({
-    ...initialState,
+    ...state,
     isLoading: true,
   })),
   on(LoginActions.currentUserSuccess, (state, { payload }) => ({
