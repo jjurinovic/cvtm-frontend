@@ -5,6 +5,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { User } from 'src/app/features/users/models/user.model';
+import { logout } from 'src/app/state/auth/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +27,7 @@ export class HeaderComponent {
   }
 
   logout(): void {
-    this._auth.logout();
+    this.store.dispatch(logout());
   }
 
   openDialog(): void {
