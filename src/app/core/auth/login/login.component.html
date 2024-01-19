@@ -38,13 +38,16 @@
         type="submit"
         color="primary"
         [disabled]="!form.valid || isLoading"
+        class="login-submit"
       >
         {{ isLoading ? "Loading..." : "Login" }}
       </button>
     </form>
 
+    @if (error) {
     <div class="login-error">
       {{ error }}
     </div>
+    }
   </div>
 </div>
