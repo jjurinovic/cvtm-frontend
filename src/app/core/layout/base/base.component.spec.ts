@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
+import { currentUser } from 'src/app/state/auth/auth.actions';
 
 describe('BaseComponent', () => {
   let component: BaseComponent;
@@ -47,13 +48,19 @@ describe('BaseComponent', () => {
       providers: [provideMockStore({ initialState })],
     }).compileComponents();
 
-    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(BaseComponent);
     component = fixture.componentInstance;
+    store = TestBed.inject(MockStore);
+    spyOn(store, 'select').and.callThrough();
+    spyOn(store, 'dispatch').and.callThrough();
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should dispatch action to get current user', () => {
+    expect(store.dispatch).toHaveBeenCalledWith(currentUser());
   });
 });
