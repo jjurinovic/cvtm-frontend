@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavigationComponent } from './navigation.component';
+import { MatListModule } from '@angular/material/list';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
@@ -8,10 +10,10 @@ describe('NavigationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavigationComponent]
-    })
-    .compileComponents();
-    
+      declarations: [NavigationComponent],
+      imports: [MatListModule, RouterModule.forRoot([])],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
