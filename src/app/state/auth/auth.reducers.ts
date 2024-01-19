@@ -15,15 +15,15 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(LoginActions.login, (state) => ({ ...state, isLoading: true })),
+  on(LoginActions.login, (state) => ({ ...initialState, isLoading: true })),
   on(LoginActions.loginSuccess, (state) => ({
     ...state,
     isLoggedIn: true,
     isLoading: false,
   })),
-  on(LoginActions.loginFailure, (state) => ({
+  on(LoginActions.loginFailure, (state, { payload }) => ({
     ...state,
-    error: 'Login error',
+    error: payload.error,
     isLoading: false,
   })),
   on(LoginActions.logout, (state) => initialState)

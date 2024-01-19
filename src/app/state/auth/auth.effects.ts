@@ -19,10 +19,10 @@ export class AuthEffects {
             type: AuthActionTypes.LoginSuccess,
             payload: data.access_token,
           })),
-          catchError(() =>
+          catchError(({ error }) =>
             of({
               type: AuthActionTypes.LoginFail,
-              payload: { error: 'Login Error' },
+              payload: { error: error.detail },
             })
           )
         )
@@ -35,7 +35,6 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActionTypes.LoginSuccess),
         tap((action: any) => {
-          console.log(action);
           localStorage.setItem('token', action.payload);
           this.router.navigateByUrl('/');
         })

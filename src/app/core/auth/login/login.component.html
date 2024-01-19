@@ -25,6 +25,7 @@
           (click)="hide = !hide"
           [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide"
+          type="button"
         >
           <mat-icon color="primary">{{
             hide ? "visibility_off" : "visibility"
@@ -34,11 +35,16 @@
 
       <button
         mat-flat-button
+        type="submit"
         color="primary"
         [disabled]="!form.valid || isLoading"
       >
         {{ isLoading ? "Loading..." : "Login" }}
       </button>
     </form>
+
+    <div class="login-error">
+      {{ error }}
+    </div>
   </div>
 </div>
