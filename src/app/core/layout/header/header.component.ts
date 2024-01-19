@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
@@ -9,6 +9,8 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  @Output() onMenuClick: EventEmitter<any> = new EventEmitter();
+
   constructor(private _auth: AuthService, public dialog: MatDialog) {}
 
   logout(): void {
