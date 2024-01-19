@@ -19,6 +19,13 @@ const routes: Routes = [
             (m) => m.DashboardModule
           ),
       },
+      {
+        path: 'company',
+        loadChildren: () =>
+          import('./features/company/company.module').then(
+            (m) => m.CompanyModule
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: '/' },
