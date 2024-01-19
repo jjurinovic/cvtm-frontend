@@ -1,4 +1,24 @@
-# Cvtm
+# Cvtm Frontend
+
+Welcome to the frontend application for time management, built using Angular and Material UI. This application is currently in development and will provide various functionalities for efficient time and task management.
+
+##
+
+### The application and code will be improved and maintained over time.
+
+##
+
+## Backend
+
+Backend is avaiable on [Github](https://github.com/jjurinovic/cvtm-backend)
+
+### Included
+
+- [Angular Material](https://material.angular.io/) - Material design components for Angular
+- [ngrx/store](https://github.com/ngrx/store) - RxJS powered state management for Angular apps, inspired by Redux
+- [ngrx/effects](https://github.com/ngrx/effects) - Side effect model for @ngrx/store
+- [angular/router](https://github.com/angular/angular) - Angular Router
+- [ngrx/store-devtools](https://github.com/ngrx/store-devtools) - Instrumentation for @ngrx/store enabling time-travel debugging
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.1.
 
