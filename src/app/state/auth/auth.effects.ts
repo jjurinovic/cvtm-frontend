@@ -2,10 +2,16 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
-import { AuthActionTypes, loginSuccess } from './auth.actions';
+import {
+  AuthActionTypes,
+  loginSuccess,
+  currentUser,
+  logout,
+} from './auth.actions';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Auth } from 'src/app/core/models/auth.model';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/features/users/services/users.service';
 
 @Injectable()
 export class AuthEffects {
@@ -17,7 +23,7 @@ export class AuthEffects {
         this._auth.login(payload.username, payload.password).pipe(
           map((data) => ({
             type: AuthActionTypes.LoginSuccess,
-            payload: data.access_token,
+            payload: data,
           })),
           catchError(({ error }) =>
             of({
@@ -35,7 +41,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActionTypes.LoginSuccess),
         tap((action: any) => {
-          localStorage.setItem('token', action.payload);
+          localStorage.setItem('token', action.payload.access_token);
           this.router.navigateByUrl('/');
         })
       ),
@@ -54,9 +60,31 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  currentUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActionTypes.CurrentUser),
+      exhaustMap(() =>
+        this._users.getCurrentUser().pipe(
+          map((data) => ({
+            type: AuthActionTypes.CurrentUserSuccess,
+            payload: data,
+          })),
+          catchError(({ error }) => {
+            console.log(error);
+            return of({
+              type: AuthActionTypes.CurrentUserFail,
+              payload: { error: error.detail },
+            });
+          })
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private _auth: AuthService,
-    private router: Router
+    private router: Router,
+    private _users: UsersService
   ) {}
 }

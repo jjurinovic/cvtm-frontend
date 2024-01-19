@@ -6,6 +6,9 @@ export enum AuthActionTypes {
   LoginSuccess = '[Login Page] Login Success',
   LoginFail = '[Login Page] Login Fail',
   Logout = '[Base Component] Logout',
+  CurrentUser = '[Users] Current user',
+  CurrentUserSuccess = '[Users] Current user Success',
+  CurrentUserFail = '[Users] Current user Fail',
 }
 
 export const login = createAction(
@@ -24,3 +27,15 @@ export const loginFailure = createAction(
 );
 
 export const logout = createAction(AuthActionTypes.Logout);
+
+export const currentUser = createAction(AuthActionTypes.CurrentUser);
+
+export const currentUserSuccess = createAction(
+  AuthActionTypes.CurrentUserSuccess,
+  props<{ payload: any }>()
+);
+
+export const currentUserFail = createAction(
+  AuthActionTypes.CurrentUserFail,
+  props<{ payload: any }>()
+);
