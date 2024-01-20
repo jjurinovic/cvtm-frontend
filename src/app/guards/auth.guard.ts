@@ -9,7 +9,7 @@ export const authGuard = () => {
   if (authService.isLoggedIn()) {
     return true;
   }
-
+  router.navigateByUrl('/login');
   // Redirect to the login page
-  return router.parseUrl('/login');
+  return false;
 };
