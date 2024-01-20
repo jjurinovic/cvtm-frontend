@@ -4,20 +4,10 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { UsersService } from '../features/users/services/users.service';
-import { User } from '../features/users/models/user.model';
-import { Role } from '../features/users/enums/role.enum';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 
 const testToken = 'abc';
-const testUser: User = {
-  id: 2,
-  name: 'test name',
-  email: 'abc@test.com',
-  role: Role.ADMIN,
-  company_id: 1,
-};
-
 describe('AuthInterceptor', () => {
   let service: UsersService;
   let httpTestingController: HttpTestingController;
