@@ -4,7 +4,6 @@ import { AuthService } from '../core/services/auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginComponent } from '../core/auth/login/login.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { UrlTree } from '@angular/router';
 
 describe('AuthGuard', () => {
   let service: AuthService;
@@ -23,7 +22,7 @@ describe('AuthGuard', () => {
   });
 
   it('should return true', () => {
-    localStorage.setItem('token', 'abc');
+    service.setToken('abc');
     const guardResponse = TestBed.runInInjectionContext(() => {
       return authGuard();
     });

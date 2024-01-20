@@ -40,7 +40,7 @@ describe('AuthService', () => {
   });
 
   it('should getToken() return "abc"', () => {
-    localStorage.setItem('token', testToken);
+    service.setToken(testToken);
     expect(service.getToken()).toEqual(testToken);
   });
 
@@ -50,7 +50,7 @@ describe('AuthService', () => {
   });
 
   it('should isLoggedIn() return true', () => {
-    localStorage.setItem('token', testToken);
+    service.setToken(testToken);
     expect(service.isLoggedIn()).toBeTruthy();
   });
 

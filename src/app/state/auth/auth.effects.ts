@@ -51,7 +51,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActionTypes.LoginSuccess),
         tap((action: any) => {
-          localStorage.setItem('token', action.payload.access_token);
+          this._auth.setToken(action.payload.access_token);
           this.router.navigateByUrl('/');
         })
       ),
