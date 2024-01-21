@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { Role } from 'src/app/features/users/enums/role.enum';
+
+interface CustomJwtPayload extends JwtPayload {
+  role: Role;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +50,10 @@ export class AuthService {
   }
 
   public getRole(): Role {
+    if (!this.role) {
+      const decoded = jwtDecode<CustomJwtPayload>(this.getToken() as string);
+      this.role = decoded.role;
+    }
     return this.role;
   }
 }
