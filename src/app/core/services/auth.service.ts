@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Role } from 'src/app/features/users/enums/role.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
+
+  private role!: Role;
 
   BASE_URL = 'http://localhost:8000/';
 
@@ -35,5 +38,13 @@ export class AuthService {
 
   removeToken(): void {
     localStorage.removeItem('token');
+  }
+
+  public setRole(role: Role): void {
+    this.role = role;
+  }
+
+  public getRole(): Role {
+    return this.role;
   }
 }

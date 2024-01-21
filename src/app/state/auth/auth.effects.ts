@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, act, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import {
   map,
@@ -52,6 +52,7 @@ export class AuthEffects {
         ofType(AuthActionTypes.LoginSuccess),
         tap((action: any) => {
           this._auth.setToken(action.payload.access_token);
+          this._auth.setRole(action.payload.role);
           this.router.navigateByUrl('/');
         })
       ),
@@ -94,6 +95,17 @@ export class AuthEffects {
         )
       )
     )
+  );
+
+  currentUserSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActionTypes.CurrentUserSuccess),
+        tap((action: any) => {
+          this._auth.setRole(action.payload.role);
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(
