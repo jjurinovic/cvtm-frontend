@@ -50,10 +50,11 @@ export class AuthService {
   }
 
   public getRole(): Role {
-    if (!this.role) {
+    if (!this.role && this.role !== 0) {
       const decoded = jwtDecode<CustomJwtPayload>(this.getToken() as string);
       this.role = decoded.role;
     }
+
     return this.role;
   }
 }
