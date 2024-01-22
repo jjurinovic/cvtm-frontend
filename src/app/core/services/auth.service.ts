@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   public getRole(): Role {
-    if (!this.role && this.role !== 0) {
+    if (!this.role && this.role !== 0 && this.getToken()) {
       const decoded = jwtDecode<CustomJwtPayload>(this.getToken() as string);
       this.role = decoded.role;
     }
