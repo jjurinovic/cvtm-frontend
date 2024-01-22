@@ -1,4 +1,10 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import {
+  Directive,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewContainerRef,
+} from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
 
@@ -16,13 +22,21 @@ export class HasRoleDirective implements OnInit {
 
   private role: Role = Role.USER;
 
-  constructor(private elementRef: ElementRef, private _auth: AuthService) {}
+  constructor(
+    private template: TemplateRef<any>,
+    private view: ViewContainerRef,
+    private _auth: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.elementRef.nativeElement.style.display = this.checkRole();
+    if (this.checkRole()) {
+      this.view.createEmbeddedView(this.template);
+    } else {
+      this.view.clear();
+    }
   }
 
-  private checkRole(): string {
-    return this._auth.getRole() <= this.role ? 'block' : 'none';
+  private checkRole(): boolean {
+    return this._auth.getRole() <= this.role;
   }
 }
