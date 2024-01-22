@@ -4,6 +4,7 @@
     [routerLink]="[link.link]"
     routerLinkActive="router-link-active"
     class="navigation-item"
+    [appHasRole]="link.minRole"
   >
     <mat-list-item>
       <span matListItemTitle>{{ link.title }}</span>

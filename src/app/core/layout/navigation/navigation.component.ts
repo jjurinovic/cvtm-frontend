@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NavItem } from '../../models/nav-item.model';
+import { Role } from 'src/app/features/users/enums/role.enum';
 
 @Component({
   selector: 'app-navigation',
@@ -6,7 +8,12 @@ import { Component } from '@angular/core';
   styleUrl: './navigation.component.scss',
 })
 export class NavigationComponent {
-  links = [
+  links: NavItem[] = [
+    {
+      link: '/admin',
+      title: 'Admin',
+      minRole: Role.ROOT,
+    },
     {
       link: '/dashboard',
       title: 'Dashboard',

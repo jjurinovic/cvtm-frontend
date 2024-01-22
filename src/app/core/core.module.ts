@@ -14,6 +14,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { NavigationComponent } from './layout/navigation/navigation.component';
 import { MatListModule } from '@angular/material/list';
+import { HasRoleDirective } from '../shared/directives/has-role.directive';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MatListModule } from '@angular/material/list';
     MatSidenavModule,
     RouterModule,
     MatListModule,
+    HasRoleDirective,
   ],
 })
 export class CoreModule {}
