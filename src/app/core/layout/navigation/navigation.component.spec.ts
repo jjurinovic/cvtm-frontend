@@ -4,6 +4,10 @@ import { NavigationComponent } from './navigation.component';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from '../../services/auth.service';
+import { Role } from 'src/app/features/users/enums/role.enum';
 
 const testLinks = [
   { link: 'test1', title: 'Test 1' },
@@ -14,15 +18,23 @@ const testLinks = [
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
   let fixture: ComponentFixture<NavigationComponent>;
+  let service: AuthService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [NavigationComponent],
-      imports: [MatListModule, RouterModule.forRoot([])],
+      imports: [
+        MatListModule,
+        RouterModule.forRoot([]),
+        HttpClientTestingModule,
+        HasRoleDirective,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
+    service = TestBed.inject(AuthService);
+    service.setRole(Role.USER);
     fixture.detectChanges();
   });
 

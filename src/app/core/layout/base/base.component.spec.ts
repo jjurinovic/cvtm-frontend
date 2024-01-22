@@ -14,11 +14,15 @@ import { NavigationComponent } from '../navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { currentUser } from 'src/app/state/auth/auth.actions';
+import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
+import { AuthService } from '../../services/auth.service';
+import { Role } from 'src/app/features/users/enums/role.enum';
 
 describe('BaseComponent', () => {
   let component: BaseComponent;
   let fixture: ComponentFixture<BaseComponent>;
   let store: MockStore;
+  let service: AuthService;
 
   const initialState = {
     isLoggedIn: false,
@@ -44,6 +48,7 @@ describe('BaseComponent', () => {
         MatSidenavModule,
         RouterModule.forRoot([]),
         MatListModule,
+        HasRoleDirective,
       ],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();
@@ -51,7 +56,8 @@ describe('BaseComponent', () => {
     fixture = TestBed.createComponent(BaseComponent);
     component = fixture.componentInstance;
     store = TestBed.inject(MockStore);
-    spyOn(store, 'select').and.callThrough();
+    service = TestBed.inject(AuthService);
+    service.setRole(Role.USER);
     spyOn(store, 'dispatch').and.callThrough();
     fixture.detectChanges();
   });
