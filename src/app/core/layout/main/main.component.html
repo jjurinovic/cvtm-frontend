@@ -1,6 +1,8 @@
-<mat-drawer-container class="sidebar" autosize>
-  <mat-drawer #drawer class="sidebar-nav" mode="side">
+<mat-drawer-container class="main" autosize>
+  <mat-drawer #drawer class="main-sidebar" mode="side">
     <app-navigation></app-navigation>
   </mat-drawer>
-  <router-outlet></router-outlet>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
 </mat-drawer-container>
