@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { Role } from 'src/app/features/users/enums/role.enum';
+import { environment } from 'src/environments/environment';
 
 interface CustomJwtPayload extends JwtPayload {
   role: Role;
@@ -12,11 +13,13 @@ interface CustomJwtPayload extends JwtPayload {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log(environment);
+  }
 
   private role!: Role;
 
-  BASE_URL = 'http://localhost:8000/';
+  private baseURl = environment.apiUrl;
 
   isLoggedIn(): boolean {
     return !!this.getToken();
@@ -30,7 +33,7 @@ export class AuthService {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
-    return this.http.post(this.BASE_URL + 'login', formData);
+    return this.http.post(this.baseURl + '/login', formData);
   }
 
   getToken(): string | null {
