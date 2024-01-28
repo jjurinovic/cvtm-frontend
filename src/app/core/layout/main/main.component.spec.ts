@@ -12,6 +12,7 @@ import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthService } from '../../services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
+import { PageTitleComponent } from '../page-title/page-title.component';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -28,7 +29,7 @@ describe('MainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainComponent, NavigationComponent],
+      declarations: [MainComponent, NavigationComponent, PageTitleComponent],
       imports: [
         BrowserAnimationsModule,
         MatSidenavModule,

@@ -17,6 +17,7 @@ import { currentUser } from 'src/app/state/auth/auth.actions';
 import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
 import { AuthService } from '../../services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
+import { PageTitleComponent } from '../page-title/page-title.component';
 
 describe('BaseComponent', () => {
   let component: BaseComponent;
@@ -38,6 +39,7 @@ describe('BaseComponent', () => {
         HeaderComponent,
         MainComponent,
         NavigationComponent,
+        PageTitleComponent,
       ],
       imports: [
         BrowserAnimationsModule,

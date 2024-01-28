@@ -13,4 +13,6 @@ describe('PageService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should set title with setTitle()', () => {});
 });

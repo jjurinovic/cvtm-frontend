@@ -10,13 +10,14 @@ import { AuthInterceptor } from './auth.interceptor';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginComponent } from '../core/auth/login/login.component';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 describe('ErrorInterceptor', () => {
   let service: UsersService;
   let httpTestingController: HttpTestingController;
   let router: Router;
 
-  let url = 'http://localhost:8000';
+  let url = environment.apiUrl;
 
   let routes = [{ path: 'login', component: LoginComponent }];
 

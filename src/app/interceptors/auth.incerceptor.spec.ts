@@ -6,13 +6,14 @@ import {
 import { UsersService } from '../features/users/services/users.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
+import { environment } from 'src/environments/environment';
 
 const testToken = 'abc';
 describe('AuthInterceptor', () => {
   let service: UsersService;
   let httpTestingController: HttpTestingController;
 
-  let url = 'http://localhost:8000';
+  let url = environment.apiUrl;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { User } from 'src/app/features/users/models/user.model';
 import { Role } from 'src/app/features/users/enums/role.enum';
+import { environment } from 'src/environments/environment';
 
 const testToken = 'abc';
 const testUser: User = {
@@ -21,7 +22,7 @@ describe('AuthService', () => {
   let service: AuthService;
   let httpTestingController: HttpTestingController;
 
-  let url = 'http://localhost:8000';
+  let url = environment.apiUrl;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
