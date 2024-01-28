@@ -11,11 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterModule } from '@angular/router';
+import { RouterModule, TitleStrategy } from '@angular/router';
 import { NavigationComponent } from './layout/navigation/navigation.component';
 import { MatListModule } from '@angular/material/list';
 import { HasRoleDirective } from '../shared/directives/has-role.directive';
 import { PageTitleComponent } from './layout/page-title/page-title.component';
+import { PageTitleStrategy } from './strategies/page-title-strategy';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,12 @@ import { PageTitleComponent } from './layout/page-title/page-title.component';
     RouterModule,
     MatListModule,
     HasRoleDirective,
+  ],
+  providers: [
+    {
+      provide: TitleStrategy,
+      useClass: PageTitleStrategy,
+    },
   ],
 })
 export class CoreModule {}
