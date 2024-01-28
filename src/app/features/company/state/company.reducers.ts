@@ -5,6 +5,9 @@ import * as CompanyActions from './company.actions';
 
 export interface State {
   companies: Company[];
+  page: number | null;
+  total: number | null;
+  size: number | null;
   isLoading: boolean;
   error: string | null;
 }
@@ -13,6 +16,9 @@ export const initialState: State = {
   companies: [],
   isLoading: false,
   error: null,
+  page: null,
+  total: null,
+  size: null,
 };
 
 export const reducer = createReducer(
@@ -20,7 +26,11 @@ export const reducer = createReducer(
   on(CompanyActions.getAll, (state) => ({ ...initialState, isLoading: true })),
   on(CompanyActions.getAllSuccess, (state, { payload }) => ({
     ...state,
-    companies: payload,
+    companies: payload.results,
+    size: payload.size,
+    total: payload.total,
+    page: payload.page,
+    isLoading: false,
   })),
   on(CompanyActions.getAllFailure, (state, { payload }) => ({
     ...state,

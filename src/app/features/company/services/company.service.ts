@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Company } from '../models/company.model';
 import { environment } from 'src/environments/environment';
+import { PageResponse } from 'src/app/shared/models/page-response';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +15,10 @@ export class CompanyService {
 
   /**
    * Return all companies. It's only available for ROOT user
-   * @returns {Observable<Company[]>} Returns observable with list of all companies
+   * @returns {Observable<PageResponse<Company>} Returns observable with list of all companies
    */
-  public getAllCompanies(): Observable<Company[]> {
-    return this.http.get<Company[]>(this.baseUrl);
+  public getAllCompanies(): Observable<PageResponse<Company>> {
+    return this.http.get<PageResponse<Company>>(this.baseUrl);
   }
 
   /**
