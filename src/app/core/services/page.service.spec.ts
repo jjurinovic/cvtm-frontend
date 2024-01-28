@@ -14,5 +14,20 @@ describe('PageService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should set title with setTitle()', () => {});
+  it('should set title with setTitle()', () => {
+    service.setTitle('test');
+    expect(service.pageTitle).toEqual('test');
+  });
+
+  it('should return title with getTitle()', () => {
+    service.setTitle('test');
+    expect(service.getTitle()).toEqual('test');
+  });
+
+  it('should pageTitle$ next been called', () => {
+    const nextSpy = spyOn(service.pageTitle$, 'next');
+    service.setTitle('test');
+
+    expect(nextSpy).toHaveBeenCalledWith('test');
+  });
 });
