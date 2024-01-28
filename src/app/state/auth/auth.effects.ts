@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Actions, act, createEffect, ofType } from '@ngrx/effects';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import {
   map,
@@ -10,17 +12,11 @@ import {
   filter,
   switchMap,
 } from 'rxjs/operators';
-import {
-  AuthActionTypes,
-  loginSuccess,
-  currentUser,
-  logout,
-} from './auth.actions';
+
+import { AuthActionTypes } from './auth.actions';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Auth } from 'src/app/core/models/auth.model';
-import { Router } from '@angular/router';
 import { UsersService } from 'src/app/features/users/services/users.service';
-import { Store } from '@ngrx/store';
 import { selectCurrentUser } from './auth.selectors';
 import { Role } from 'src/app/features/users/enums/role.enum';
 

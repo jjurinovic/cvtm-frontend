@@ -1,7 +1,7 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
+
 import * as LoginActions from './auth.actions';
 import { User } from 'src/app/features/users/models/user.model';
-import { currentUserFail } from './auth.actions';
 
 export interface State {
   isLoggedIn: boolean;
