@@ -20,7 +20,6 @@ export class CompanyListComponent implements OnInit {
 
     this.store.select(selectAllCompanies).subscribe((data) => {
       this.companies = data;
-      console.log(this.companies);
     });
   }
 }
