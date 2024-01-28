@@ -13,9 +13,7 @@ interface CustomJwtPayload extends JwtPayload {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {
-    console.log(environment);
-  }
+  constructor(private http: HttpClient) {}
 
   private role!: Role;
 
