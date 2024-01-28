@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { UsersService } from 'src/app/features/users/services/users.service';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from './auth.selectors';
+import { Role } from 'src/app/features/users/enums/role.enum';
 
 @Injectable()
 export class AuthEffects {
@@ -53,7 +54,12 @@ export class AuthEffects {
         tap((action: any) => {
           this._auth.setToken(action.payload.access_token);
           this._auth.setRole(action.payload.role);
-          this.router.navigateByUrl('/');
+
+          if (this._auth.getRole() === Role.ROOT) {
+            this.router.navigateByUrl('/admin');
+          } else {
+            this.router.navigateByUrl('/');
+          }
         })
       ),
     { dispatch: false }
