@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, ResolveEnd, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  ActivationStart,
+  NavigationEnd,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
+
+import { PageService } from '../../services/page.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-page-title',
@@ -7,7 +16,11 @@ import { NavigationEnd, ResolveEnd, Router } from '@angular/router';
   styleUrl: './page-title.component.scss',
 })
 export class PageTitleComponent implements OnInit {
-  constructor(private router: Router) {}
+  pageTitle: string = '';
+  constructor(private _page: PageService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pageTitle = this._page.getTitle();
+    this._page.pageTitle$.subscribe((title) => (this.pageTitle = title));
+  }
 }
