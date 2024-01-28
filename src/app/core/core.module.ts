@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { NavigationComponent } from './layout/navigation/navigation.component';
 import { MatListModule } from '@angular/material/list';
 import { HasRoleDirective } from '../shared/directives/has-role.directive';
+import { PageTitleComponent } from './layout/page-title/page-title.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HasRoleDirective } from '../shared/directives/has-role.directive';
     MainComponent,
     LoginComponent,
     NavigationComponent,
+    PageTitleComponent,
   ],
   imports: [
     CommonModule,
