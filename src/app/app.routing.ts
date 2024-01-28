@@ -7,7 +7,7 @@ import { roleGuard } from './guards/role.guard';
 import { Role } from './features/users/enums/role.enum';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, title: 'Login' },
   {
     path: '',
     component: BaseComponent,

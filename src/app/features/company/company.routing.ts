@@ -12,10 +12,12 @@ const routes: Routes = [
       {
         path: '',
         component: CompanyInfoComponent,
+        title: 'Company Info',
       },
       {
         path: 'edit',
         component: CompanyEditComponent,
+        title: 'Company Edit',
       },
     ],
   },

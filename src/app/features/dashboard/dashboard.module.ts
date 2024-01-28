@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: 'dashboard', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent, title: 'Dashboard' },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ]),
   ],
