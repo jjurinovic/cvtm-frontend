@@ -5,7 +5,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
-          <input matInput placeholder="Name" formControlName="name" />
+          <input matInput placeholder="Name" formControlName="name" id="name" />
           @if (form.get('name')?.hasError('required')) {
           <mat-error>Name is <strong>required</strong></mat-error>
           }
@@ -13,7 +13,7 @@
       </div>
       <mat-form-field appearance="outline">
         <mat-label>VAT</mat-label>
-        <input matInput placeholder="VAT" formControlName="vat" />
+        <input matInput placeholder="VAT" formControlName="vat" id="vat" />
       </mat-form-field>
     </div>
 
@@ -23,7 +23,12 @@
       <div class="form-row">
         <mat-form-field appearance="outline">
           <mat-label>Address 1</mat-label>
-          <input matInput placeholder="Address 1" formControlName="address1" />
+          <input
+            matInput
+            placeholder="Address 1"
+            formControlName="address1"
+            id="address1"
+          />
           @if (form.get('address.address1')?.hasError('required')) {
           <mat-error>Address1 is <strong>required</strong></mat-error>
           }
@@ -32,20 +37,30 @@
       <div class="form-row">
         <mat-form-field appearance="outline">
           <mat-label>Address 2</mat-label>
-          <input matInput placeholder="Address 2" formControlName="address2" />
+          <input
+            matInput
+            placeholder="Address 2"
+            formControlName="address2"
+            id="address2"
+          />
         </mat-form-field>
       </div>
       <div class="form-row">
         <mat-form-field appearance="outline" class="w-50">
           <mat-label>City</mat-label>
-          <input matInput placeholder="City" formControlName="city" />
+          <input matInput placeholder="City" formControlName="city" id="city" />
           @if (form.get('address.city')?.hasError('required')) {
           <mat-error>City is <strong>required</strong></mat-error>
           }
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-50">
           <mat-label>Postcode</mat-label>
-          <input matInput placeholder="Postcode" formControlName="postcode" />
+          <input
+            matInput
+            placeholder="Postcode"
+            formControlName="postcode"
+            id="postcode"
+          />
           @if (form.get('address.postcode')?.hasError('required')) {
           <mat-error>Postcode is <strong>required</strong></mat-error>
           }
@@ -54,11 +69,21 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="w-50">
           <mat-label>County</mat-label>
-          <input matInput placeholder="County" formControlName="county" />
+          <input
+            matInput
+            placeholder="County"
+            formControlName="county"
+            id="county"
+          />
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-50">
           <mat-label>Country</mat-label>
-          <input matInput placeholder="Country" formControlName="country" />
+          <input
+            matInput
+            placeholder="Country"
+            formControlName="country"
+            id="country"
+          />
           @if (form.get('address.country')?.hasError('required')) {
           <mat-error>Country is <strong>required</strong></mat-error>
           }
