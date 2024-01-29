@@ -28,8 +28,8 @@ export class CompanyCreateComponent {
   }
 
   public submit(): void {
-    this.store.dispatch(CompanyActions.createCompany(this.form.value));
     if (this.form.valid) {
+      this.store.dispatch(CompanyActions.createCompany(this.form.value));
     }
   }
 }
