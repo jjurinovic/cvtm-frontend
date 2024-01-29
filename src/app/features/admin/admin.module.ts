@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminComponent } from './components/admin/admin.component';
-import { AdminRoutingModule } from './admin.routing';
+import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
-import { CompanyListComponent } from './components/company-list/company-list.component';
 import { MatButtonModule } from '@angular/material/button';
+
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminRoutingModule } from './admin.routing';
+import { CompanyListComponent } from './components/company-list/company-list.component';
 import { CompanyCreateComponent } from './components/company-create/company-create.component';
 
 @NgModule({
@@ -16,6 +18,7 @@ import { CompanyCreateComponent } from './components/company-create/company-crea
     MatTabsModule,
     MatTableModule,
     MatButtonModule,
+    MatCardModule,
   ],
 })
 export class AdminModule {}
