@@ -14,20 +14,22 @@ export class CompanyCreateComponent {
 
   constructor(private fb: FormBuilder, private store: Store) {
     this.form = this.fb.group({
-      name: ['', Validators.required],
-      vat: [''],
+      name: [null, Validators.required],
+      vat: [null],
       address: this.fb.group({
-        address1: ['', Validators.required],
-        address2: [''],
-        city: ['', Validators.required],
-        postcode: ['', Validators.required],
-        county: [''],
-        country: ['', Validators.required],
+        address1: [null, Validators.required],
+        address2: [null],
+        city: [null, Validators.required],
+        postcode: [null, Validators.required],
+        county: [null],
+        country: [null, Validators.required],
       }),
     });
   }
 
   public submit(): void {
     this.store.dispatch(CompanyActions.createCompany(this.form.value));
+    if (this.form.valid) {
+    }
   }
 }
