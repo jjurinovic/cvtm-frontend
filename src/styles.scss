@@ -88,3 +88,25 @@ mat-form-field {
   padding: 25px;
   box-sizing: border-box;
 }
+
+.form-title {
+  color: #767676;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.mat-mdc-form-field-error-wrapper {
+  padding: 0 !important;
+}
+
+.mat-mdc-form-field-error {
+  font-size: 0.9rem;
+}
