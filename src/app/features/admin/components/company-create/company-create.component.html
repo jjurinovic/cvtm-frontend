@@ -1,1 +1,40 @@
-<p>company-create works!</p>
+<mat-card>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>VAT</mat-label>
+      <input matInput placeholder="VAT" formControlName="vat" />
+    </mat-form-field>
+    <div formGroupName="address">
+      <mat-form-field appearance="outline">
+        <mat-label>Address 1</mat-label>
+        <input matInput placeholder="Address 1" formControlName="address1" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Address 2</mat-label>
+        <input matInput placeholder="Address 2" formControlName="address2" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="City" formControlName="city" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Postcode</mat-label>
+        <input matInput placeholder="Postcode" formControlName="postcode" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>County</mat-label>
+        <input matInput placeholder="County" formControlName="county" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Country</mat-label>
+        <input matInput placeholder="Country" formControlName="country" />
+      </mat-form-field>
+    </div>
+
+    <button mat-flat-button color="primary" type="submit">Save</button>
+  </form>
+</mat-card>

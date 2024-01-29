@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, exhaustMap, catchError } from 'rxjs/operators';
+import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
 
-import { CompanyActionTypes } from './company.actions';
+import {
+  CompanyActionTypes,
+  createCompany,
+  createCompanySuccess,
+} from './company.actions';
 import { CompanyService } from '../services/company.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class CompanyEffects {
@@ -33,5 +38,41 @@ export class CompanyEffects {
     { dispatch: false }
   );
 
-  constructor(private actions$: Actions, private _company: CompanyService) {}
+  createCompany$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CompanyActionTypes.CreateCompany),
+      exhaustMap((payload) =>
+        this._company.createCompany(payload).pipe(
+          map((data) => ({
+            type: CompanyActionTypes.CreateCompanySuccess,
+            payload: data,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: CompanyActionTypes.CreateCompanyFail,
+              payload: { error: error.detail },
+            })
+          )
+        )
+      )
+    )
+  );
+
+  createCompanySuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CompanyActionTypes.CreateCompanySuccess),
+        tap(() => {
+          console.log('first');
+          this.router.navigateByUrl('/admin');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  constructor(
+    private actions$: Actions,
+    private _company: CompanyService,
+    private router: Router
+  ) {}
 }

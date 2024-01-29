@@ -4,11 +4,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminRoutingModule } from './admin.routing';
 import { CompanyListComponent } from './components/company-list/company-list.component';
 import { CompanyCreateComponent } from './components/company-create/company-create.component';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [AdminComponent, CompanyListComponent, CompanyCreateComponent],
@@ -19,6 +21,8 @@ import { CompanyCreateComponent } from './components/company-create/company-crea
     MatTableModule,
     MatButtonModule,
     MatCardModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ],
 })
 export class AdminModule {}

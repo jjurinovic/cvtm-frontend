@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { User } from 'src/app/features/users/models/user.model';
 import { Company } from '../models/company.model';
 import * as CompanyActions from './company.actions';
+import { createCompanySuccess } from './company.actions';
 
 export interface State {
   companies: Company[];
@@ -35,6 +36,15 @@ export const reducer = createReducer(
   on(CompanyActions.getAllFailure, (state, { payload }) => ({
     ...state,
     error: payload.error,
+    isLoading: false,
+  })),
+  on(CompanyActions.createCompany, (state) => ({ ...state, isLoading: true })),
+  on(CompanyActions.createCompanySuccess, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(CompanyActions.createCompanyFail, (state) => ({
+    ...state,
     isLoading: false,
   }))
 );
