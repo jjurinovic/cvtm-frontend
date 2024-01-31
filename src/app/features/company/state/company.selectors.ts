@@ -33,6 +33,11 @@ export const selectSortFieldCompanies = createSelector(
   (state) => state.sortField
 );
 
+export const selectSearchCompanies = createSelector(
+  selectCompany,
+  (state) => state.q
+);
+
 export const selectError = createSelector(
   selectCompany,
   (state) => state.error

@@ -8,6 +8,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminRoutingModule } from './admin.routing';
@@ -27,6 +29,8 @@ import { CompanyCreateComponent } from './components/company-create/company-crea
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
+    MatIconModule,
+    MatFormFieldModule,
   ],
 })
 export class AdminModule {}

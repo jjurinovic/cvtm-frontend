@@ -13,6 +13,7 @@ export interface State {
   error: string | null;
   sort: string | null;
   sortField: string | null;
+  q: string | null;
 }
 
 export const initialState: State = {
@@ -24,11 +25,12 @@ export const initialState: State = {
   size: 10,
   sort: null,
   sortField: null,
+  q: null,
 };
 
 export const reducer = createReducer(
   initialState,
-  on(CompanyActions.getAll, (state) => ({ ...initialState, isLoading: true })),
+  on(CompanyActions.getAll, (state) => ({ ...state, isLoading: true })),
   on(CompanyActions.getAllSuccess, (state, { payload }) => ({
     ...state,
     companies: payload.results,
@@ -38,6 +40,7 @@ export const reducer = createReducer(
     isLoading: false,
     sort: payload.sort,
     sortField: payload.sort_field,
+    q: payload.q,
   })),
   on(CompanyActions.getAllFailure, (state, { payload }) => ({
     ...state,

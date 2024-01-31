@@ -26,6 +26,10 @@ export class CompanyEffects {
           params = params.append('sort', data.payload.sort);
           params = params.append('sort_field', data.payload.sortField);
         }
+
+        if (data.payload.q) {
+          params = params.append('q', data.payload.q);
+        }
         return params;
       }),
       exhaustMap((params) =>
