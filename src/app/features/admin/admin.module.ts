@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminRoutingModule } from './admin.routing';
@@ -25,6 +26,7 @@ import { CompanyCreateComponent } from './components/company-create/company-crea
     ReactiveFormsModule,
     MatInputModule,
     MatPaginatorModule,
+    MatSortModule,
   ],
 })
 export class AdminModule {}

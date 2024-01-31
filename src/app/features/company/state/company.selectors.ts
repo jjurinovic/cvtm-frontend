@@ -23,6 +23,16 @@ export const selectSizeCompanies = createSelector(
   (state) => state.size
 );
 
+export const selectSortCompanies = createSelector(
+  selectCompany,
+  (state) => state.sort
+);
+
+export const selectSortFieldCompanies = createSelector(
+  selectCompany,
+  (state) => state.sortField
+);
+
 export const selectError = createSelector(
   selectCompany,
   (state) => state.error

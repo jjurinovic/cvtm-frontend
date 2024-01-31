@@ -6,20 +6,24 @@ import { createCompanySuccess } from './company.actions';
 
 export interface State {
   companies: Company[];
-  page: number | null;
+  page: number;
   total: number | null;
-  size: number | null;
+  size: number;
   isLoading: boolean;
   error: string | null;
+  sort: string | null;
+  sortField: string | null;
 }
 
 export const initialState: State = {
   companies: [],
   isLoading: false,
   error: null,
-  page: null,
+  page: 1,
   total: null,
-  size: null,
+  size: 10,
+  sort: null,
+  sortField: null,
 };
 
 export const reducer = createReducer(
@@ -32,6 +36,8 @@ export const reducer = createReducer(
     total: payload.total,
     page: payload.page,
     isLoading: false,
+    sort: payload.sort,
+    sortField: payload.sort_field,
   })),
   on(CompanyActions.getAllFailure, (state, { payload }) => ({
     ...state,

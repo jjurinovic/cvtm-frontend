@@ -21,6 +21,11 @@ export class CompanyEffects {
         let params = new HttpParams();
         params = params.append('size', data.payload.size);
         params = params.append('page', data.payload.page);
+
+        if (data.payload.sort) {
+          params = params.append('sort', data.payload.sort);
+          params = params.append('sort_field', data.payload.sortField);
+        }
         return params;
       }),
       exhaustMap((params) =>
