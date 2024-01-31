@@ -1,24 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
+import { SortDirection } from '@angular/material/sort';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  fromEvent,
+  tap,
+} from 'rxjs';
 
 import { Company } from 'src/app/features/company/models/company.model';
 import * as CompanyActions from '../../../company/state/company.actions';
 import {
   selectAllCompanies,
   selectPageCompanies,
+  selectSearchCompanies,
   selectSizeCompanies,
   selectSortCompanies,
   selectSortFieldCompanies,
   selectTotalCompanies,
 } from 'src/app/features/company/state/company.selectors';
-import { SortDirection } from '@angular/material/sort';
 
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',
   styleUrl: './company-list.component.scss',
 })
-export class CompanyListComponent implements OnInit {
+export class CompanyListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'vat', 'address'];
   companies: Company[] = [];
   total: number | null = 0;
@@ -26,6 +40,10 @@ export class CompanyListComponent implements OnInit {
   size: number = 10;
   sort: string | null = null;
   sortField: string | null = null;
+  searchValue: string | null = null;
+  private debounceTime = 500;
+
+  @ViewChild('input') input?: ElementRef;
 
   constructor(private store: Store) {}
 
@@ -54,22 +72,41 @@ export class CompanyListComponent implements OnInit {
       .select(selectSortFieldCompanies)
       .subscribe((sortField) => (this.sortField = sortField));
 
-    this.getData(this.page + 1, this.size, this.sort, this.sortField);
+    this.store
+      .select(selectSearchCompanies)
+      .subscribe((q) => (this.searchValue = q));
+    this.getData();
   }
 
-  private getData(
-    page: number,
-    size: number,
-    sort: string | null,
-    sortField: string | null
-  ): void {
+  ngAfterViewInit() {
+    fromEvent(this.input?.nativeElement, 'keyup')
+      .pipe(
+        filter(Boolean),
+        debounceTime(this.debounceTime),
+        distinctUntilChanged(),
+        tap(() => {
+          this.searchValue = this.input?.nativeElement.value;
+          this.getData();
+        })
+      )
+      .subscribe();
+  }
+
+  private getData(): void {
     this.store.dispatch(
       CompanyActions.getAll({
-        payload: { page, size, sort, sortField },
+        payload: {
+          page: this.page + 1,
+          size: this.size,
+          sort: this.sort,
+          sortField: this.sortField,
+          q: this.searchValue,
+        },
       })
     );
   }
 
+  /** Page change */
   pageChange({
     pageIndex,
     pageSize,
@@ -77,16 +114,16 @@ export class CompanyListComponent implements OnInit {
     pageIndex: number;
     pageSize: number;
   }): void {
-    const page = pageIndex + 1;
-    const size = pageSize;
-    this.getData(page, size, this.sort, this.sortField);
+    this.page = pageIndex;
+    this.size = pageSize;
+    this.getData();
   }
 
+  /** On sort */
   onSort({ active, direction }: { active: string; direction: string }): void {
-    const sort = direction;
-    const sortField = active;
-    const page = this.page + 1;
-    this.getData(page, this.size, sort, sortField);
+    this.sort = direction;
+    this.sortField = active;
+    this.getData();
   }
 
   getSortField(): string {
@@ -95,5 +132,10 @@ export class CompanyListComponent implements OnInit {
 
   getSort(): SortDirection {
     return (this.sort as SortDirection) || '';
+  }
+
+  clearSearch(): void {
+    this.searchValue = null;
+    this.getData();
   }
 }
