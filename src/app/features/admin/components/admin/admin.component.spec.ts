@@ -4,6 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AdminComponent } from './admin.component';
 import { CompanyListComponent } from '../company-list/company-list.component';
@@ -21,6 +24,9 @@ describe('AdminComponent', () => {
         MatTabsModule,
         MatTableModule,
         MatCardModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatSortModule,
       ],
       providers: [provideMockStore()],
     }).compileComponents();
