@@ -21,6 +21,24 @@
     </td>
   </ng-container>
 
+  <!-- Address Column -->
+  <ng-container matColumnDef="action">
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button>edit</button>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20]"
+  [length]="total"
+  [pageIndex]="page"
+  [pageSize]="size"
+  showFirstLastButtons
+  aria-label="Select page of periodic elements"
+  (page)="pageChange($event)"
+>
+</mat-paginator>
+total: {{ total }} size: {{ size }} page: {{ page }}

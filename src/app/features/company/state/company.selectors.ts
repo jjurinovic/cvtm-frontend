@@ -8,6 +8,21 @@ export const selectAllCompanies = createSelector(
   (state) => state.companies
 );
 
+export const selectTotalCompanies = createSelector(
+  selectCompany,
+  (state) => state.total
+);
+
+export const selectPageCompanies = createSelector(
+  selectCompany,
+  (state) => state.page
+);
+
+export const selectSizeCompanies = createSelector(
+  selectCompany,
+  (state) => state.size
+);
+
 export const selectError = createSelector(
   selectCompany,
   (state) => state.error

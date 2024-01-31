@@ -5,12 +5,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
 
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminRoutingModule } from './admin.routing';
 import { CompanyListComponent } from './components/company-list/company-list.component';
 import { CompanyCreateComponent } from './components/company-create/company-create.component';
-import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [AdminComponent, CompanyListComponent, CompanyCreateComponent],
@@ -23,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatPaginatorModule,
   ],
 })
 export class AdminModule {}

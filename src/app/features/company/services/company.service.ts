@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Company } from '../models/company.model';
@@ -17,8 +17,10 @@ export class CompanyService {
    * Return all companies. It's only available for ROOT user
    * @returns {Observable<PageResponse<Company>} Returns observable with list of all companies
    */
-  public getAllCompanies(): Observable<PageResponse<Company>> {
-    return this.http.get<PageResponse<Company>>(this.baseUrl);
+  public getAllCompanies(
+    params: HttpParams
+  ): Observable<PageResponse<Company>> {
+    return this.http.get<PageResponse<Company>>(this.baseUrl, { params });
   }
 
   /**

@@ -11,7 +11,10 @@ export enum CompanyActionTypes {
   CreateCompanyFail = '[Company] Create new Company Fail',
 }
 
-export const getAll = createAction(CompanyActionTypes.GetAll);
+export const getAll = createAction(
+  CompanyActionTypes.GetAll,
+  props<{ payload: any }>()
+);
 
 export const getAllSuccess = createAction(
   CompanyActionTypes.GetAllSuccess,

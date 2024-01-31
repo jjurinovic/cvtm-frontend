@@ -10,14 +10,21 @@ import {
 } from './company.actions';
 import { CompanyService } from '../services/company.service';
 import { Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class CompanyEffects {
   getAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CompanyActionTypes.GetAll),
-      exhaustMap(() =>
-        this._company.getAllCompanies().pipe(
+      map((data: any) => {
+        let params = new HttpParams();
+        params = params.append('size', data.payload.size);
+        params = params.append('page', data.payload.page);
+        return params;
+      }),
+      exhaustMap((params) =>
+        this._company.getAllCompanies(params).pipe(
           map((data) => ({
             type: CompanyActionTypes.GetAllSuccess,
             payload: data,
