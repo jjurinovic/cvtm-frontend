@@ -6,12 +6,12 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 
-import { CompanyCreateComponent } from './company-create.component';
+import { CompanyFormComponent } from './company-form.component';
 import { Company } from 'src/app/features/company/models/company.model';
 
-describe('CompanyCreateComponent', () => {
-  let component: CompanyCreateComponent;
-  let fixture: ComponentFixture<CompanyCreateComponent>;
+describe('CompanyFormComponent', () => {
+  let component: CompanyFormComponent;
+  let fixture: ComponentFixture<CompanyFormComponent>;
   let store: MockStore;
 
   const testCompany: Company = {
@@ -31,7 +31,7 @@ describe('CompanyCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CompanyCreateComponent],
+      declarations: [CompanyFormComponent],
       imports: [
         BrowserAnimationsModule,
         ReactiveFormsModule,
@@ -42,7 +42,7 @@ describe('CompanyCreateComponent', () => {
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
-    fixture = TestBed.createComponent(CompanyCreateComponent);
+    fixture = TestBed.createComponent(CompanyFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

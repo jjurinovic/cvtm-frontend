@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import * as CompanyActions from '../../../company/state/company.actions';
 
 @Component({
-  selector: 'app-company-create',
-  templateUrl: './company-create.component.html',
-  styleUrl: './company-create.component.scss',
+  selector: 'app-company-form',
+  templateUrl: './company-form.component.html',
+  styleUrl: './company-form.component.scss',
 })
-export class CompanyCreateComponent {
+export class CompanyFormComponent {
   form: FormGroup;
 
   constructor(private fb: FormBuilder, private store: Store) {

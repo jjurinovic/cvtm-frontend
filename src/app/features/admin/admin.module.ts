@@ -14,10 +14,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminRoutingModule } from './admin.routing';
 import { CompanyListComponent } from './components/company-list/company-list.component';
-import { CompanyCreateComponent } from './components/company-create/company-create.component';
+import { CompanyFormComponent } from './components/company-form/company-form.component';
 
 @NgModule({
-  declarations: [AdminComponent, CompanyListComponent, CompanyCreateComponent],
+  declarations: [AdminComponent, CompanyListComponent, CompanyFormComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

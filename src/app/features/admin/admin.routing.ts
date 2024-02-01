@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminComponent } from './components/admin/admin.component';
-import { CompanyCreateComponent } from './components/company-create/company-create.component';
+import { CompanyFormComponent } from './components/company-form/company-form.component';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'company/create',
-    component: CompanyCreateComponent,
+    component: CompanyFormComponent,
     title: 'Create Company',
   },
 ];
