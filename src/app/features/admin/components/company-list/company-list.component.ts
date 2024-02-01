@@ -33,7 +33,7 @@ import {
   styleUrl: './company-list.component.scss',
 })
 export class CompanyListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['name', 'vat', 'address'];
+  displayedColumns: string[] = ['name', 'vat', 'address', 'action'];
   companies: Company[] = [];
   total: number | null = 0;
   page: number = 1;

@@ -11,6 +11,11 @@ const routes: Routes = [
     title: `Admin Settings`,
   },
   {
+    path: 'company/:id/edit',
+    component: CompanyFormComponent,
+    title: 'Edit Company',
+  },
+  {
     path: 'company/create',
     component: CompanyFormComponent,
     title: 'Create Company',

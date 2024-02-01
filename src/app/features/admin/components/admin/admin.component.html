@@ -2,15 +2,12 @@
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="admin">
     <mat-tab label="Companies"
       ><div class="tab-content">
-        <button
-          mat-flat-button
-          color="primary"
-          class="admin__add-company"
-          (click)="addCompany()"
-        >
-          Add Company
-        </button>
-        <app-company-list></app-company-list></div
+        <a routerLink="/admin/company/create">
+          <button mat-flat-button color="primary" class="admin__add-company">
+            Add Company
+          </button>
+          <app-company-list></app-company-list>
+        </a></div
     ></mat-tab>
     <mat-tab label="Users">Users content</mat-tab>
     <mat-tab label="Settings">Settings content</mat-tab>

@@ -54,10 +54,15 @@
       </td>
     </ng-container>
 
-    <!-- Address Column -->
+    <!-- actions Column -->
     <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button>edit</button>
+        <a routerLink="/admin/company/{{ element.id }}/edit">
+          <button color="primary" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </a>
       </td>
     </ng-container>
 
