@@ -92,7 +92,7 @@ export class CompanyListComponent implements OnInit, AfterViewInit {
       .subscribe();
   }
 
-  private getData(): void {
+  getData(): void {
     this.store.dispatch(
       CompanyActions.getAll({
         payload: {
