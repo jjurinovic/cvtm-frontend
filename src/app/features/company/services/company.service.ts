@@ -15,7 +15,7 @@ export class CompanyService {
 
   /**
    * Return all companies. It's only available for ROOT user
-   * @returns {Observable<PageResponse<Company>} Returns observable with list of all companies
+   * @returns {Observable<PageResponse<Company>>} Returns observable with list of all companies
    */
   public getAllCompanies(
     params: HttpParams
@@ -29,7 +29,7 @@ export class CompanyService {
    * @returns {Observable<Company>} Return observable with company data
    */
   public getCompanyById(id: number): Observable<Company> {
-    return this.http.get<Company>(this.baseUrl + id);
+    return this.http.get<Company>(this.baseUrl + '/' + id);
   }
 
   /**

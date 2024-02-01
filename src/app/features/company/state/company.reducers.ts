@@ -1,8 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { User } from 'src/app/features/users/models/user.model';
+
 import { Company } from '../models/company.model';
 import * as CompanyActions from './company.actions';
-import { createCompanySuccess } from './company.actions';
 
 export interface State {
   companies: Company[];
@@ -14,6 +13,7 @@ export interface State {
   sort: string | null;
   sortField: string | null;
   q: string | null;
+  currentCompany: Company | null;
 }
 
 export const initialState: State = {
@@ -26,6 +26,7 @@ export const initialState: State = {
   sort: null,
   sortField: null,
   q: null,
+  currentCompany: null,
 };
 
 export const reducer = createReducer(
@@ -53,6 +54,16 @@ export const reducer = createReducer(
     isLoading: false,
   })),
   on(CompanyActions.createCompanyFail, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(CompanyActions.getCompanyById, (state) => ({ ...state, isLoading: true })),
+  on(CompanyActions.getCompanyByIdSuccess, (state, { payload }) => ({
+    ...state,
+    isLoading: false,
+    currentCompany: payload,
+  })),
+  on(CompanyActions.getCompanyByIdFail, (state) => ({
     ...state,
     isLoading: false,
   }))

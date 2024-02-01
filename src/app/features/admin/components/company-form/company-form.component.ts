@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as CompanyActions from '../../../company/state/company.actions';
+import { selectCurrentCompany } from 'src/app/features/company/state/company.selectors';
 
 @Component({
   selector: 'app-company-form',
@@ -11,8 +13,13 @@ import * as CompanyActions from '../../../company/state/company.actions';
 })
 export class CompanyFormComponent {
   form: FormGroup;
+  companyId: number | null = null;
 
-  constructor(private fb: FormBuilder, private store: Store) {
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private route: ActivatedRoute
+  ) {
     this.form = this.fb.group({
       name: [null, Validators.required],
       vat: [null],
@@ -24,6 +31,20 @@ export class CompanyFormComponent {
         county: [null],
         country: [null, Validators.required],
       }),
+    });
+
+    this.route.params.subscribe((params) => {
+      this.companyId = params['id'];
+
+      if (this.companyId) {
+        this.store.dispatch(
+          CompanyActions.getCompanyById({ payload: this.companyId })
+        );
+      }
+    });
+
+    this.store.select(selectCurrentCompany).subscribe((company) => {
+      if (company) this.form.patchValue(company);
     });
   }
 

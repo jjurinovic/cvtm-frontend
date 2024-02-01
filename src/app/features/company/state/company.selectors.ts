@@ -38,6 +38,11 @@ export const selectSearchCompanies = createSelector(
   (state) => state.q
 );
 
+export const selectCurrentCompany = createSelector(
+  selectCompany,
+  (state) => state.currentCompany
+);
+
 export const selectError = createSelector(
   selectCompany,
   (state) => state.error
