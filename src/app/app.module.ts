@@ -14,13 +14,14 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { reducers } from './state/state';
 import { CompanyEffects } from './features/company/state/company.effects';
+import { metaReducers } from './state/meta.reducers';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducers, {}),
+    StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([AuthEffects, CompanyEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     CoreModule,
