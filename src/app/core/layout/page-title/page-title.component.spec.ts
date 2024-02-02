@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { PageTitleComponent } from './page-title.component';
 
@@ -18,5 +19,14 @@ describe('PageTitleComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show correct title in html', () => {
+    component.pageTitle = 'test';
+    fixture.detectChanges();
+
+    const pageTitleH2 = fixture.debugElement.query(By.css('.page-title'));
+
+    expect(pageTitleH2.nativeElement.textContent).toEqual('test');
   });
 });
