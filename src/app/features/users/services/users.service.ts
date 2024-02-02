@@ -31,6 +31,15 @@ export class UsersService {
   }
 
   /**
+   * Update existing user and returns it
+   * @param {User} user user data for update
+   * @returns {Observable<User>} Returns Observable with updated user
+   */
+  public updateUser(user: User): Observable<User> {
+    return this.http.put<User>(this.baseUrl, user);
+  }
+
+  /**
    * Return user by given id
    * @param {number} id
    * @returns {Observable<User>} Returns Observable with user with given id
