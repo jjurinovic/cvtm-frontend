@@ -24,7 +24,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error instanceof HttpErrorResponse && error.status === 401) {
           this.store.dispatch(logout());
         }
-        this.snackBar.error(error.error.detail);
+        this.snackBar.error(error.error.detail || 'Server error');
         return throwError(() => error);
       })
     );
