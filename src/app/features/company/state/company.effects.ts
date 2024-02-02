@@ -137,6 +137,11 @@ export class CompanyEffects {
   );
 
   getCompanyByIdSuccess$ = createEffect(
+    () => this.actions$.pipe(ofType(CompanyActionTypes.GetCompanyByIdSuccess)),
+    { dispatch: false }
+  );
+
+  getCompanyByIdFail$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(CompanyActionTypes.GetCompanyByIdFail),

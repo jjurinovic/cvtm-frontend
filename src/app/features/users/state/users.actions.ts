@@ -20,12 +20,12 @@ export enum UserActionTypes {
 
 export const createUser = createAction(
   UserActionTypes.CreateUser,
-  props<{ payload: User }>()
+  props<{ payload: any }>()
 );
 
 export const createUserSuccess = createAction(
   UserActionTypes.CreateUserSuccess,
-  props<{ payload: User }>()
+  props<{ payload: any }>()
 );
 
 export const createUserFail = createAction(
@@ -40,7 +40,7 @@ export const updateUser = createAction(
 
 export const updateUserSuccess = createAction(
   UserActionTypes.UpdateUserSuccess,
-  props<{ payload: User }>()
+  props<{ payload: any }>()
 );
 
 export const updateUserFail = createAction(

@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminRoutingModule } from './admin.routing';
@@ -41,6 +43,8 @@ import { RolePipe } from 'src/app/shared/pipes/role.pipe';
     MatIconModule,
     MatFormFieldModule,
     RolePipe,
+    MatSelectModule,
+    MatChipsModule,
   ],
 })
 export class AdminModule {}

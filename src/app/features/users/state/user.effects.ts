@@ -52,11 +52,11 @@ export class UserEffects {
   createUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActionTypes.CreateUser),
-      exhaustMap((payload) =>
+      exhaustMap((payload: any) =>
         this._user.createUser(payload).pipe(
           map((data) => ({
             type: UserActionTypes.CreateUserSuccess,
-            payload: data,
+            payload: { ...data, returnUrl: payload.returnUrl },
           })),
           catchError(({ error }) =>
             of({
@@ -73,8 +73,9 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(UserActionTypes.CreateUserSuccess),
-        tap(() => {
-          this.router.navigateByUrl('/admin');
+        tap((data: any) => {
+          console.log(data);
+          this.router.navigateByUrl(data.payload.returnUrl);
         })
       ),
     { dispatch: false }
@@ -83,11 +84,11 @@ export class UserEffects {
   updateUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActionTypes.UpdateUser),
-      exhaustMap((payload) =>
+      exhaustMap((payload: any) =>
         this._user.updateUser(payload).pipe(
           map((data) => ({
             type: UserActionTypes.UpdateUserSuccess,
-            payload: data,
+            payload: { ...data, returnUrl: payload.returnUrl },
           })),
           catchError(({ error }) =>
             of({
@@ -103,9 +104,9 @@ export class UserEffects {
   updateUserSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(UserActionTypes.UpdateUser),
-        tap(() => {
-          this.router.navigateByUrl('/admin');
+        ofType(UserActionTypes.UpdateUserSuccess),
+        map((data: any) => {
+          this.router.navigateByUrl(data.payload.returnUrl);
         })
       ),
     { dispatch: false }
@@ -132,9 +133,14 @@ export class UserEffects {
   );
 
   getUserByIdSuccess$ = createEffect(
+    () => this.actions$.pipe(ofType(UserActionTypes.GetUserByIdSuccess)),
+    { dispatch: false }
+  );
+
+  getUserByIdFail$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(UserActionTypes.GetUserByIdSuccess),
+        ofType(UserActionTypes.GetUserByIdFail),
         tap(() => {
           this.router.navigateByUrl('/admin');
         })
