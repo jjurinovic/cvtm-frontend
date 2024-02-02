@@ -35,7 +35,6 @@ export class NavigationComponent {
     this.store.select(selectCurrentUser).subscribe((user) => {
       if (user) {
         this.userRole = user.role;
-        console.log(this.userRole);
       }
     });
   }
