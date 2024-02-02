@@ -16,6 +16,7 @@ import { reducers } from './state/state';
 import { CompanyEffects } from './features/company/state/company.effects';
 import { metaReducers } from './state/meta.reducers';
 import { UserEffects } from './features/users/state/user.effects';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { UserEffects } from './features/users/state/user.effects';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     CoreModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
   ],
   providers: [
     {
