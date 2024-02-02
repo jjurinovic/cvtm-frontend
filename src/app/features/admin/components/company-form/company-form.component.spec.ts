@@ -8,9 +8,14 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 import { CompanyFormComponent } from './company-form.component';
 import { Company } from 'src/app/features/company/models/company.model';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
+import { UserListComponent } from '../user-list/user-list.component';
 
 describe('CompanyFormComponent', () => {
   let component: CompanyFormComponent;
@@ -34,13 +39,17 @@ describe('CompanyFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CompanyFormComponent],
+      declarations: [CompanyFormComponent, UserListComponent],
       imports: [
         BrowserAnimationsModule,
         ReactiveFormsModule,
         MatInputModule,
         MatCardModule,
         RouterTestingModule,
+        MatTabsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
       ],
       providers: [
         provideMockStore(),
@@ -54,6 +63,7 @@ describe('CompanyFormComponent', () => {
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
+    spyOn(store, 'select').and.callThrough();
     fixture = TestBed.createComponent(CompanyFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -63,9 +73,18 @@ describe('CompanyFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should render tab groups', () => {
+    const tabGroup = fixture.debugElement.query(By.directive(MatTabGroup));
+    expect(tabGroup).toBeTruthy();
+  });
+
   it('should render form', () => {
     const form = fixture.debugElement.query(By.css('form'));
     expect(form).toBeTruthy();
+  });
+
+  it('should call store select', () => {
+    expect(store.select).toHaveBeenCalled();
   });
 
   it('should have empty form on start', () => {
@@ -86,7 +105,7 @@ describe('CompanyFormComponent', () => {
   it('should call submit() and not dispatch on form submit on empty form', () => {
     const submitSpy = spyOn(component, 'submit').and.callThrough();
     const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
-    const btn = fixture.debugElement.query(By.css('button'));
+    const btn = fixture.debugElement.query(By.css('#company-submit'));
 
     btn.nativeElement.click();
 
@@ -98,7 +117,7 @@ describe('CompanyFormComponent', () => {
     const submitSpy = spyOn(component, 'submit').and.callThrough();
     const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
     component.form.setValue(testCompany);
-    const btn = fixture.debugElement.query(By.css('button'));
+    const btn = fixture.debugElement.query(By.css('#company-submit'));
 
     btn.nativeElement.click();
     fixture.detectChanges();
