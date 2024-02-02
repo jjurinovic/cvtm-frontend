@@ -110,3 +110,26 @@ mat-form-field {
 .mat-mdc-form-field-error {
   font-size: 0.9rem;
 }
+
+.mat-mdc-snack-bar-container {
+  &.error-snackbar {
+    --mdc-snackbar-container-color: #f35221;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #313131;
+    --mat-snack-bar-button-color: #fff;
+  }
+
+  &.success-snackbar {
+    --mdc-snackbar-container-color: #387c23;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #313131;
+    --mat-snack-bar-button-color: #fff;
+  }
+
+  &.warn-snackbar {
+    --mdc-snackbar-container-color: #cfbd1a;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #313131;
+    --mat-snack-bar-button-color: #fff;
+  }
+}
