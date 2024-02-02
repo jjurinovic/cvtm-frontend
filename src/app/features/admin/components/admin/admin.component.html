@@ -1,5 +1,11 @@
 <mat-card>
-  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="admin">
+  <mat-tab-group
+    [selectedIndex]="selectedTabIndex"
+    (selectedIndexChange)="changeTab($event)"
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    class="admin"
+  >
     <mat-tab label="Companies"
       ><div class="tab-content">
         <a routerLink="/admin/company/create">
