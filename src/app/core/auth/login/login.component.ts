@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as AuthActions from '../../../state/auth/auth.actions';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import * as AuthActions from '../../../state/auth/auth.actions';
 import {
   selectError,
   selectIsLoading,
