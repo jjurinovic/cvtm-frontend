@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
+
+import { JwtPayload, jwtDecode } from 'jwt-decode';
+
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { environment } from 'src/environments/environment';
 

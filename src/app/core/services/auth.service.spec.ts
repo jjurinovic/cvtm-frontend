@@ -3,8 +3,8 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+
 import { AuthService } from './auth.service';
-import { HttpClientModule } from '@angular/common/http';
 import { User } from 'src/app/features/users/models/user.model';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { environment } from 'src/environments/environment';
