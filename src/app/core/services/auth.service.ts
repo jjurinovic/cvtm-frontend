@@ -6,6 +6,7 @@ import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { environment } from 'src/environments/environment';
+import { AuthResponse } from '../models/auth-response.model';
 
 interface CustomJwtPayload extends JwtPayload {
   role: Role;
@@ -25,7 +26,13 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  login(username: string, password: string): Observable<any> {
+  /**
+   * Login and return token and logged in user
+   * @param username username/email for login
+   * @param password password
+   * @returns {Observable<AuthResponse>} Return observable with AuthResponse object
+   */
+  login(username: string, password: string): Observable<AuthResponse> {
     // remove token to not get errors
     this.removeToken();
 
@@ -33,7 +40,7 @@ export class AuthService {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
-    return this.http.post(this.baseURl + '/login', formData);
+    return this.http.post<AuthResponse>(this.baseURl + '/login', formData);
   }
 
   getToken(): string | null {
