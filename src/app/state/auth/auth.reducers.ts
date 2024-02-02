@@ -46,7 +46,7 @@ export const reducer = createReducer(
   })),
   on(LoginActions.currentUserFail, (state: State, { payload }) => ({
     ...state,
-    error: payload.error,
+    error: payload.detail,
     isLoading: false,
   })),
   on(LoginActions.logout, (state: State) => initialState)
