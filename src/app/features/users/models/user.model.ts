@@ -1,3 +1,4 @@
+import { Address } from 'src/app/shared/models/address';
 import { Role } from '../enums/role.enum';
 
 export interface User {
@@ -6,4 +7,5 @@ export interface User {
   email: string;
   role: Role;
   company_id: number;
+  address?: Address | null;
 }
