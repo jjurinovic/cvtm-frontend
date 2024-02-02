@@ -16,6 +16,7 @@ import {
   selectSizeUsers,
   selectSortFieldUsers,
   selectSortUsers,
+  selectTotalUsers,
 } from 'src/app/features/users/state/user.selectors';
 import { selectTotalCompanies } from '../../../company/state/company.selectors';
 import * as UserActions from '../../../users/state/users.actions';
@@ -48,7 +49,7 @@ export class UserListComponent {
     });
 
     this.store
-      .select(selectTotalCompanies)
+      .select(selectTotalUsers)
       .subscribe((total) => (this.total = total));
 
     this.store
