@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 import { User } from '../models/user.model';
+import { PageResponse } from 'src/app/shared/models/page-response';
 
 export enum UserActionTypes {
   CreateUser = '[User] Create New User',
@@ -64,12 +65,12 @@ export const getUserByIdFail = createAction(
 
 export const getAllUsers = createAction(
   UserActionTypes.GetAllUsers,
-  props<{ payload: number }>()
+  props<{ payload: any }>()
 );
 
 export const getAllUsersSuccess = createAction(
   UserActionTypes.GetAllUsersSuccess,
-  props<{ payload: any }>()
+  props<{ payload: PageResponse<User> }>()
 );
 
 export const getAllUsersFail = createAction(

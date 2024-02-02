@@ -18,34 +18,28 @@ export class UserEffects {
   getAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActionTypes.GetAllUsers),
-      map((data: any) => {
-        let params = new HttpParams();
-        params = params.append('size', data.payload.size);
-        params = params.append('page', data.payload.page);
-
-        if (data.payload.sort) {
-          params = params.append('sort', data.payload.sort);
-          params = params.append('sort_field', data.payload.sortField);
-        }
-
-        if (data.payload.q) {
-          params = params.append('q', data.payload.q);
-        }
-        return params;
-      }),
-      exhaustMap((params) =>
-        this._user.getAll(params).pipe(
-          map((data) => ({
-            type: UserActionTypes.GetAllUsersSuccess,
-            payload: data,
-          })),
-          catchError(({ error }) =>
-            of({
-              type: UserActionTypes.GetAllUsersFail,
-              payload: { error: error.detail },
-            })
+      exhaustMap(({ payload }: any) =>
+        this._user
+          .getAll(
+            payload.companyId,
+            payload.page,
+            payload.size,
+            payload.sort,
+            payload.sortField,
+            payload.q
           )
-        )
+          .pipe(
+            map((data) => ({
+              type: UserActionTypes.GetAllUsersSuccess,
+              payload: data,
+            })),
+            catchError(({ error }) =>
+              of({
+                type: UserActionTypes.GetAllUsersFail,
+                payload: { error: error.detail },
+              })
+            )
+          )
       )
     )
   );

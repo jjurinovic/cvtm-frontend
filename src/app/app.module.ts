@@ -15,6 +15,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { reducers } from './state/state';
 import { CompanyEffects } from './features/company/state/company.effects';
 import { metaReducers } from './state/meta.reducers';
+import { UserEffects } from './features/users/state/user.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,7 @@ import { metaReducers } from './state/meta.reducers';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([AuthEffects, CompanyEffects]),
+    EffectsModule.forRoot([AuthEffects, CompanyEffects, UserEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     CoreModule,
     BrowserAnimationsModule,
