@@ -1,6 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 
 import { Auth } from 'src/app/core/models/auth.model';
+import { AuthResponse } from 'src/app/core/models/auth-response.model';
+import { BaseError } from 'src/app/shared/models/error';
+import { User } from 'src/app/features/users/models/user.model';
 
 export enum AuthActionTypes {
   Login = '[Login Page] Login',
@@ -19,12 +22,12 @@ export const login = createAction(
 
 export const loginSuccess = createAction(
   AuthActionTypes.LoginSuccess,
-  props<{ payload: any }>()
+  props<{ payload: AuthResponse }>()
 );
 
 export const loginFailure = createAction(
   AuthActionTypes.LoginFail,
-  props<{ payload: any }>()
+  props<{ payload: BaseError }>()
 );
 
 export const logout = createAction(AuthActionTypes.Logout);
@@ -33,10 +36,10 @@ export const currentUser = createAction(AuthActionTypes.CurrentUser);
 
 export const currentUserSuccess = createAction(
   AuthActionTypes.CurrentUserSuccess,
-  props<{ payload: any }>()
+  props<{ payload: User }>()
 );
 
 export const currentUserFail = createAction(
   AuthActionTypes.CurrentUserFail,
-  props<{ payload: any }>()
+  props<{ payload: BaseError }>()
 );
