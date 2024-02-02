@@ -6,12 +6,14 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, catchError, throwError } from 'rxjs';
+
+import { logout } from '../state/auth/auth.actions';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  constructor(private store: Store) {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -19,8 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
+          this.store.dispatch(logout());
         }
         return throwError(() => error);
       })

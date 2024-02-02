@@ -3,23 +3,24 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { UsersService } from '../features/users/services/users.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorInterceptor } from './error.interceptor';
-import { AuthInterceptor } from './auth.interceptor';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LoginComponent } from '../core/auth/login/login.component';
-import { Router } from '@angular/router';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { Component } from '@angular/core';
+
+import { ErrorInterceptor } from './error.interceptor';
 import { environment } from 'src/environments/environment';
+@Component({})
+class TestLoginComponent {}
 
 describe('ErrorInterceptor', () => {
-  let service: UsersService;
+  let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  let router: Router;
+  let store: MockStore;
 
   let url = environment.apiUrl;
 
-  let routes = [{ path: 'login', component: LoginComponent }];
+  let routes = [{ path: 'login', component: TestLoginComponent }];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,52 +29,37 @@ describe('ErrorInterceptor', () => {
         RouterTestingModule.withRoutes(routes),
       ],
       providers: [
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: AuthInterceptor,
-          multi: true,
-        },
+        provideMockStore(),
         {
           provide: HTTP_INTERCEPTORS,
           useClass: ErrorInterceptor,
           multi: true,
         },
       ],
-    });
-    service = TestBed.inject(UsersService);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    }).createComponent(TestLoginComponent);
 
-    router = TestBed.inject(Router);
-    router.initialNavigation();
+    httpClient = TestBed.inject(HttpClient);
+    store = TestBed.inject(MockStore);
+    spyOn(store, 'dispatch');
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
     httpTestingController.verify();
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
-  it('should intercept request and if there is error 401 logout and remove token', () => {
-    localStorage.setItem('token', 'abc');
-    const navigateSpy = spyOn(router, 'navigateByUrl');
-
-    service.getCurrentUser().subscribe({
+  it('should intercept request and if there is error 401 and call dispatch logout', () => {
+    httpClient.get('/test').subscribe({
       next: () => {},
       error: (error) => {
         expect(error).toBeTruthy();
-
-        // check if token is removed
-        const token = localStorage.getItem('token');
-        expect(token).toBeFalsy();
-        expect(navigateSpy).toHaveBeenCalledWith('/login');
+        expect(store.dispatch).toHaveBeenCalled();
       },
     });
 
     const req = httpTestingController.expectOne({
       method: 'GET',
-      url: `${url}/user/me`,
+      url: `/test`,
     });
     req.error(new ProgressEvent('error'), { status: 401 });
   });
