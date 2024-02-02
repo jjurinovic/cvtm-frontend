@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { Store } from '@ngrx/store';
+
 import { NavItem } from '../../models/nav-item.model';
 import { Role } from 'src/app/features/users/enums/role.enum';
-import { Store } from '@ngrx/store';
 import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 
 @Component({

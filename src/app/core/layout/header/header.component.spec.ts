@@ -1,14 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { HeaderComponent } from './header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { By } from '@angular/platform-browser';
+
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+
+import { HeaderComponent } from './header.component';
 import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { User } from 'src/app/features/users/models/user.model';
 import { Role } from 'src/app/features/users/enums/role.enum';
-import { By } from '@angular/platform-browser';
 import { logout } from 'src/app/state/auth/auth.actions';
 
 const testUser: User = {

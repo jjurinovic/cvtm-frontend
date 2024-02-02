@@ -1,18 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
-import { BaseComponent } from './base.component';
 import { StoreModule } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { HeaderComponent } from '../header/header.component';
-import { HttpClientModule } from '@angular/common/http';
-import { MainComponent } from '../main/main.component';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationComponent } from '../navigation/navigation.component';
-import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
+
+import { BaseComponent } from './base.component';
+import { HeaderComponent } from '../header/header.component';
+import { MainComponent } from '../main/main.component';
+import { NavigationComponent } from '../navigation/navigation.component';
 import { currentUser } from 'src/app/state/auth/auth.actions';
 import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
 import { AuthService } from '../../services/auth.service';

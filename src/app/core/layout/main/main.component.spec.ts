@@ -1,15 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { By } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 import { MainComponent } from './main.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from '../navigation/navigation.component';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { RouterModule } from '@angular/router';
-import { MatListModule } from '@angular/material/list';
-import { By } from '@angular/platform-browser';
 import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthService } from '../../services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { PageTitleComponent } from '../page-title/page-title.component';

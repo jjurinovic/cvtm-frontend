@@ -1,14 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  ActivationStart,
-  NavigationEnd,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
 
 import { PageService } from '../../services/page.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-page-title',

@@ -1,14 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
+import { By } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+
+import { MatListModule } from '@angular/material/list';
 
 import { NavigationComponent } from './navigation.component';
-import { MatListModule } from '@angular/material/list';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { By } from '@angular/platform-browser';
 import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthService } from '../../services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
