@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { CompanyListComponent } from './company-list.component';
 import { Company } from 'src/app/features/company/models/company.model';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CompanyListComponent', () => {
   let component: CompanyListComponent;
@@ -54,6 +55,7 @@ describe('CompanyListComponent', () => {
         MatSortModule,
         ReactiveFormsModule,
         MatIconModule,
+        RouterTestingModule,
       ],
       providers: [provideMockStore()],
     }).compileComponents();

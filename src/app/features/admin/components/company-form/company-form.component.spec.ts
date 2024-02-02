@@ -5,6 +5,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 import { CompanyFormComponent } from './company-form.component';
 import { Company } from 'src/app/features/company/models/company.model';
@@ -37,8 +40,17 @@ describe('CompanyFormComponent', () => {
         ReactiveFormsModule,
         MatInputModule,
         MatCardModule,
+        RouterTestingModule,
       ],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore(),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: 123 }),
+          },
+        },
+      ],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
