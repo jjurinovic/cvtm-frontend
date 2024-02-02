@@ -4,4 +4,5 @@ export interface NavItem {
   link: string;
   title: string;
   minRole?: Role;
+  excludeRole?: Role;
 }

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NavItem } from '../../models/nav-item.model';
 import { Role } from 'src/app/features/users/enums/role.enum';
+import { Store } from '@ngrx/store';
+import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 
 @Component({
   selector: 'app-navigation',
@@ -21,6 +23,18 @@ export class NavigationComponent {
     {
       link: '/company',
       title: 'Company',
+      excludeRole: Role.ROOT,
     },
   ];
+
+  userRole!: Role;
+
+  constructor(private store: Store) {
+    this.store.select(selectCurrentUser).subscribe((user) => {
+      if (user) {
+        this.userRole = user.role;
+        console.log(this.userRole);
+      }
+    });
+  }
 }

@@ -1,5 +1,7 @@
 <mat-nav-list>
-  @for (link of links; track link) {
+  @for (link of links; track link) { @if(!(link.excludeRole?.toString() &&
+  link.excludeRole === userRole)) {
+
   <a
     [routerLink]="[link.link]"
     routerLinkActive="router-link-active"
@@ -10,5 +12,5 @@
       <span matListItemTitle>{{ link.title }}</span>
     </mat-list-item></a
   >
-  }
+  } }
 </mat-nav-list>
