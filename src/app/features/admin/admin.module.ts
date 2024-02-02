@@ -17,9 +17,16 @@ import { CompanyListComponent } from './components/company-list/company-list.com
 import { CompanyFormComponent } from './components/company-form/company-form.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
+import { RolePipe } from 'src/app/shared/pipes/role.pipe';
 
 @NgModule({
-  declarations: [AdminComponent, CompanyListComponent, CompanyFormComponent, UserListComponent, UserFormComponent],
+  declarations: [
+    AdminComponent,
+    CompanyListComponent,
+    CompanyFormComponent,
+    UserListComponent,
+    UserFormComponent,
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -33,6 +40,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
     MatSortModule,
     MatIconModule,
     MatFormFieldModule,
+    RolePipe,
   ],
 })
 export class AdminModule {}

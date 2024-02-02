@@ -1,96 +1,126 @@
 <mat-card class="company-create">
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="company-create__basic">
-      <h4 class="form-title">Company Info</h4>
-      <div class="form-row">
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Name" formControlName="name" id="name" />
-          @if (form.get('name')?.hasError('required')) {
-          <mat-error>Name is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
-      </div>
-      <mat-form-field appearance="outline">
-        <mat-label>VAT</mat-label>
-        <input matInput placeholder="VAT" formControlName="vat" id="vat" />
-      </mat-form-field>
-    </div>
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="admin">
+    <mat-tab label="Info"
+      ><div class="tab-content">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="company-create__basic">
+            <h4 class="form-title">Company Info</h4>
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input
+                  matInput
+                  placeholder="Name"
+                  formControlName="name"
+                  id="name"
+                />
+                @if (form.get('name')?.hasError('required')) {
+                <mat-error>Name is <strong>required</strong></mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline">
+              <mat-label>VAT</mat-label>
+              <input
+                matInput
+                placeholder="VAT"
+                formControlName="vat"
+                id="vat"
+              />
+            </mat-form-field>
+          </div>
 
-    <!-- ADRESS  -->
-    <div formGroupName="address" class="company-create__address">
-      <h4 class="form-title">Company Address</h4>
-      <div class="form-row">
-        <mat-form-field appearance="outline">
-          <mat-label>Address 1</mat-label>
-          <input
-            matInput
-            placeholder="Address 1"
-            formControlName="address1"
-            id="address1"
-          />
-          @if (form.get('address.address1')?.hasError('required')) {
-          <mat-error>Address1 is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
-      </div>
-      <div class="form-row">
-        <mat-form-field appearance="outline">
-          <mat-label>Address 2</mat-label>
-          <input
-            matInput
-            placeholder="Address 2"
-            formControlName="address2"
-            id="address2"
-          />
-        </mat-form-field>
-      </div>
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="w-50">
-          <mat-label>City</mat-label>
-          <input matInput placeholder="City" formControlName="city" id="city" />
-          @if (form.get('address.city')?.hasError('required')) {
-          <mat-error>City is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-50">
-          <mat-label>Postcode</mat-label>
-          <input
-            matInput
-            placeholder="Postcode"
-            formControlName="postcode"
-            id="postcode"
-          />
-          @if (form.get('address.postcode')?.hasError('required')) {
-          <mat-error>Postcode is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
-      </div>
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="w-50">
-          <mat-label>County</mat-label>
-          <input
-            matInput
-            placeholder="County"
-            formControlName="county"
-            id="county"
-          />
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-50">
-          <mat-label>Country</mat-label>
-          <input
-            matInput
-            placeholder="Country"
-            formControlName="country"
-            id="country"
-          />
-          @if (form.get('address.country')?.hasError('required')) {
-          <mat-error>Country is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
-      </div>
-    </div>
+          <!-- ADRESS  -->
+          <div formGroupName="address" class="company-create__address">
+            <h4 class="form-title">Company Address</h4>
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Address 1</mat-label>
+                <input
+                  matInput
+                  placeholder="Address 1"
+                  formControlName="address1"
+                  id="address1"
+                />
+                @if (form.get('address.address1')?.hasError('required')) {
+                <mat-error>Address1 is <strong>required</strong></mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Address 2</mat-label>
+                <input
+                  matInput
+                  placeholder="Address 2"
+                  formControlName="address2"
+                  id="address2"
+                />
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="w-50">
+                <mat-label>City</mat-label>
+                <input
+                  matInput
+                  placeholder="City"
+                  formControlName="city"
+                  id="city"
+                />
+                @if (form.get('address.city')?.hasError('required')) {
+                <mat-error>City is <strong>required</strong></mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-50">
+                <mat-label>Postcode</mat-label>
+                <input
+                  matInput
+                  placeholder="Postcode"
+                  formControlName="postcode"
+                  id="postcode"
+                />
+                @if (form.get('address.postcode')?.hasError('required')) {
+                <mat-error>Postcode is <strong>required</strong></mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="w-50">
+                <mat-label>County</mat-label>
+                <input
+                  matInput
+                  placeholder="County"
+                  formControlName="county"
+                  id="county"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-50">
+                <mat-label>Country</mat-label>
+                <input
+                  matInput
+                  placeholder="Country"
+                  formControlName="country"
+                  id="country"
+                />
+                @if (form.get('address.country')?.hasError('required')) {
+                <mat-error>Country is <strong>required</strong></mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
 
-    <button mat-flat-button color="primary" type="submit">Save</button>
-  </form>
+          <button mat-flat-button color="primary" type="submit">Save</button>
+        </form>
+      </div></mat-tab
+    >
+    @if (companyId) {
+    <mat-tab label="Users">
+      <mat-card class="company-users">
+        <div class="tab-content">
+          <app-user-list [companyId]="companyId"></app-user-list>
+        </div>
+      </mat-card>
+    </mat-tab>
+    }
+  </mat-tab-group>
 </mat-card>
