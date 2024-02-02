@@ -15,9 +15,11 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminRoutingModule } from './admin.routing';
 import { CompanyListComponent } from './components/company-list/company-list.component';
 import { CompanyFormComponent } from './components/company-form/company-form.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
 
 @NgModule({
-  declarations: [AdminComponent, CompanyListComponent, CompanyFormComponent],
+  declarations: [AdminComponent, CompanyListComponent, CompanyFormComponent, UserListComponent, UserFormComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
