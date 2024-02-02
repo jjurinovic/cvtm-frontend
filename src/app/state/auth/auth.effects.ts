@@ -19,6 +19,8 @@ import { Auth } from 'src/app/core/models/auth.model';
 import { UsersService } from 'src/app/features/users/services/users.service';
 import { selectCurrentUser } from './auth.selectors';
 import { Role } from 'src/app/features/users/enums/role.enum';
+import { AuthResponse } from 'src/app/core/models/auth-response.model';
+import { BaseError } from '../../shared/models/error';
 
 @Injectable()
 export class AuthEffects {
@@ -28,11 +30,11 @@ export class AuthEffects {
       map((action: any) => action.payload),
       exhaustMap((payload: Auth) =>
         this._auth.login(payload.username, payload.password).pipe(
-          map((data) => ({
+          map((data: AuthResponse) => ({
             type: AuthActionTypes.LoginSuccess,
             payload: data,
           })),
-          catchError(({ error }) =>
+          catchError(({ error }: { error: BaseError }) =>
             of({
               type: AuthActionTypes.LoginFail,
               payload: { error: error.detail },
@@ -47,9 +49,9 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActionTypes.LoginSuccess),
-        tap((action: any) => {
-          this._auth.setToken(action.payload.access_token);
-          this._auth.setRole(action.payload.role);
+        tap(({ payload }: { payload: AuthResponse }) => {
+          this._auth.setToken(payload.access_token);
+          this._auth.setRole(payload.user.role);
 
           if (this._auth.getRole() === Role.ROOT) {
             this.router.navigateByUrl('/admin');
@@ -65,7 +67,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActionTypes.Logout),
-        tap((action: any) => {
+        tap(() => {
           this._auth.removeToken();
           this.router.navigateByUrl('/login');
         })
@@ -88,7 +90,6 @@ export class AuthEffects {
             payload: data,
           })),
           catchError(({ error }) => {
-            console.log(error);
             return of({
               type: AuthActionTypes.CurrentUserFail,
               payload: { error: error.detail },

@@ -19,32 +19,35 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(LoginActions.login, (state) => ({ ...initialState, isLoading: true })),
-  on(LoginActions.loginSuccess, (state, { payload }) => ({
+  on(LoginActions.login, (state: State) => ({
+    ...initialState,
+    isLoading: true,
+  })),
+  on(LoginActions.loginSuccess, (state: State, { payload }) => ({
     ...state,
     isLoggedIn: true,
     isLoading: false,
     user: payload.user,
   })),
-  on(LoginActions.loginFailure, (state, { payload }) => ({
+  on(LoginActions.loginFailure, (state: State, { payload }) => ({
     ...state,
-    error: payload.error,
+    error: payload.detail,
     isLoading: false,
   })),
-  on(LoginActions.currentUser, (state) => ({
+  on(LoginActions.currentUser, (state: State) => ({
     ...state,
     isLoading: true,
   })),
-  on(LoginActions.currentUserSuccess, (state, { payload }) => ({
+  on(LoginActions.currentUserSuccess, (state: State, { payload }) => ({
     ...state,
     isLoggedIn: true,
     isLoading: false,
     user: payload,
   })),
-  on(LoginActions.currentUserFail, (state, { payload }) => ({
+  on(LoginActions.currentUserFail, (state: State, { payload }) => ({
     ...state,
     error: payload.error,
     isLoading: false,
   })),
-  on(LoginActions.logout, (state) => initialState)
+  on(LoginActions.logout, (state: State) => initialState)
 );
