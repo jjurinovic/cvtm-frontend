@@ -53,7 +53,27 @@ export class UsersService {
    * @param {HttpParams} params pagination, search
    * @returns {Observable<PageResponse<User>>} Return Observable with page response with list of users
    */
-  public getAll(params: HttpParams): Observable<PageResponse<User>> {
+  public getAll(
+    companyId: number,
+    page: number,
+    size: number,
+    sort?: string,
+    sortField?: string,
+    q?: string
+  ): Observable<PageResponse<User>> {
+    let params = new HttpParams();
+    params = params.append('company_id', companyId);
+    params = params.append('size', size);
+    params = params.append('page', page);
+
+    if (sort && sortField) {
+      params = params.append('sort', sort);
+      params = params.append('sort_field', sortField);
+    }
+
+    if (q) {
+      params = params.append('q', q);
+    }
     return this.http.get<PageResponse<User>>(this.baseUrl, { params });
   }
 }
