@@ -66,5 +66,15 @@ export const reducer = createReducer(
   on(CompanyActions.getCompanyByIdFail, (state) => ({
     ...state,
     isLoading: false,
+  })),
+  on(CompanyActions.updateCompany, (state) => ({ ...state, isLoading: true })),
+  on(CompanyActions.updateCompanySuccess, (state, { payload }) => ({
+    ...state,
+    currentCompany: payload,
+    isLoading: false,
+  })),
+  on(CompanyActions.updateCompanyFail, (state) => ({
+    ...state,
+    isLoading: false,
   }))
 );

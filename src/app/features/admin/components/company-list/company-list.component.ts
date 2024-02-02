@@ -114,6 +114,7 @@ export class CompanyListComponent implements OnInit, AfterViewInit {
     pageIndex: number;
     pageSize: number;
   }): void {
+    console.log('page change');
     this.page = pageIndex;
     this.size = pageSize;
     this.getData();

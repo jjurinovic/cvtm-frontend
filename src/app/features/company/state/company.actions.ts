@@ -12,6 +12,9 @@ export enum CompanyActionTypes {
   GetCompanyById = '[Company] Get Company by Id',
   GetCompanyByIdSuccess = '[Company] Get Company by Id Success',
   GetCompanyByIdFail = '[Company] Get Company by Id Fail',
+  UpdateCompany = '[Company] Update Company',
+  UpdateCompanySuccess = '[Company] Update Company Success',
+  UpdateCompanyFail = '[Company] Update Company Fail',
 }
 
 export const getAll = createAction(
@@ -40,6 +43,20 @@ export const createCompanySuccess = createAction(
 
 export const createCompanyFail = createAction(
   CompanyActionTypes.CreateCompanyFail
+);
+
+export const updateCompany = createAction(
+  CompanyActionTypes.UpdateCompany,
+  props<{ payload: Company }>()
+);
+
+export const updateCompanySuccess = createAction(
+  CompanyActionTypes.UpdateCompanySuccess,
+  props<{ payload: Company }>()
+);
+
+export const updateCompanyFail = createAction(
+  CompanyActionTypes.UpdateCompanyFail
 );
 
 export const getCompanyById = createAction(

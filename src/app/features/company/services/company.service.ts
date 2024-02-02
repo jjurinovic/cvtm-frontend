@@ -40,4 +40,13 @@ export class CompanyService {
   public createCompany(company: Company): Observable<Company> {
     return this.http.post<Company>(this.baseUrl, company);
   }
+
+  /**
+   * Update company with given data
+   * @param {Company} company
+   * @returns {Observable<Company>} Return observable with company data
+   */
+  public updateCompany(company: Company): Observable<Company> {
+    return this.http.put<Company>(this.baseUrl, company);
+  }
 }

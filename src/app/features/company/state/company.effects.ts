@@ -85,6 +85,37 @@ export class CompanyEffects {
     { dispatch: false }
   );
 
+  updateCompany$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CompanyActionTypes.UpdateCompany),
+      exhaustMap((payload) =>
+        this._company.updateCompany(payload).pipe(
+          map((data) => ({
+            type: CompanyActionTypes.UpdateCompanySuccess,
+            payload: data,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: CompanyActionTypes.UpdateCompanyFail,
+              payload: { error: error.detail },
+            })
+          )
+        )
+      )
+    )
+  );
+
+  updateCompanySuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CompanyActionTypes.UpdateCompanySuccess),
+        tap(() => {
+          this.router.navigateByUrl('/admin');
+        })
+      ),
+    { dispatch: false }
+  );
+
   getCompanyById$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CompanyActionTypes.GetCompanyById),

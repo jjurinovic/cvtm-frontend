@@ -50,7 +50,16 @@ export class CompanyFormComponent {
 
   public submit(): void {
     if (this.form.valid) {
-      this.store.dispatch(CompanyActions.createCompany(this.form.value));
+      if (this.companyId) {
+        this.store.dispatch(
+          CompanyActions.updateCompany({
+            ...this.form.value,
+            id: this.companyId,
+          })
+        );
+      } else {
+        this.store.dispatch(CompanyActions.createCompany(this.form.value));
+      }
     }
   }
 }
