@@ -16,6 +16,7 @@ const testUser: User = {
   email: 'abc@test.com',
   role: Role.ADMIN,
   company_id: 1,
+  address: null,
 };
 
 describe('AuthService', () => {
@@ -67,7 +68,7 @@ describe('AuthService', () => {
 
   it('should call login() and return when logged in', () => {
     service.login('test', 'pass').subscribe((res) => {
-      expect(res).toEqual(testUser);
+      expect(res).toEqual({ access_token: testToken, user: testUser });
     });
 
     const req = httpTestingController.expectOne({
@@ -75,6 +76,6 @@ describe('AuthService', () => {
       url: `${url}/login`,
     });
 
-    req.flush(testUser);
+    req.flush({ access_token: testToken, user: testUser });
   });
 });
