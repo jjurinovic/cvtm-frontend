@@ -6,7 +6,6 @@ export function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
     if (action.type === AuthActionTypes.Logout) {
       state = undefined;
     }
-    console.log(state);
 
     return reducer(state, action);
   };
