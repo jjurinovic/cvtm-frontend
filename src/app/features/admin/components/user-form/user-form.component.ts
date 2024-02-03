@@ -38,6 +38,7 @@ export class UserFormComponent {
 
     this.route.params.subscribe((params) => {
       this.userId = params['id'];
+      this.companyId = params['companyId'];
 
       if (this.userId) {
         this.store.dispatch(UserActions.getUserById({ payload: this.userId }));
@@ -46,7 +47,6 @@ export class UserFormComponent {
 
     this.store.select(selectUserData).subscribe((user) => {
       if (user) this.form.patchValue(user);
-      this.companyId = user?.company_id;
     });
   }
 
@@ -64,7 +64,7 @@ export class UserFormComponent {
         this.store.dispatch(
           UserActions.createUser({
             ...this.form.value,
-            role: Role[this.form.value.role],
+            role: this.form.value.role,
             returnUrl: `/admin/company/${this.companyId}/edit`,
           })
         );

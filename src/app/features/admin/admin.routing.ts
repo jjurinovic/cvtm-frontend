@@ -22,12 +22,12 @@ const routes: Routes = [
     title: 'Create Company',
   },
   {
-    path: 'user/:id/edit',
+    path: 'company/:companyId/user/:id/edit',
     component: UserFormComponent,
     title: 'Edit User',
   },
   {
-    path: 'user/create',
+    path: 'company/:companyId/user/create',
     component: UserFormComponent,
     title: 'Create User',
   },
