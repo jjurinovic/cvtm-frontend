@@ -65,6 +65,7 @@ export class UserFormComponent {
           UserActions.createUser({
             ...this.form.value,
             role: this.form.value.role,
+            company_id: this.companyId,
             returnUrl: `/admin/company/${this.companyId}/edit`,
           })
         );
