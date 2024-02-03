@@ -24,8 +24,8 @@ export class UserFormComponent {
   ) {
     this.form = this.fb.group({
       name: [null, Validators.required],
-      email: [null],
-      role: [Role[3]],
+      email: [null, [Validators.required, Validators.email]],
+      role: [Role.USER],
       address: this.fb.group({
         address1: [null, Validators.required],
         address2: [null],

@@ -20,6 +20,11 @@
             formControlName="email"
             id="email"
           />
+          @if (form.get('email')?.hasError('required')) {
+          <mat-error>Email is <strong>required</strong></mat-error>
+          } @else if (form.get('email')?.hasError('email')) {
+          <mat-error>Email is <strong>invalid</strong></mat-error>
+          }
         </mat-form-field>
       </div>
       <mat-form-field appearance="outline">
