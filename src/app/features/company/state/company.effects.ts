@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
 
-import {
-  CompanyActionTypes,
-  createCompany,
-  createCompanySuccess,
-} from './company.actions';
+import { CompanyActionTypes } from './company.actions';
 import { CompanyService } from '../services/company.service';
-import { Router } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Injectable()
 export class CompanyEffects {
@@ -79,6 +77,7 @@ export class CompanyEffects {
       this.actions$.pipe(
         ofType(CompanyActionTypes.CreateCompanySuccess),
         tap(() => {
+          this._snackbar.success('Company successfully created!', 10000);
           this.router.navigateByUrl('/admin');
         })
       ),
@@ -110,6 +109,7 @@ export class CompanyEffects {
       this.actions$.pipe(
         ofType(CompanyActionTypes.UpdateCompanySuccess),
         tap(() => {
+          this._snackbar.success('Company successfully updated!', 10000);
           this.router.navigateByUrl('/admin');
         })
       ),
@@ -155,6 +155,7 @@ export class CompanyEffects {
   constructor(
     private actions$: Actions,
     private _company: CompanyService,
-    private router: Router
+    private router: Router,
+    private _snackbar: SnackbarService
   ) {}
 }

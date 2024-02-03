@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
 
-import {
-  UserActionTypes,
-  getAllUsersFail,
-  updateUser,
-  getUserById,
-} from './users.actions';
+import { UserActionTypes } from './users.actions';
 import { UsersService } from '../services/users.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Injectable()
 export class UserEffects {
@@ -74,7 +70,7 @@ export class UserEffects {
       this.actions$.pipe(
         ofType(UserActionTypes.CreateUserSuccess),
         tap((data: any) => {
-          console.log(data);
+          this._snackbar.success('User successfully created!', 10000);
           this.router.navigateByUrl(data.payload.returnUrl);
         })
       ),
@@ -106,6 +102,7 @@ export class UserEffects {
       this.actions$.pipe(
         ofType(UserActionTypes.UpdateUserSuccess),
         map((data: any) => {
+          this._snackbar.success('User successfully updated!', 10000);
           this.router.navigateByUrl(data.payload.returnUrl);
         })
       ),
@@ -151,6 +148,7 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private _user: UsersService,
-    private router: Router
+    private router: Router,
+    private _snackbar: SnackbarService
   ) {}
 }
