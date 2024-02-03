@@ -21,7 +21,7 @@ export class AdminComponent {
   changeTab(index: number): void {
     this.selectedTabIndex = index;
     this.store.dispatch(
-      AdminActions.setTab({ payload: this.selectedTabIndex })
+      AdminActions.setAdminTab({ payload: this.selectedTabIndex })
     );
   }
 }

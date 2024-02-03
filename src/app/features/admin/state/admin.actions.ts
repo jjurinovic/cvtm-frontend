@@ -1,10 +1,16 @@
 import { createAction, props } from '@ngrx/store';
 
 export enum AdminActionTypes {
-  SetTab = '[Admin] Set Tab index',
+  SetAdminTab = '[Admin] Set Admin Tab index',
+  SetAdminCompanyTab = '[Admin] Set Admin Company Tab index',
 }
 
-export const setTab = createAction(
-  AdminActionTypes.SetTab,
+export const setAdminTab = createAction(
+  AdminActionTypes.SetAdminTab,
+  props<{ payload: number }>()
+);
+
+export const setAdminCompanyTab = createAction(
+  AdminActionTypes.SetAdminCompanyTab,
   props<{ payload: number }>()
 );

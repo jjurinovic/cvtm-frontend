@@ -1,5 +1,11 @@
 <mat-card class="company-create">
-  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="admin">
+  <mat-tab-group
+    [selectedIndex]="selectedTabIndex"
+    (selectedIndexChange)="changeTab($event)"
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    class="admin"
+  >
     <mat-tab label="Info"
       ><div class="tab-content">
         <form [formGroup]="form" (ngSubmit)="submit()">

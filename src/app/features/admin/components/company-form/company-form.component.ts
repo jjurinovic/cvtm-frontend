@@ -5,6 +5,8 @@ import { Store } from '@ngrx/store';
 
 import * as CompanyActions from '../../../company/state/company.actions';
 import { selectCurrentCompany } from 'src/app/features/company/state/company.selectors';
+import { selectAdminCompanyTabIndex } from '../../state/admin.selectors';
+import { setAdminCompanyTab } from '../../state/admin.actions';
 
 @Component({
   selector: 'app-company-form',
@@ -14,6 +16,7 @@ import { selectCurrentCompany } from 'src/app/features/company/state/company.sel
 export class CompanyFormComponent {
   form: FormGroup;
   companyId: number | null = null;
+  selectedTabIndex: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -46,6 +49,10 @@ export class CompanyFormComponent {
     this.store.select(selectCurrentCompany).subscribe((company) => {
       if (company) this.form.patchValue(company);
     });
+
+    this.store
+      .select(selectAdminCompanyTabIndex)
+      .subscribe((index) => (this.selectedTabIndex = index));
   }
 
   public submit(): void {
@@ -61,5 +68,10 @@ export class CompanyFormComponent {
         this.store.dispatch(CompanyActions.createCompany(this.form.value));
       }
     }
+  }
+
+  public changeTab(index: number): void {
+    this.selectedTabIndex = index;
+    this.store.dispatch(setAdminCompanyTab({ payload: this.selectedTabIndex }));
   }
 }

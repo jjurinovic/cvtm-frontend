@@ -8,3 +8,8 @@ export const selectAdminTabIndex = createSelector(
   selectAdmin,
   (state) => state.adminTabIndex
 );
+
+export const selectAdminCompanyTabIndex = createSelector(
+  selectAdmin,
+  (state) => state.companyTabIndex
+);
