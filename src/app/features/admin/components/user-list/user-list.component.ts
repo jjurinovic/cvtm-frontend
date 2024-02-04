@@ -18,7 +18,6 @@ import {
   selectSortUsers,
   selectTotalUsers,
 } from 'src/app/features/users/state/user.selectors';
-import { selectTotalCompanies } from '../../../company/state/company.selectors';
 import * as UserActions from '../../../users/state/users.actions';
 import { SortDirection } from '@angular/material/sort';
 
