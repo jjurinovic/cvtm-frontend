@@ -54,7 +54,7 @@ export const reducer = createReducer(
   })),
   on(UserActions.updateUserFail, (state, { payload }) => ({
     ...state,
-    error: payload.error,
+    error: payload.detail,
     isLoading: false,
   })),
   on(UserActions.getUserById, (state) => ({
