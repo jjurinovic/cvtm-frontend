@@ -15,7 +15,8 @@ import { logout } from 'src/app/state/auth/auth.actions';
 
 const testUser: User = {
   id: 2,
-  name: 'test name',
+  first_name: 'test first name',
+  last_name: 'test last name',
   email: 'abc@test.com',
   role: Role.ADMIN,
   company_id: 1,

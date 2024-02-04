@@ -22,7 +22,8 @@ describe('Login Success', () => {
     const payload: AuthResponse = {
       access_token: 'token',
       user: {
-        name: 'test user',
+        first_name: 'test first name',
+        last_name: 'test last name',
         company_id: 1,
         email: 'test@email.com',
         id: 999,
@@ -73,7 +74,8 @@ describe('Current User', () => {
 describe('Current User Success', () => {
   it('should create an action', () => {
     const payload: User = {
-      name: 'test user',
+      first_name: 'test first name',
+      last_name: 'test last name',
       company_id: 1,
       email: 'test@email.com',
       id: 999,

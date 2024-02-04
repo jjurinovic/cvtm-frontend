@@ -2,7 +2,8 @@ import * as fromReducer from './auth.reducers';
 import * as AuthActions from './auth.actions';
 
 const testUser = {
-  name: 'test user',
+  first_name: 'test first name',
+  last_name: 'test last name',
   company_id: 1,
   email: 'test@email.com',
   id: 999,
