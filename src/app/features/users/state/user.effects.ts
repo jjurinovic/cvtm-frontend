@@ -34,7 +34,7 @@ export class UserEffects {
             catchError(({ error }) =>
               of({
                 type: UserActionTypes.GetAllUsersFail,
-                payload: { error: error.detail },
+                payload: error,
               })
             )
           )
@@ -59,7 +59,7 @@ export class UserEffects {
           catchError(({ error }: { error: BaseError }) =>
             of({
               type: UserActionTypes.CreateUserFail,
-              payload: { error: error.detail },
+              payload: error,
             })
           )
         )
@@ -91,7 +91,7 @@ export class UserEffects {
           catchError(({ error }) =>
             of({
               type: UserActionTypes.UpdateUserFail,
-              payload: { error: error.detail },
+              payload: error,
             })
           )
         )
@@ -123,7 +123,7 @@ export class UserEffects {
           catchError(({ error }) =>
             of({
               type: UserActionTypes.GetUserByIdFail,
-              payload: { error: error.detail },
+              payload: error,
             })
           )
         )
