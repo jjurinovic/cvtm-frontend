@@ -104,7 +104,7 @@ describe('User Selectors', () => {
     expect(selectError.projector(state)).toEqual('test error');
   });
 
-  it('should selectIsLoading return error', () => {
+  it('should selectIsLoading return false', () => {
     expect(selectIsLoading.projector(state)).toBeDefined();
     expect(selectIsLoading.projector(state)).toBeFalse();
   });
