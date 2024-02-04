@@ -87,5 +87,9 @@ export const reducer = createReducer(
     ...state,
     error: payload.error,
     isLoading: false,
+  })),
+  on(UserActions.resetUserForm, (state) => ({
+    ...state,
+    user: null,
   }))
 );

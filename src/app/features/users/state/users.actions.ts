@@ -16,6 +16,7 @@ export enum UserActionTypes {
   GetAllUsers = '[User] Get all Users',
   GetAllUsersSuccess = '[User] Get all Users Success',
   GetAllUsersFail = '[User] Get all Users Fail',
+  ResetUserForm = '[User] Reset user form',
 }
 
 export const createUser = createAction(
@@ -77,3 +78,5 @@ export const getAllUsersFail = createAction(
   UserActionTypes.GetAllUsersFail,
   props<{ payload: any }>()
 );
+
+export const resetUserForm = createAction(UserActionTypes.ResetUserForm);

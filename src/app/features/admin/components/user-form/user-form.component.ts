@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -12,7 +12,7 @@ import { selectUserData } from 'src/app/features/users/state/user.selectors';
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss',
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnDestroy {
   form: FormGroup;
   userId: number | null = null;
   companyId?: number;
@@ -49,6 +49,10 @@ export class UserFormComponent {
     this.store.select(selectUserData).subscribe((user) => {
       if (user) this.form.patchValue(user);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(UserActions.resetUserForm());
   }
 
   public submit(): void {
