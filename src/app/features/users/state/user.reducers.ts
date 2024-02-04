@@ -41,7 +41,7 @@ export const reducer = createReducer(
   })),
   on(UserActions.createUserFail, (state, { payload }) => ({
     ...state,
-    error: payload.error,
+    error: payload.detail,
     isLoading: false,
   })),
   on(UserActions.updateUser, (state) => ({
@@ -68,7 +68,7 @@ export const reducer = createReducer(
   })),
   on(UserActions.getUserByIdFail, (state, { payload }) => ({
     ...state,
-    error: payload.error,
+    error: payload.detail,
     isLoading: false,
   })),
   on(UserActions.getAllUsers, (state) => ({ ...state, isLoading: true })),
@@ -85,7 +85,7 @@ export const reducer = createReducer(
   })),
   on(UserActions.getAllUsersFail, (state, { payload }) => ({
     ...state,
-    error: payload.error,
+    error: payload.detail,
     isLoading: false,
   })),
   on(UserActions.resetUserForm, (state) => ({

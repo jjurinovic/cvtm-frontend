@@ -8,6 +8,8 @@ import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
 import { UserActionTypes } from './users.actions';
 import { UsersService } from '../services/users.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { UserWithReturnUrl } from '../models/user.model';
+import { BaseError } from 'src/app/shared/models/error';
 
 @Injectable()
 export class UserEffects {
@@ -48,13 +50,13 @@ export class UserEffects {
   createUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActionTypes.CreateUser),
-      exhaustMap((payload: any) =>
+      exhaustMap((payload: UserWithReturnUrl) =>
         this._user.createUser(payload).pipe(
           map((data) => ({
             type: UserActionTypes.CreateUserSuccess,
             payload: { ...data, returnUrl: payload.returnUrl },
           })),
-          catchError(({ error }) =>
+          catchError(({ error }: { error: BaseError }) =>
             of({
               type: UserActionTypes.CreateUserFail,
               payload: { error: error.detail },
@@ -69,9 +71,9 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(UserActionTypes.CreateUserSuccess),
-        tap((data: any) => {
+        tap(({ payload }: { payload: UserWithReturnUrl }) => {
           this._snackbar.success('User successfully created!', 10000);
-          this.router.navigateByUrl(data.payload.returnUrl);
+          this.router.navigateByUrl(payload.returnUrl);
         })
       ),
     { dispatch: false }

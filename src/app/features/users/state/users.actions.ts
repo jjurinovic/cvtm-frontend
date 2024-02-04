@@ -1,7 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 
-import { User } from '../models/user.model';
+import { User, UserWithReturnUrl } from '../models/user.model';
 import { PageResponse } from 'src/app/shared/models/page-response';
+import { BaseError } from 'src/app/shared/models/error';
+import { UsersRequest } from '../models/users-request';
 
 export enum UserActionTypes {
   CreateUser = '[User] Create New User',
@@ -21,27 +23,27 @@ export enum UserActionTypes {
 
 export const createUser = createAction(
   UserActionTypes.CreateUser,
-  props<{ payload: any }>()
+  props<{ payload: UserWithReturnUrl }>()
 );
 
 export const createUserSuccess = createAction(
   UserActionTypes.CreateUserSuccess,
-  props<{ payload: any }>()
+  props<{ payload: UserWithReturnUrl }>()
 );
 
 export const createUserFail = createAction(
   UserActionTypes.CreateUserFail,
-  props<{ payload: any }>()
+  props<{ payload: BaseError }>()
 );
 
 export const updateUser = createAction(
   UserActionTypes.UpdateUser,
-  props<{ payload: User }>()
+  props<{ payload: UserWithReturnUrl }>()
 );
 
 export const updateUserSuccess = createAction(
   UserActionTypes.UpdateUserSuccess,
-  props<{ payload: any }>()
+  props<{ payload: UserWithReturnUrl }>()
 );
 
 export const updateUserFail = createAction(
@@ -61,12 +63,12 @@ export const getUserByIdSuccess = createAction(
 
 export const getUserByIdFail = createAction(
   UserActionTypes.GetUserByIdFail,
-  props<{ payload: any }>()
+  props<{ payload: BaseError }>()
 );
 
 export const getAllUsers = createAction(
   UserActionTypes.GetAllUsers,
-  props<{ payload: any }>()
+  props<{ payload: UsersRequest }>()
 );
 
 export const getAllUsersSuccess = createAction(
@@ -76,7 +78,7 @@ export const getAllUsersSuccess = createAction(
 
 export const getAllUsersFail = createAction(
   UserActionTypes.GetAllUsersFail,
-  props<{ payload: any }>()
+  props<{ payload: BaseError }>()
 );
 
 export const resetUserForm = createAction(UserActionTypes.ResetUserForm);
