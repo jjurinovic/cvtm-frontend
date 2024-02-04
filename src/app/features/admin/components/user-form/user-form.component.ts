@@ -23,7 +23,8 @@ export class UserFormComponent {
     private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
-      name: [null, Validators.required],
+      first_name: [null, Validators.required],
+      last_name: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       role: [Role.USER],
       address: this.fb.group({

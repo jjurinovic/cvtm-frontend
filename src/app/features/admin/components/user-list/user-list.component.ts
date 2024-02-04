@@ -28,7 +28,14 @@ import { SortDirection } from '@angular/material/sort';
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
-  displayedColumns: string[] = ['name', 'email', 'role', 'address', 'action'];
+  displayedColumns: string[] = [
+    'last_name',
+    'first_name',
+    'email',
+    'role',
+    'address',
+    'action',
+  ];
   users: User[] = [];
   total: number | null = 0;
   page: number = 1;

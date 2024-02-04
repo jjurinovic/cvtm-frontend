@@ -3,13 +3,34 @@
     <div class="company-create__basic">
       <h4 class="form-title">User Info</h4>
       <div class="form-row">
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Name" formControlName="name" id="name" />
-          @if (form.get('name')?.hasError('required')) {
-          <mat-error>Name is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
+        <div class="w-50">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              placeholder="First Name"
+              formControlName="first_name"
+              id="first_name"
+            />
+            @if (form.get('first_name')?.hasError('required')) {
+            <mat-error>First Name is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="w-50">
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input
+              matInput
+              placeholder="Last Name"
+              formControlName="last_name"
+              id="last_name"
+            />
+            @if (form.get('last_name')?.hasError('required')) {
+            <mat-error>Last Name is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
       </div>
       <div class="form-row">
         <mat-form-field appearance="outline">
