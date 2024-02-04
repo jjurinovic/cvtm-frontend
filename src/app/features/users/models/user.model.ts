@@ -13,3 +13,7 @@ export interface User {
   updated_date?: string;
   password_changed?: boolean;
 }
+
+export interface UserWithReturnUrl extends User {
+  returnUrl: string;
+}
