@@ -81,7 +81,9 @@ describe('CompanyListComponent', () => {
     fixture.detectChanges();
     const rows = fixture.debugElement.queryAll(By.css('tbody tr'));
     expect(table).toBeTruthy();
-    expect(rows.length).toEqual(0);
+
+    // one row is for no data row
+    expect(rows.length).toEqual(1);
   });
 
   it('should render table with 2 rows', () => {
