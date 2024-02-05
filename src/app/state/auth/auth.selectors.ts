@@ -16,5 +16,5 @@ export const selectIsLoading = createSelector(
 
 export const selectCurrentUser = createSelector(
   selectAuth,
-  (state) => state.user
+  (state) => state?.user
 );
