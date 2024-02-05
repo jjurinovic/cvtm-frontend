@@ -6,6 +6,7 @@ import { BaseComponent } from './core/layout/base/base.component';
 import { authGuard } from './guards/auth.guard';
 import { roleGuard } from './guards/role.guard';
 import { Role } from './features/users/enums/role.enum';
+import { ProfileComponent } from './general/profile/profile.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, title: 'Login' },
@@ -15,6 +16,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     canActivateChild: [authGuard],
     children: [
+      { path: 'profile', component: ProfileComponent, title: 'My Profile' },
       {
         path: '',
         loadChildren: () =>

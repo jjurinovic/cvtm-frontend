@@ -4,7 +4,9 @@
   </button>
   <span>CVTM</span>
   <span class="example-spacer"></span>
-  <span>{{ currentUser?.last_name + " " + currentUser?.first_name }}</span>
+  <a routerLink="/profile">
+    <span>{{ currentUser?.last_name + " " + currentUser?.first_name }}</span>
+  </a>
   <button
     class="header-logout"
     mat-icon-button
