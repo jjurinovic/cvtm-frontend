@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from '../core/services/auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
+import { AuthService } from '../core/services/auth.service';
 import { Role } from '../features/users/enums/role.enum';
 import { roleGuard } from './role.guard';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 describe('RoleGuard', () => {
   let service: AuthService;
