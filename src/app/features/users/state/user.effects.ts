@@ -105,7 +105,9 @@ export class UserEffects {
         ofType(UserActionTypes.UpdateUserSuccess),
         tap((data: any) => {
           this._snackbar.success('User successfully updated!', 10000);
-          this.router.navigateByUrl(data.payload.returnUrl);
+          if (data.payload.returnUrl) {
+            this.router.navigateByUrl(data.payload.returnUrl);
+          }
         })
       ),
     { dispatch: false }

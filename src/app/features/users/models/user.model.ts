@@ -1,5 +1,6 @@
 import { Address } from 'src/app/shared/models/address';
 import { Role } from '../enums/role.enum';
+import { Company } from '../../company/models/company.model';
 
 export interface User {
   id: number;
@@ -8,6 +9,7 @@ export interface User {
   email: string;
   role: Role;
   company_id: number;
+  company?: Company | null;
   address?: Address | null;
   created_date?: string;
   updated_date?: string;

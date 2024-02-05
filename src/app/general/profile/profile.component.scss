@@ -1,0 +1,23 @@
+.profile-form {
+  padding: 25px;
+  max-width: 50%;
+
+  .profile-row {
+    margin-bottom: 25px;
+    .profile-row-title {
+      margin-right: 15px;
+    }
+
+    .profile-row-value {
+      font-weight: bold;
+    }
+  }
+
+  @media screen and (max-width: 1400px) {
+    max-width: 75%;
+  }
+
+  @media screen and (max-width: 992px) {
+    max-width: 100%;
+  }
+}
