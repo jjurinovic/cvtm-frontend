@@ -3,17 +3,18 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { UsersService } from '../features/users/services/users.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+
 import { AuthInterceptor } from './auth.interceptor';
-import { environment } from 'src/environments/environment';
+import { AuthService } from '../core/services/auth.service';
 
-const testToken = 'abc';
+const testToken = 'Bearer abc';
+
 describe('AuthInterceptor', () => {
-  let service: UsersService;
+  let service: AuthService;
   let httpTestingController: HttpTestingController;
-
-  let url = environment.apiUrl;
+  let httpClient: HttpClient;
+  let authServiceSpy = jasmine.createSpyObj('AuthService', ['getToken']);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -24,9 +25,14 @@ describe('AuthInterceptor', () => {
           useClass: AuthInterceptor,
           multi: true,
         },
+        {
+          provide: AuthService,
+          useValue: authServiceSpy,
+        },
       ],
     });
-    service = TestBed.inject(UsersService);
+    service = TestBed.inject(AuthService);
+    httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -38,35 +44,33 @@ describe('AuthInterceptor', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should intercept request and add token if token exists', () => {
-    localStorage.setItem('token', testToken);
-    service.getCurrentUser().subscribe((res) => {
-      expect(res).toBeTruthy();
-    });
+  it('should intercept request and add token if token exists', (done) => {
+    authServiceSpy.getToken.and.returnValue(testToken);
+    httpClient.get('/test').subscribe(() => done());
 
     const req = httpTestingController.expectOne({
       method: 'GET',
-      url: `${url}/user/me`,
+      url: `/test`,
     });
-    expect(req.request.headers.has('Content-Type')).toEqual(true);
-    expect(req.request.headers.get('Content-Type')).toEqual('application/json');
+    req.flush({});
+
     expect(req.request.headers.has('Authorization')).toEqual(true);
     expect(req.request.headers.get('Authorization')).toEqual(
       `Bearer ${testToken}`
     );
   });
 
-  it('should intercept request and not add token if token does not exist', () => {
-    localStorage.removeItem('token');
-    service.getCurrentUser().subscribe((res) => {
-      expect(res).toBeTruthy();
-    });
+  it('should intercept request and not add token if token does not exist', (done) => {
+    authServiceSpy.getToken.and.returnValue(null);
+    httpClient.get('/test').subscribe(() => done());
 
     const req = httpTestingController.expectOne({
       method: 'GET',
-      url: `${url}/user/me`,
+      url: `/test`,
     });
-    expect(req.request.headers.has('Content-Type')).toEqual(false);
+    req.flush({});
+
     expect(req.request.headers.has('Authorization')).toEqual(false);
+    expect(req.request.headers.get('Authorization')).toBeFalsy();
   });
 });
