@@ -54,7 +54,7 @@ export class UserEffects {
         this._user.createUser(payload).pipe(
           map((data) => ({
             type: UserActionTypes.CreateUserSuccess,
-            payload: { ...data, returnUrl: payload.returnUrl },
+            payload: data,
           })),
           catchError(({ error }: { error: BaseError }) =>
             of({
@@ -86,7 +86,7 @@ export class UserEffects {
         this._user.updateUser(payload).pipe(
           map((data) => ({
             type: UserActionTypes.UpdateUserSuccess,
-            payload: { ...data, returnUrl: payload.returnUrl },
+            payload: data,
           })),
           catchError(({ error }) =>
             of({
@@ -103,7 +103,7 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(UserActionTypes.UpdateUserSuccess),
-        map((data: any) => {
+        tap((data: any) => {
           this._snackbar.success('User successfully updated!', 10000);
           this.router.navigateByUrl(data.payload.returnUrl);
         })
