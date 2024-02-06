@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MatCardModule } from '@angular/material/card';
@@ -16,7 +17,12 @@ describe('ProfileComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ProfileComponent],
       providers: [provideMockStore()],
-      imports: [MatCardModule, MatInputModule, ReactiveFormsModule],
+      imports: [
+        MatCardModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
