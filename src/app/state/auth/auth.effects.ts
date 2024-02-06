@@ -12,6 +12,7 @@ import {
   filter,
   switchMap,
 } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 import { AuthActionTypes } from './auth.actions';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -69,6 +70,7 @@ export class AuthEffects {
         ofType(AuthActionTypes.Logout),
         tap(() => {
           this._auth.removeToken();
+          this.dialog.closeAll();
           this.router.navigateByUrl('/login');
         })
       ),
@@ -116,6 +118,7 @@ export class AuthEffects {
     private _auth: AuthService,
     private router: Router,
     private _users: UsersService,
-    private store: Store
+    private store: Store,
+    private dialog: MatDialog
   ) {}
 }
