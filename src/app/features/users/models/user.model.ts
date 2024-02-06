@@ -17,6 +17,6 @@ export interface User {
 }
 
 export interface UserWithLocalProps extends User {
-  returnUrl?: string;
-  myId?: number;
+  returnUrl: string | null;
+  myId?: number | null;
 }

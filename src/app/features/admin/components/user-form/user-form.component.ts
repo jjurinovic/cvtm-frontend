@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import * as UserActions from '../../../users/state/users.actions';
 import { selectUserData } from 'src/app/features/users/state/user.selectors';
+import { User } from 'src/app/features/users/models/user.model';
+import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 
 @Component({
   selector: 'app-user-form',
@@ -16,6 +18,7 @@ export class UserFormComponent implements OnDestroy {
   form: FormGroup;
   userId: number | null = null;
   companyId?: number;
+  currentUser!: User;
 
   constructor(
     private fb: FormBuilder,
@@ -49,6 +52,10 @@ export class UserFormComponent implements OnDestroy {
     this.store.select(selectUserData).subscribe((user) => {
       if (user) this.form.patchValue(user);
     });
+
+    this.store
+      .select(selectCurrentUser)
+      .subscribe((user) => (this.currentUser = user));
   }
 
   ngOnDestroy(): void {
@@ -60,18 +67,23 @@ export class UserFormComponent implements OnDestroy {
       if (this.userId) {
         this.store.dispatch(
           UserActions.updateUser({
-            ...this.form.value,
-            id: this.userId,
-            returnUrl: `/admin/company/${this.companyId}/edit`,
+            payload: {
+              ...this.form.value,
+              id: this.userId,
+              returnUrl: `/admin/company/${this.companyId}/edit`,
+              myId: this.currentUser.id,
+            },
           })
         );
       } else {
         this.store.dispatch(
           UserActions.createUser({
-            ...this.form.value,
-            role: this.form.value.role,
-            company_id: this.companyId,
-            returnUrl: `/admin/company/${this.companyId}/edit`,
+            payload: {
+              ...this.form.value,
+              role: this.form.value.role,
+              company_id: this.companyId,
+              returnUrl: `/admin/company/${this.companyId}/edit`,
+            },
           })
         );
       }

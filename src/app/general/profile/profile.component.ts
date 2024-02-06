@@ -18,6 +18,7 @@ import { PasswordChangeDialogComponent } from '../password-change-dialog/passwor
 export class ProfileComponent {
   user!: User;
   form!: FormGroup;
+  currentUser!: User;
 
   constructor(
     private fb: FormBuilder,
@@ -43,15 +44,22 @@ export class ProfileComponent {
         });
       }
     });
+
+    this.store
+      .select(selectCurrentUser)
+      .subscribe((user) => (this.currentUser = user));
   }
 
   public submit(): void {
     if (this.form.valid) {
       this.store.dispatch(
         UserActions.updateUser({
-          ...this.form.value,
-          id: this.user.id,
-          company_id: this.user.company_id,
+          payload: {
+            ...this.form.value,
+            id: this.user.id,
+            company_id: this.user.company_id,
+            myId: this.currentUser.id,
+          },
         })
       );
     }

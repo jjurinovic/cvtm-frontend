@@ -32,6 +32,7 @@ import {
 } from './users.actions';
 import { PasswordChange } from '../models/password-change.model';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { currentUser } from 'src/app/state/auth/auth.actions';
 
 const testUser: User = {
   first_name: 'test user',
@@ -45,6 +46,7 @@ const testUser: User = {
 const userWithLocalProps: UserWithLocalProps = {
   ...testUser,
   returnUrl: '/test',
+  myId: 1,
 };
 
 const testUsersRequest: UsersRequest = {
@@ -207,15 +209,40 @@ describe('UserEffects', () => {
     });
   });
 
-  it('should call updateUserSuccess$ and return call snackbar and navigateByUrl', (done) => {
+  it('should call updateUserSuccess$ and call snackbar and navigateByUrl', (done) => {
     const payload: UserWithLocalProps = userWithLocalProps;
     actions$ = of(updateUserSuccess({ payload }));
 
-    effects.updateUserSuccess$.subscribe(() => done());
+    const subscription = effects.updateUserSuccess$.subscribe(
+      (resultAction) => {
+        // Provjera da se snackbar poziva s odgovarajućim porukama
+        expect(snackService.success).toHaveBeenCalledWith(
+          'User successfully updated!',
+          10000
+        );
 
-    expect(router.navigateByUrl).toHaveBeenCalledWith(
-      payload.returnUrl as string
+        expect(router.navigateByUrl).toHaveBeenCalledWith(
+          payload.returnUrl as string
+        );
+
+        if (payload.id === payload.myId) {
+          expect(resultAction).toEqual(currentUser());
+        }
+
+        subscription.unsubscribe();
+        done();
+      }
     );
+
+    actions$.subscribe({
+      complete: () => {
+        expect(subscription.closed).toBeTruthy();
+        done();
+      },
+      error: (err) => {
+        done.fail(err);
+      },
+    });
   });
 
   it('should call getUserById$ and return response', (done) => {

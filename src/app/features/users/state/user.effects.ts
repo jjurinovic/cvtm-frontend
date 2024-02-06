@@ -3,7 +3,14 @@ import { Router } from '@angular/router';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, exhaustMap, catchError, tap, switchMap } from 'rxjs/operators';
+import {
+  map,
+  exhaustMap,
+  catchError,
+  tap,
+  switchMap,
+  filter,
+} from 'rxjs/operators';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -12,7 +19,7 @@ import { UsersService } from '../services/users.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserWithLocalProps } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error';
-import { AuthActionTypes } from 'src/app/state/auth/auth.actions';
+import { AuthActionTypes, currentUser } from 'src/app/state/auth/auth.actions';
 
 @Injectable()
 export class UserEffects {
@@ -53,11 +60,11 @@ export class UserEffects {
   createUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActionTypes.CreateUser),
-      exhaustMap((payload: UserWithLocalProps) =>
+      exhaustMap(({ payload }: any) =>
         this._user.createUser(payload).pipe(
           map((data) => ({
             type: UserActionTypes.CreateUserSuccess,
-            payload: data,
+            payload: { ...data, returnUrl: payload.returnUrl },
           })),
           catchError(({ error }: { error: BaseError }) =>
             of({
@@ -85,12 +92,18 @@ export class UserEffects {
   updateUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActionTypes.UpdateUser),
-      exhaustMap((payload: any) =>
+      exhaustMap(({ payload }: any) =>
         this._user.updateUser(payload).pipe(
-          map((data) => ({
-            type: UserActionTypes.UpdateUserSuccess,
-            payload: data,
-          })),
+          map((data) => {
+            return {
+              type: UserActionTypes.UpdateUserSuccess,
+              payload: {
+                ...data,
+                myId: payload.myId,
+                returnUrl: payload.returnUrl,
+              },
+            };
+          }),
           catchError(({ error }) =>
             of({
               type: UserActionTypes.UpdateUserFail,
@@ -105,17 +118,24 @@ export class UserEffects {
   updateUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActionTypes.UpdateUserSuccess),
-      tap((data: any) => {
+      map((action: any) => {
+        const { payload } = action;
         this._snackbar.success('User successfully updated!', 10000);
-        if (data.payload.returnUrl) {
-          this.router.navigateByUrl(data.payload.returnUrl);
+
+        if (payload.returnUrl) {
+          this.router.navigateByUrl(payload.returnUrl);
+        }
+
+        const isCurrentUser = payload.id === payload.myId;
+
+        if (isCurrentUser) {
+          return currentUser();
+        } else {
+          return { type: 'NO_ACTION' };
         }
       }),
-      switchMap(() =>
-        of({
-          type: AuthActionTypes.CurrentUser,
-        })
-      )
+      filter((action) => action.type !== 'NO_ACTION'),
+      switchMap((action) => of(action))
     )
   );
 
