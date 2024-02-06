@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { User, UserWithReturnUrl } from '../models/user.model';
+import { User, UserWithLocalProps } from '../models/user.model';
 import { PageResponse } from 'src/app/shared/models/page-response';
 import { BaseError } from 'src/app/shared/models/error';
 import { UsersRequest } from '../models/users-request';
@@ -27,12 +27,12 @@ export enum UserActionTypes {
 
 export const createUser = createAction(
   UserActionTypes.CreateUser,
-  props<{ payload: UserWithReturnUrl }>()
+  props<{ payload: UserWithLocalProps }>()
 );
 
 export const createUserSuccess = createAction(
   UserActionTypes.CreateUserSuccess,
-  props<{ payload: UserWithReturnUrl }>()
+  props<{ payload: UserWithLocalProps }>()
 );
 
 export const createUserFail = createAction(
@@ -42,12 +42,12 @@ export const createUserFail = createAction(
 
 export const updateUser = createAction(
   UserActionTypes.UpdateUser,
-  props<{ payload: UserWithReturnUrl }>()
+  props<{ payload: UserWithLocalProps }>()
 );
 
 export const updateUserSuccess = createAction(
   UserActionTypes.UpdateUserSuccess,
-  props<{ payload: UserWithReturnUrl }>()
+  props<{ payload: UserWithLocalProps }>()
 );
 
 export const updateUserFail = createAction(

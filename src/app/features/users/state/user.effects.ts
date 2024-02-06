@@ -3,15 +3,16 @@ import { Router } from '@angular/router';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
+import { map, exhaustMap, catchError, tap, switchMap } from 'rxjs/operators';
 
 import { MatDialog } from '@angular/material/dialog';
 
 import { UserActionTypes } from './users.actions';
 import { UsersService } from '../services/users.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { UserWithReturnUrl } from '../models/user.model';
+import { UserWithLocalProps } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error';
+import { AuthActionTypes } from 'src/app/state/auth/auth.actions';
 
 @Injectable()
 export class UserEffects {
@@ -52,7 +53,7 @@ export class UserEffects {
   createUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActionTypes.CreateUser),
-      exhaustMap((payload: UserWithReturnUrl) =>
+      exhaustMap((payload: UserWithLocalProps) =>
         this._user.createUser(payload).pipe(
           map((data) => ({
             type: UserActionTypes.CreateUserSuccess,
@@ -73,9 +74,9 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(UserActionTypes.CreateUserSuccess),
-        tap(({ payload }: { payload: UserWithReturnUrl }) => {
+        tap(({ payload }: { payload: UserWithLocalProps }) => {
           this._snackbar.success('User successfully created!', 10000);
-          this.router.navigateByUrl(payload.returnUrl);
+          if (payload.returnUrl) this.router.navigateByUrl(payload.returnUrl);
         })
       ),
     { dispatch: false }
@@ -101,18 +102,21 @@ export class UserEffects {
     )
   );
 
-  updateUserSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(UserActionTypes.UpdateUserSuccess),
-        tap((data: any) => {
-          this._snackbar.success('User successfully updated!', 10000);
-          if (data.payload.returnUrl) {
-            this.router.navigateByUrl(data.payload.returnUrl);
-          }
+  updateUserSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActionTypes.UpdateUserSuccess),
+      tap((data: any) => {
+        this._snackbar.success('User successfully updated!', 10000);
+        if (data.payload.returnUrl) {
+          this.router.navigateByUrl(data.payload.returnUrl);
+        }
+      }),
+      switchMap(() =>
+        of({
+          type: AuthActionTypes.CurrentUser,
         })
-      ),
-    { dispatch: false }
+      )
+    )
   );
 
   getUserById$ = createEffect(() =>

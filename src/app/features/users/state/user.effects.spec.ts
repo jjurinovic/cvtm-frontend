@@ -8,7 +8,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Action } from '@ngrx/store';
 import { Observable, of, throwError } from 'rxjs';
 
-import { User, UserWithReturnUrl } from '../models/user.model';
+import { User, UserWithLocalProps } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error';
 import { State, initialState } from './user.reducers';
 import { UserEffects } from './user.effects';
@@ -42,7 +42,7 @@ const testUser: User = {
   role: 0,
 };
 
-const userWithReturnUrl: UserWithReturnUrl = {
+const userWithLocalProps: UserWithLocalProps = {
   ...testUser,
   returnUrl: '/test',
 };
@@ -148,15 +148,15 @@ describe('UserEffects', () => {
   });
 
   it('should call createUser$ and return response', (done) => {
-    userServiceSpy.createUser.and.returnValue(of(userWithReturnUrl));
+    userServiceSpy.createUser.and.returnValue(of(userWithLocalProps));
 
-    const payload: UserWithReturnUrl = userWithReturnUrl;
+    const payload: UserWithLocalProps = userWithLocalProps;
 
     actions$ = of(createUser({ payload }));
     effects.createUser$.subscribe((action) => {
       expect(action).toEqual({
         type: UserActionTypes.CreateUserSuccess,
-        payload: userWithReturnUrl,
+        payload: userWithLocalProps,
       });
       done();
     });
@@ -165,7 +165,7 @@ describe('UserEffects', () => {
   it('should call createUser$ and return error', (done) => {
     userServiceSpy.createUser.and.throwError(testError);
 
-    const payload: UserWithReturnUrl = userWithReturnUrl;
+    const payload: UserWithLocalProps = userWithLocalProps;
 
     actions$ = of(createUser({ payload }));
     effects.createUser$.subscribe({
@@ -178,15 +178,15 @@ describe('UserEffects', () => {
   });
 
   it('should call updateUser$ and return response', (done) => {
-    userServiceSpy.updateUser.and.returnValue(of(userWithReturnUrl));
+    userServiceSpy.updateUser.and.returnValue(of(userWithLocalProps));
 
-    const payload: UserWithReturnUrl = userWithReturnUrl;
+    const payload: UserWithLocalProps = userWithLocalProps;
 
     actions$ = of(updateUser({ payload }));
     effects.updateUser$.subscribe((action) => {
       expect(action).toEqual({
         type: UserActionTypes.UpdateUserSuccess,
-        payload: userWithReturnUrl,
+        payload: userWithLocalProps,
       });
       done();
     });
@@ -195,7 +195,7 @@ describe('UserEffects', () => {
   it('should call updateUser$ and return error', (done) => {
     userServiceSpy.updateUser.and.throwError(testError);
 
-    const payload: UserWithReturnUrl = userWithReturnUrl;
+    const payload: UserWithLocalProps = userWithLocalProps;
 
     actions$ = of(updateUser({ payload }));
     effects.updateUser$.subscribe({
@@ -208,12 +208,14 @@ describe('UserEffects', () => {
   });
 
   it('should call updateUserSuccess$ and return call snackbar and navigateByUrl', (done) => {
-    const payload: UserWithReturnUrl = userWithReturnUrl;
+    const payload: UserWithLocalProps = userWithLocalProps;
     actions$ = of(updateUserSuccess({ payload }));
 
     effects.updateUserSuccess$.subscribe(() => done());
 
-    expect(router.navigateByUrl).toHaveBeenCalledWith(payload.returnUrl);
+    expect(router.navigateByUrl).toHaveBeenCalledWith(
+      payload.returnUrl as string
+    );
   });
 
   it('should call getUserById$ and return response', (done) => {

@@ -16,6 +16,7 @@ export interface User {
   password_changed?: boolean;
 }
 
-export interface UserWithReturnUrl extends User {
-  returnUrl: string;
+export interface UserWithLocalProps extends User {
+  returnUrl?: string;
+  myId?: number;
 }

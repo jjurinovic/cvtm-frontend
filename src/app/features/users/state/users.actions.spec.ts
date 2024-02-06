@@ -1,5 +1,5 @@
 import { BaseError } from 'src/app/shared/models/error';
-import { User, UserWithReturnUrl } from '../models/user.model';
+import { User, UserWithLocalProps } from '../models/user.model';
 import * as UserActions from './users.actions';
 import { UserActionTypes, resetUserForm } from './users.actions';
 import { UsersRequest } from '../models/users-request';
@@ -21,7 +21,7 @@ const testError: BaseError = {
 
 describe('CreateUser', () => {
   it('should create an action', () => {
-    const payload: UserWithReturnUrl = { ...testUser, returnUrl: '/test' };
+    const payload: UserWithLocalProps = { ...testUser, returnUrl: '/test' };
     const action = UserActions.createUser({ payload });
 
     expect({ ...action }).toEqual({
@@ -33,7 +33,7 @@ describe('CreateUser', () => {
 
 describe('CreateUserSuccess', () => {
   it('should create an action', () => {
-    const payload: UserWithReturnUrl = { ...testUser, returnUrl: '/test' };
+    const payload: UserWithLocalProps = { ...testUser, returnUrl: '/test' };
     const action = UserActions.createUserSuccess({ payload });
 
     expect({ ...action }).toEqual({
@@ -57,7 +57,7 @@ describe('CreateUserFail', () => {
 
 describe('UpdateUser', () => {
   it('should create an action', () => {
-    const payload: UserWithReturnUrl = { ...testUser, returnUrl: '/test' };
+    const payload: UserWithLocalProps = { ...testUser, returnUrl: '/test' };
     const action = UserActions.updateUser({ payload });
 
     expect({ ...action }).toEqual({
@@ -69,7 +69,7 @@ describe('UpdateUser', () => {
 
 describe('UpdateUserSuccess', () => {
   it('should create an action', () => {
-    const payload: UserWithReturnUrl = { ...testUser, returnUrl: '/test' };
+    const payload: UserWithLocalProps = { ...testUser, returnUrl: '/test' };
     const action = UserActions.updateUserSuccess({ payload });
 
     expect({ ...action }).toEqual({

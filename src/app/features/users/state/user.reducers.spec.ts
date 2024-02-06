@@ -1,5 +1,5 @@
 import { BaseError } from 'src/app/shared/models/error';
-import { User, UserWithReturnUrl } from '../models/user.model';
+import { User, UserWithLocalProps } from '../models/user.model';
 import * as fromReducer from './user.reducers';
 import * as UserActions from './users.actions';
 
@@ -12,7 +12,7 @@ const testUser: User = {
   role: 0,
 };
 
-const userWithReturnUrl: UserWithReturnUrl = {
+const userWithLocalProps: UserWithLocalProps = {
   ...testUser,
   returnUrl: '/test',
 };
@@ -37,7 +37,7 @@ describe('User reducers', () => {
       isLoading: true,
     };
 
-    const action = UserActions.createUser({ payload: userWithReturnUrl });
+    const action = UserActions.createUser({ payload: userWithLocalProps });
     const state = fromReducer.reducer(initialState, action);
 
     expect(state).toEqual(newState);
@@ -51,7 +51,7 @@ describe('User reducers', () => {
     };
 
     const action = UserActions.createUserSuccess({
-      payload: userWithReturnUrl,
+      payload: userWithLocalProps,
     });
     const state = fromReducer.reducer(initialState, action);
 
@@ -80,7 +80,7 @@ describe('User reducers', () => {
       isLoading: true,
     };
 
-    const action = UserActions.updateUser({ payload: userWithReturnUrl });
+    const action = UserActions.updateUser({ payload: userWithLocalProps });
     const state = fromReducer.reducer(initialState, action);
 
     expect(state).toEqual(newState);
@@ -94,7 +94,7 @@ describe('User reducers', () => {
     };
 
     const action = UserActions.updateUserSuccess({
-      payload: userWithReturnUrl,
+      payload: userWithLocalProps,
     });
     const state = fromReducer.reducer(initialState, action);
 
@@ -134,11 +134,11 @@ describe('User reducers', () => {
     const newState: fromReducer.State = {
       ...initialState,
       isLoading: false,
-      user: userWithReturnUrl,
+      user: userWithLocalProps,
     };
 
     const action = UserActions.getUserByIdSuccess({
-      payload: userWithReturnUrl,
+      payload: userWithLocalProps,
     });
     const state = fromReducer.reducer(initialState, action);
 
