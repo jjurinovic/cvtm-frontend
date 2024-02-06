@@ -91,5 +91,18 @@ export const reducer = createReducer(
   on(UserActions.resetUserForm, (state) => ({
     ...state,
     user: null,
+  })),
+  on(UserActions.passwordChange, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(UserActions.passwordChangeSuccess, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(UserActions.passwordChangeFail, (state, { payload }) => ({
+    ...state,
+    error: payload.detail,
+    isLoading: false,
   }))
 );

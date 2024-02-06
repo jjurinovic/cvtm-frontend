@@ -4,6 +4,7 @@ import { User, UserWithReturnUrl } from '../models/user.model';
 import { PageResponse } from 'src/app/shared/models/page-response';
 import { BaseError } from 'src/app/shared/models/error';
 import { UsersRequest } from '../models/users-request';
+import { PasswordChange } from '../models/password-change.model';
 
 export enum UserActionTypes {
   CreateUser = '[User] Create New User',
@@ -19,6 +20,9 @@ export enum UserActionTypes {
   GetAllUsersSuccess = '[User] Get all Users Success',
   GetAllUsersFail = '[User] Get all Users Fail',
   ResetUserForm = '[User] Reset user form',
+  PasswordChange = '[User] Password change',
+  PasswordChangeSuccess = '[User] Password change Success',
+  PasswordChangeFail = '[User] Password changeFail',
 }
 
 export const createUser = createAction(
@@ -82,3 +86,17 @@ export const getAllUsersFail = createAction(
 );
 
 export const resetUserForm = createAction(UserActionTypes.ResetUserForm);
+
+export const passwordChange = createAction(
+  UserActionTypes.PasswordChange,
+  props<{ payload: PasswordChange }>()
+);
+
+export const passwordChangeSuccess = createAction(
+  UserActionTypes.PasswordChangeSuccess
+);
+
+export const passwordChangeFail = createAction(
+  UserActionTypes.PasswordChangeFail,
+  props<{ payload: BaseError }>()
+);

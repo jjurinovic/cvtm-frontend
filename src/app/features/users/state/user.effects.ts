@@ -5,6 +5,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
 
+import { MatDialog } from '@angular/material/dialog';
+
 import { UserActionTypes } from './users.actions';
 import { UsersService } from '../services/users.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -149,10 +151,42 @@ export class UserEffects {
     { dispatch: false }
   );
 
+  passwordChange$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActionTypes.PasswordChange),
+      exhaustMap((payload: any) =>
+        this._user.changePassword(payload).pipe(
+          map(() => ({
+            type: UserActionTypes.PasswordChangeSuccess,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: UserActionTypes.PasswordChangeFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  passwordChangeSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActionTypes.PasswordChangeSuccess),
+        tap(() => {
+          this._snackbar.success('Password successfully updated!', 10000);
+          this.dialogRef.closeAll();
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private _user: UsersService,
     private router: Router,
-    private _snackbar: SnackbarService
+    private _snackbar: SnackbarService,
+    private dialogRef: MatDialog
   ) {}
 }
