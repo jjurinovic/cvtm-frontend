@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { provideMockActions } from '@ngrx/effects/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Action } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 import { User, UserWithReturnUrl } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error';
@@ -18,15 +19,19 @@ import { UsersRequest } from '../models/users-request';
 import {
   getUserById,
   getUserByIdFail,
+  passwordChange,
+  passwordChangeFail,
+  passwordChangeSuccess,
   updateUserSuccess,
 } from './users.actions';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   UserActionTypes,
   createUser,
   getAllUsers,
   updateUser,
 } from './users.actions';
+import { PasswordChange } from '../models/password-change.model';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 const testUser: User = {
   first_name: 'test user',
@@ -65,12 +70,18 @@ const testError: BaseError = { detail: 'test error' };
 
 const testInitialState: State = { ...initialState };
 
+const passChangeObj: PasswordChange = {
+  old_password: 'old',
+  new_password: 'new',
+};
+
 describe('UserEffects', () => {
   let actions$: Observable<Action>;
   let effects: UserEffects;
   let userServiceSpy: any;
   let store: MockStore;
   let router: Router;
+  let snackService: SnackbarService;
 
   beforeEach(() => {
     userServiceSpy = jasmine.createSpyObj('UsersService', [
@@ -79,6 +90,7 @@ describe('UserEffects', () => {
       'createUser',
       'updateUser',
       'getUserById',
+      'changePassword',
     ]);
 
     TestBed.configureTestingModule({
@@ -99,8 +111,10 @@ describe('UserEffects', () => {
     effects = TestBed.inject(UserEffects);
     store = TestBed.inject(MockStore);
     router = TestBed.inject(Router);
+    snackService = TestBed.inject(SnackbarService);
     spyOn(store, 'select').and.callThrough();
     spyOn(router, 'navigateByUrl');
+    spyOn(snackService, 'success').and.callThrough();
   });
 
   it('should call getAll$ and return response', (done) => {
@@ -239,5 +253,41 @@ describe('UserEffects', () => {
     effects.getUserByIdFail$.subscribe(() => done());
 
     expect(router.navigateByUrl).toHaveBeenCalledWith('/admin');
+  });
+
+  it('should call passwordChange$ and return response', (done) => {
+    userServiceSpy.changePassword.and.returnValue(of(passChangeObj));
+
+    const payload: PasswordChange = passChangeObj;
+
+    actions$ = of(passwordChange({ payload }));
+    effects.passwordChange$.subscribe((action) => {
+      expect(action).toEqual({
+        type: UserActionTypes.PasswordChangeSuccess,
+      });
+      done();
+    });
+  });
+
+  it('should call passwordChange$ and return error', (done) => {
+    userServiceSpy.changePassword.and.throwError(testError);
+
+    const payload: PasswordChange = passChangeObj;
+
+    actions$ = of(passwordChange({ payload }));
+    effects.passwordChange$.subscribe({
+      next: () => {},
+      error: (error) => {
+        expect(error).toEqual(testError);
+        done();
+      },
+    });
+  });
+
+  it('should call passwordChangeSuccess$ and return response', (done) => {
+    actions$ = of(passwordChangeSuccess());
+    effects.passwordChangeSuccess$.subscribe(() => done());
+
+    expect(snackService.success).toHaveBeenCalled();
   });
 });

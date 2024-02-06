@@ -4,6 +4,7 @@ import * as UserActions from './users.actions';
 import { UserActionTypes, resetUserForm } from './users.actions';
 import { UsersRequest } from '../models/users-request';
 import { PageResponse } from 'src/app/shared/models/page-response';
+import { PasswordChange } from '../models/password-change.model';
 
 const testUser: User = {
   first_name: 'test first name',
@@ -179,6 +180,43 @@ describe('ResetUserForm', () => {
 
     expect({ ...action }).toEqual({
       type: UserActionTypes.ResetUserForm,
+    });
+  });
+});
+
+describe('PasswordChange', () => {
+  it('should create an action', () => {
+    const payload: PasswordChange = {
+      old_password: 'test',
+      new_password: 'newTest',
+    };
+    const action = UserActions.passwordChange({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.PasswordChange,
+      payload,
+    });
+  });
+});
+
+describe('PasswordChangeSuccess', () => {
+  it('should create an action', () => {
+    const action = UserActions.passwordChangeSuccess();
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.PasswordChangeSuccess,
+    });
+  });
+});
+
+describe('PasswordChangeFail', () => {
+  it('should create an action', () => {
+    const payload: BaseError = testError;
+    const action = UserActions.passwordChangeFail({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.PasswordChangeFail,
+      payload,
     });
   });
 });

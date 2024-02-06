@@ -232,4 +232,47 @@ describe('User reducers', () => {
 
     expect(state).toEqual(newState);
   });
+
+  it('passwordChange should return the new state', () => {
+    const { initialState } = fromReducer;
+    const newState: fromReducer.State = {
+      ...initialState,
+      isLoading: true,
+    };
+
+    const action = UserActions.passwordChange({
+      payload: { new_password: 'new', old_password: 'old' },
+    });
+    const state = fromReducer.reducer(initialState, action);
+
+    expect(state).toEqual(newState);
+  });
+
+  it('passwordChangeSuccess should return the new state', () => {
+    const { initialState } = fromReducer;
+    const newState: fromReducer.State = {
+      ...initialState,
+      isLoading: false,
+    };
+
+    const action = UserActions.passwordChangeSuccess();
+    const state = fromReducer.reducer(initialState, action);
+
+    expect(state).toEqual(newState);
+  });
+
+  it('passwordChangeFail should return the new state with error', () => {
+    const { initialState } = fromReducer;
+    const newState: fromReducer.State = {
+      ...initialState,
+      error: testError.detail,
+    };
+
+    const action = UserActions.passwordChangeFail({
+      payload: testError,
+    });
+    const state = fromReducer.reducer(initialState, action);
+
+    expect(state).toEqual(newState);
+  });
 });
