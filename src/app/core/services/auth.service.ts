@@ -44,15 +44,15 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('cvtm-token');
   }
 
   setToken(token: string): void {
-    localStorage.setItem('token', token);
+    localStorage.setItem('cvtm-token', token);
   }
 
   removeToken(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('cvtm-token');
   }
 
   public setRole(role: Role): void {
