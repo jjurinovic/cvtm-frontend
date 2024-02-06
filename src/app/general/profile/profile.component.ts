@@ -7,6 +7,8 @@ import { User } from 'src/app/features/users/models/user.model';
 import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import * as UserActions from '../../features/users/state/users.actions';
 import { Role } from 'src/app/features/users/enums/role.enum';
+import { MatDialog } from '@angular/material/dialog';
+import { PasswordChangeDialogComponent } from '../password-change-dialog/password-change-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +19,11 @@ export class ProfileComponent {
   user!: User;
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private store: Store) {
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private dialog: MatDialog
+  ) {
     this.store.select(selectCurrentUser).subscribe((data) => {
       this.user = data;
 
@@ -53,5 +59,9 @@ export class ProfileComponent {
 
   getRole(): string {
     return Role[this.user?.role];
+  }
+
+  openDialog(): void {
+    this.dialog.open(PasswordChangeDialogComponent);
   }
 }

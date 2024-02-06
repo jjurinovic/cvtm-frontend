@@ -12,6 +12,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
@@ -24,9 +25,10 @@ import { CompanyEffects } from './features/company/state/company.effects';
 import { metaReducers } from './state/meta.reducers';
 import { UserEffects } from './features/users/state/user.effects';
 import { ProfileComponent } from './general/profile/profile.component';
+import { PasswordChangeDialogComponent } from './general/password-change-dialog/password-change-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, ProfileComponent],
+  declarations: [AppComponent, ProfileComponent, PasswordChangeDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,6 +42,7 @@ import { ProfileComponent } from './general/profile/profile.component';
     MatButtonModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatDialogModule,
   ],
   providers: [
     {
