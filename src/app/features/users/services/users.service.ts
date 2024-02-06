@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { PageResponse } from 'src/app/shared/models/page-response';
+import { PasswordChange } from '../models/password-change.model';
 
 @Injectable({
   providedIn: 'root',
@@ -75,5 +76,14 @@ export class UsersService {
       params = params.append('q', q);
     }
     return this.http.get<PageResponse<User>>(this.baseUrl, { params });
+  }
+
+  /**
+   * Change password
+   * @param {PasswordChange} data old and new password
+   * @returns {Observable<string>} Return string message
+   */
+  public changePassword(data: PasswordChange): Observable<string> {
+    return this.http.put<string>(this.baseUrl + `/change-password`, data);
   }
 }
