@@ -32,7 +32,7 @@ import {
 } from './users.actions';
 import { PasswordChange } from '../models/password-change.model';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { currentUser } from 'src/app/state/auth/auth.actions';
+import { AuthActionTypes, currentUser } from 'src/app/state/auth/auth.actions';
 
 const testUser: User = {
   first_name: 'test user',
@@ -209,13 +209,38 @@ describe('UserEffects', () => {
     });
   });
 
-  it('should call updateUserSuccess$ and call snackbar and navigateByUrl', (done) => {
-    const payload: UserWithLocalProps = userWithLocalProps;
+  it('should call updateUserSuccess$, and user id is not same as myId, and call snackbar and navigateByUrl and removeUser and currentUser', (done) => {
+    const payload: UserWithLocalProps = { ...userWithLocalProps, id: 1 };
+    actions$ = of(updateUserSuccess({ payload }));
+    let counter = 0;
+    const actions: Array<
+      AuthActionTypes.CurrentUser | AuthActionTypes.RemoveCurrentUser
+    > = [AuthActionTypes.RemoveCurrentUser, AuthActionTypes.CurrentUser];
+
+    effects.updateUserSuccess$.subscribe({
+      next: (action) => {
+        expect(action).toEqual({ type: actions[counter] });
+        counter++;
+
+        expect(snackService.success).toHaveBeenCalledWith(
+          'User successfully updated!',
+          10000
+        );
+
+        expect(router.navigateByUrl).toHaveBeenCalledWith(
+          payload.returnUrl as string
+        );
+      },
+      complete: () => done(),
+    });
+  });
+
+  it('should call updateUserSuccess$, and user id is same as myId, and call snackbar and navigateByUrl', (done) => {
+    const payload: UserWithLocalProps = { ...userWithLocalProps, id: 1 };
     actions$ = of(updateUserSuccess({ payload }));
 
-    const subscription = effects.updateUserSuccess$.subscribe(
-      (resultAction) => {
-        // Provjera da se snackbar poziva s odgovarajućim porukama
+    effects.updateUserSuccess$.subscribe({
+      complete: () => {
         expect(snackService.success).toHaveBeenCalledWith(
           'User successfully updated!',
           10000
@@ -225,22 +250,7 @@ describe('UserEffects', () => {
           payload.returnUrl as string
         );
 
-        if (payload.id === payload.myId) {
-          expect(resultAction).toEqual(currentUser());
-        }
-
-        subscription.unsubscribe();
         done();
-      }
-    );
-
-    actions$.subscribe({
-      complete: () => {
-        expect(subscription.closed).toBeTruthy();
-        done();
-      },
-      error: (err) => {
-        done.fail(err);
       },
     });
   });

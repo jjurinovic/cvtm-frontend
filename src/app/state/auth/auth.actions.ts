@@ -13,6 +13,7 @@ export enum AuthActionTypes {
   CurrentUser = '[Users] Current user',
   CurrentUserSuccess = '[Users] Current user Success',
   CurrentUserFail = '[Users] Current user Fail',
+  RemoveCurrentUser = '[Users] Remove current user',
 }
 
 export const login = createAction(
@@ -42,4 +43,8 @@ export const currentUserSuccess = createAction(
 export const currentUserFail = createAction(
   AuthActionTypes.CurrentUserFail,
   props<{ payload: BaseError }>()
+);
+
+export const removeCurrentUser = createAction(
+  AuthActionTypes.RemoveCurrentUser
 );

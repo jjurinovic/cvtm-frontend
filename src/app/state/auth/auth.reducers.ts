@@ -49,5 +49,9 @@ export const reducer = createReducer(
     error: payload.detail,
     isLoading: false,
   })),
-  on(LoginActions.logout, (state: State) => initialState)
+  on(LoginActions.logout, (state: State) => initialState),
+  on(LoginActions.removeCurrentUser, (state: State) => ({
+    ...state,
+    user: null,
+  }))
 );

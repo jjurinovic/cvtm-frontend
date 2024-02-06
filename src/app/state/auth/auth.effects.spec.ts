@@ -158,7 +158,6 @@ describe('AuthEffects', () => {
 
   it('should call currentUser$ and return response from endpoint', (done) => {
     userServiceSpy.getCurrentUser.and.returnValue(of(testUser));
-    store.setState({});
     store.refreshState();
 
     actions$ = of(currentUser());

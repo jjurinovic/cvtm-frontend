@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import {
   map,
   exhaustMap,
@@ -10,6 +10,8 @@ import {
   tap,
   switchMap,
   filter,
+  mergeMap,
+  concatMap,
 } from 'rxjs/operators';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -19,7 +21,11 @@ import { UsersService } from '../services/users.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserWithLocalProps } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error';
-import { AuthActionTypes, currentUser } from 'src/app/state/auth/auth.actions';
+import {
+  AuthActionTypes,
+  currentUser,
+  removeCurrentUser,
+} from 'src/app/state/auth/auth.actions';
 
 @Injectable()
 export class UserEffects {
@@ -114,11 +120,10 @@ export class UserEffects {
       )
     )
   );
-
   updateUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActionTypes.UpdateUserSuccess),
-      map((action: any) => {
+      concatMap((action: any) => {
         const { payload } = action;
         this._snackbar.success('User successfully updated!', 10000);
 
@@ -129,13 +134,13 @@ export class UserEffects {
         const isCurrentUser = payload.id === payload.myId;
 
         if (isCurrentUser) {
-          return currentUser();
+          // Ovdje prvo pozivamo removeCurrentUser akciju, a zatim currentUser
+          return of([removeCurrentUser(), currentUser()]);
         } else {
-          return { type: 'NO_ACTION' };
+          return of(null); // Vraćamo EMPTY ako nije trenutno prijavljeni korisnik
         }
       }),
-      filter((action) => action.type !== 'NO_ACTION'),
-      switchMap((action) => of(action))
+      mergeMap((actions) => (actions ? actions : EMPTY))
     )
   );
 

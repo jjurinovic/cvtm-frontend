@@ -80,6 +80,8 @@ export class AuthEffects {
   currentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.CurrentUser),
+      withLatestFrom(this.store.select(selectCurrentUser)),
+      filter(([action, currentUser]) => !currentUser),
       switchMap(() =>
         this._users.getCurrentUser().pipe(
           map((data) => ({
