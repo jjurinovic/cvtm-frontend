@@ -41,6 +41,42 @@ export class UsersService {
   }
 
   /**
+   * Delete user from database
+   * @param {number} id user id
+   * @returns Delete user and return message
+   */
+  public deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  /**
+   * Delete user, set flag deleted to true
+   * @param {number} id
+   * @returns Delete user and return message
+   */
+  public deleteUserSoft(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}/soft`);
+  }
+
+  /**
+   * Toggle inactive status
+   * @param id user id
+   * @returns {User} Returns user object
+   */
+  public statusChange(id: number): Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/${id}/status-change`, {});
+  }
+
+  /**
+   * Restore deleted user
+   * @param {number} id user id
+   * @returns Return restored user
+   */
+  public restore(id: number): Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/${id}/restore`, {});
+  }
+
+  /**
    * Return user by given id
    * @param {number} id
    * @returns {Observable<User>} Returns Observable with user with given id
