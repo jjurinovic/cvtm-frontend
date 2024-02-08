@@ -20,7 +20,7 @@ import { UserActionTypes } from './users.actions';
 import { UsersService } from '../services/users.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserWithLocalProps } from '../models/user.model';
-import { BaseError } from 'src/app/shared/models/error';
+import { BaseError } from 'src/app/shared/models/error.model';
 import {
   AuthActionTypes,
   currentUser,

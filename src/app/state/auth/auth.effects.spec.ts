@@ -20,7 +20,7 @@ import {
 } from './auth.actions';
 import { AuthResponse } from 'src/app/core/models/auth-response.model';
 import { Auth } from 'src/app/core/models/auth.model';
-import { BaseError } from 'src/app/shared/models/error';
+import { BaseError } from 'src/app/shared/models/error.model';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { UsersService } from 'src/app/features/users/services/users.service';
 import { initialState } from '../../features/users/state/user.reducers';

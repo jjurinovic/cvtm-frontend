@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 
 import { User, UserWithLocalProps } from '../models/user.model';
-import { PageResponse } from 'src/app/shared/models/page-response';
-import { BaseError } from 'src/app/shared/models/error';
+import { PageResponse } from 'src/app/shared/models/page-response.model';
+import { BaseError } from 'src/app/shared/models/error.model';
 import { UsersRequest } from '../models/users-request';
 import { PasswordChange } from '../models/password-change.model';
 import { IdWithParams } from 'src/app/shared/models/id-with-params.model';

@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { Auth } from 'src/app/core/models/auth.model';
 import { AuthResponse } from 'src/app/core/models/auth-response.model';
-import { BaseError } from 'src/app/shared/models/error';
+import { BaseError } from 'src/app/shared/models/error.model';
 import { User } from 'src/app/features/users/models/user.model';
 
 export enum AuthActionTypes {

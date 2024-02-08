@@ -1,9 +1,9 @@
-import { BaseError } from 'src/app/shared/models/error';
+import { BaseError } from 'src/app/shared/models/error.model';
 import { User, UserWithLocalProps } from '../models/user.model';
 import * as UserActions from './users.actions';
 import { UserActionTypes, resetUserForm } from './users.actions';
 import { UsersRequest } from '../models/users-request';
-import { PageResponse } from 'src/app/shared/models/page-response';
+import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { PasswordChange } from '../models/password-change.model';
 import { IdWithParams } from 'src/app/shared/models/id-with-params.model';
 

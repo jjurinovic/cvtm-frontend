@@ -1,4 +1,4 @@
-import { BaseError } from 'src/app/shared/models/error';
+import { BaseError } from 'src/app/shared/models/error.model';
 import { User, UserWithLocalProps } from '../models/user.model';
 import * as fromReducer from './user.reducers';
 import * as UserActions from './users.actions';

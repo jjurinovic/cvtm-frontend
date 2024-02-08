@@ -9,12 +9,12 @@ import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
 import { User, UserWithLocalProps } from '../models/user.model';
-import { BaseError } from 'src/app/shared/models/error';
+import { BaseError } from 'src/app/shared/models/error.model';
 import { State, initialState } from './user.reducers';
 import { UserEffects } from './user.effects';
 import { UsersService } from '../services/users.service';
 import { selectCurrentUser } from '../../../state/auth/auth.selectors';
-import { PageResponse } from 'src/app/shared/models/page-response';
+import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { UsersRequest } from '../models/users-request';
 import * as UserActions from './users.actions';
 import { UserActionTypes, deleteUser, restore } from './users.actions';

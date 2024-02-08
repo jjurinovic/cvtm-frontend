@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment';
-import { PageResponse } from 'src/app/shared/models/page-response';
+import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { PasswordChange } from '../models/password-change.model';
 
 @Injectable({

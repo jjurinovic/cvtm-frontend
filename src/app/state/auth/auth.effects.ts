@@ -21,7 +21,7 @@ import { UsersService } from 'src/app/features/users/services/users.service';
 import { selectCurrentUser } from './auth.selectors';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { AuthResponse } from 'src/app/core/models/auth-response.model';
-import { BaseError } from '../../shared/models/error';
+import { BaseError } from '../../shared/models/error.model';
 import { returnUrlQueryParam } from 'src/app/utils/url';
 
 @Injectable()

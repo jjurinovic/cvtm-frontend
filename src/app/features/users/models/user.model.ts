@@ -1,4 +1,4 @@
-import { Address } from 'src/app/shared/models/address';
+import { Address } from 'src/app/shared/models/address.model';
 import { Role } from '../enums/role.enum';
 import { Company } from '../../company/models/company.model';
 

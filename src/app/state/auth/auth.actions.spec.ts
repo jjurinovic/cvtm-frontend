@@ -2,7 +2,7 @@ import { Auth } from 'src/app/core/models/auth.model';
 import * as AuthActions from './auth.actions';
 import { AuthActionTypes } from './auth.actions';
 import { AuthResponse } from 'src/app/core/models/auth-response.model';
-import { BaseError } from 'src/app/shared/models/error';
+import { BaseError } from 'src/app/shared/models/error.model';
 import { User } from 'src/app/features/users/models/user.model';
 
 describe('Login', () => {
