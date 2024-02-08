@@ -5,6 +5,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
+import { returnUrlQueryParam } from '../utils/url';
 
 export const authGuard = (
   route: ActivatedRouteSnapshot,
@@ -18,7 +19,7 @@ export const authGuard = (
   }
 
   // add return url
-  const returnUrl = '?returnUrl=' + state.url;
+  const returnUrl = returnUrlQueryParam(state.url);
   router.navigateByUrl('/login' + returnUrl);
 
   return false;

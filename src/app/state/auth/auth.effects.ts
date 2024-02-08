@@ -22,6 +22,7 @@ import { selectCurrentUser } from './auth.selectors';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { AuthResponse } from 'src/app/core/models/auth-response.model';
 import { BaseError } from '../../shared/models/error';
+import { returnUrlQueryParam } from 'src/app/utils/url';
 
 @Injectable()
 export class AuthEffects {
@@ -79,7 +80,7 @@ export class AuthEffects {
           this.dialog.closeAll();
 
           let returnUrl = '';
-          if (payload) returnUrl = '?returnUrl=' + this.router.url;
+          if (payload) returnUrl = returnUrlQueryParam(this.router.url);
           this.router.navigateByUrl('/login' + returnUrl);
         })
       ),
