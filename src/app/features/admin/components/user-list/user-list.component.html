@@ -92,7 +92,14 @@
       </tr>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [ngClass]="{
+          'user-deleted': row.deleted,
+          'user-inactive': row.inactive
+        }"
+      ></tr>
     </table>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
