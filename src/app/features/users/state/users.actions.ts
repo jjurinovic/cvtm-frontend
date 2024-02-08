@@ -23,6 +23,18 @@ export enum UserActionTypes {
   PasswordChange = '[User] Password change',
   PasswordChangeSuccess = '[User] Password change Success',
   PasswordChangeFail = '[User] Password changeFail',
+  ChangeStatus = '[User] Change status',
+  ChangeStatusSuccess = '[User] Change status Success',
+  ChangeStatusFail = '[User] Change status Fail',
+  DeleteUser = '[User] Delete user',
+  DeleteUserSuccess = '[User] Delete user Success',
+  DeleteUserFail = '[User] Delete user Fail',
+  DeleteUserHard = '[User] Delete user HARD',
+  DeleteUserHardSuccess = '[User] Delete user HARD Success',
+  DeleteUserHardFail = '[User] Delete user HARD Fail',
+  Restore = '[User] Restore user',
+  RestoreSuccess = '[User] Restore user Success',
+  RestoreFail = '[User] Restore user Fail',
 }
 
 export const createUser = createAction(
@@ -98,5 +110,65 @@ export const passwordChangeSuccess = createAction(
 
 export const passwordChangeFail = createAction(
   UserActionTypes.PasswordChangeFail,
+  props<{ payload: BaseError }>()
+);
+
+export const changeStatus = createAction(
+  UserActionTypes.ChangeStatus,
+  props<{ payload: number }>()
+);
+
+export const changeStatusSuccess = createAction(
+  UserActionTypes.ChangeStatusSuccess,
+  props<{ payload: User }>()
+);
+
+export const changeStatusFail = createAction(
+  UserActionTypes.ChangeStatusFail,
+  props<{ payload: BaseError }>()
+);
+
+export const deleteUser = createAction(
+  UserActionTypes.DeleteUser,
+  props<{ payload: number }>()
+);
+
+export const deleteUserSuccess = createAction(
+  UserActionTypes.DeleteUserSuccess,
+  props<{ payload: any }>()
+);
+
+export const deleteUserFail = createAction(
+  UserActionTypes.DeleteUserFail,
+  props<{ payload: BaseError }>()
+);
+
+export const deleteUserHard = createAction(
+  UserActionTypes.DeleteUserHard,
+  props<{ payload: number }>()
+);
+
+export const deleteUserHardSuccess = createAction(
+  UserActionTypes.DeleteUserHardSuccess,
+  props<{ payload: any }>()
+);
+
+export const deleteUserHardFail = createAction(
+  UserActionTypes.DeleteUserHardFail,
+  props<{ payload: BaseError }>()
+);
+
+export const restore = createAction(
+  UserActionTypes.Restore,
+  props<{ payload: number }>()
+);
+
+export const restoreSuccess = createAction(
+  UserActionTypes.RestoreSuccess,
+  props<{ payload: User }>()
+);
+
+export const restoreFail = createAction(
+  UserActionTypes.ChangeStatusFail,
   props<{ payload: BaseError }>()
 );

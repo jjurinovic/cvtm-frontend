@@ -104,5 +104,59 @@ export const reducer = createReducer(
     ...state,
     error: payload.detail,
     isLoading: false,
+  })),
+  on(UserActions.changeStatus, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(UserActions.changeStatusSuccess, (state, { payload }) => ({
+    ...state,
+    isLoading: false,
+    user: payload,
+  })),
+  on(UserActions.changeStatusFail, (state, { payload }) => ({
+    ...state,
+    error: payload.detail,
+    isLoading: false,
+  })),
+  on(UserActions.deleteUser, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(UserActions.deleteUserSuccess, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(UserActions.deleteUserFail, (state, { payload }) => ({
+    ...state,
+    error: payload.detail,
+    isLoading: false,
+  })),
+  on(UserActions.deleteUserHard, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(UserActions.deleteUserHardSuccess, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(UserActions.deleteUserHardFail, (state, { payload }) => ({
+    ...state,
+    error: payload.detail,
+    isLoading: false,
+  })),
+  on(UserActions.restore, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(UserActions.restoreSuccess, (state, { payload }) => ({
+    ...state,
+    isLoading: false,
+    user: payload,
+  })),
+  on(UserActions.restoreFail, (state, { payload }) => ({
+    ...state,
+    error: payload.detail,
+    isLoading: false,
   }))
 );
