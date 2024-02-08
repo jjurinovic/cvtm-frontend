@@ -1,6 +1,7 @@
 import { Address } from 'src/app/shared/models/address.model';
 import { Role } from '../enums/role.enum';
 import { Company } from '../../company/models/company.model';
+import { LocalParams } from 'src/app/shared/models/local-params.model';
 
 export interface User {
   id: number;
@@ -18,7 +19,4 @@ export interface User {
   inactive?: boolean;
 }
 
-export interface UserWithLocalProps extends User {
-  returnUrl: string | null;
-  myId?: number | null;
-}
+export interface UserWithLocalParams extends User, LocalParams {}

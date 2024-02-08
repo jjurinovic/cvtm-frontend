@@ -1,5 +1,5 @@
 import { BaseError } from 'src/app/shared/models/error.model';
-import { User, UserWithLocalProps } from '../models/user.model';
+import { User, UserWithLocalParams } from '../models/user.model';
 import * as UserActions from './users.actions';
 import { UserActionTypes } from './users.actions';
 import { UsersRequest } from '../models/users-request';
@@ -9,12 +9,12 @@ import {
   testError,
   testIdWithParams,
   testUser,
-  userWithLocalProps,
+  userWithLocalParams,
 } from '../../../../test-data/data';
 
 describe('CreateUser', () => {
   it('should create an action', () => {
-    const payload: UserWithLocalProps = { ...testUser, returnUrl: '/test' };
+    const payload: UserWithLocalParams = { ...testUser, returnUrl: '/test' };
     const action = UserActions.createUser({ payload });
 
     expect({ ...action }).toEqual({
@@ -26,7 +26,7 @@ describe('CreateUser', () => {
 
 describe('CreateUserSuccess', () => {
   it('should create an action', () => {
-    const payload: UserWithLocalProps = { ...testUser, returnUrl: '/test' };
+    const payload: UserWithLocalParams = { ...testUser, returnUrl: '/test' };
     const action = UserActions.createUserSuccess({ payload });
 
     expect({ ...action }).toEqual({
@@ -50,7 +50,7 @@ describe('CreateUserFail', () => {
 
 describe('UpdateUser', () => {
   it('should create an action', () => {
-    const payload: UserWithLocalProps = { ...testUser, returnUrl: '/test' };
+    const payload: UserWithLocalParams = { ...testUser, returnUrl: '/test' };
     const action = UserActions.updateUser({ payload });
 
     expect({ ...action }).toEqual({
@@ -62,7 +62,7 @@ describe('UpdateUser', () => {
 
 describe('UpdateUserSuccess', () => {
   it('should create an action', () => {
-    const payload: UserWithLocalProps = { ...testUser, returnUrl: '/test' };
+    const payload: UserWithLocalParams = { ...testUser, returnUrl: '/test' };
     const action = UserActions.updateUserSuccess({ payload });
 
     expect({ ...action }).toEqual({
@@ -262,12 +262,12 @@ describe('DeleteUser', () => {
 
 describe('DeleteUserSuccess', () => {
   it('should create an action', () => {
-    const payload = userWithLocalProps;
+    const payload = userWithLocalParams;
     const action = UserActions.deleteUserSuccess({ payload });
 
     expect({ ...action }).toEqual({
       type: UserActionTypes.DeleteUserSuccess,
-      payload: userWithLocalProps,
+      payload: userWithLocalParams,
     });
   });
 });

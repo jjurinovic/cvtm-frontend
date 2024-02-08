@@ -8,8 +8,6 @@ import {
   exhaustMap,
   catchError,
   tap,
-  switchMap,
-  filter,
   mergeMap,
   concatMap,
 } from 'rxjs/operators';
@@ -19,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserActionTypes } from './users.actions';
 import { UsersService } from '../services/users.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { UserWithLocalProps } from '../models/user.model';
+import { UserWithLocalParams } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error.model';
 import {
   AuthActionTypes,
@@ -87,7 +85,7 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(UserActionTypes.CreateUserSuccess),
-        tap(({ payload }: { payload: UserWithLocalProps }) => {
+        tap(({ payload }: { payload: UserWithLocalParams }) => {
           this._snackbar.success('User successfully created!', 10000);
           if (payload.returnUrl) this.router.navigateByUrl(payload.returnUrl);
         })

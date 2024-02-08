@@ -8,7 +8,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
-import { UserWithLocalProps } from '../models/user.model';
+import { UserWithLocalParams } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error.model';
 import { UserEffects } from './user.effects';
 import { UsersService } from '../services/users.service';
@@ -27,7 +27,7 @@ import {
   testPageResponse,
   testUser,
   testUsersRequest,
-  userWithLocalProps,
+  userWithLocalParams,
 } from 'src/test-data/data';
 
 describe('UserEffects', () => {
@@ -107,15 +107,15 @@ describe('UserEffects', () => {
   });
 
   it('should call createUser$ and return response', (done) => {
-    userServiceSpy.createUser.and.returnValue(of(userWithLocalProps));
+    userServiceSpy.createUser.and.returnValue(of(userWithLocalParams));
 
-    const payload: UserWithLocalProps = userWithLocalProps;
+    const payload: UserWithLocalParams = userWithLocalParams;
 
     actions$ = of(UserActions.createUser({ payload }));
     effects.createUser$.subscribe((action) => {
       expect(action).toEqual({
         type: UserActionTypes.CreateUserSuccess,
-        payload: userWithLocalProps,
+        payload: userWithLocalParams,
       });
       done();
     });
@@ -124,7 +124,7 @@ describe('UserEffects', () => {
   it('should call createUser$ and return error', (done) => {
     userServiceSpy.createUser.and.throwError(testError);
 
-    const payload: UserWithLocalProps = userWithLocalProps;
+    const payload: UserWithLocalParams = userWithLocalParams;
 
     actions$ = of(UserActions.createUser({ payload }));
     effects.createUser$.subscribe({
@@ -137,15 +137,15 @@ describe('UserEffects', () => {
   });
 
   it('should call updateUser$ and return response', (done) => {
-    userServiceSpy.updateUser.and.returnValue(of(userWithLocalProps));
+    userServiceSpy.updateUser.and.returnValue(of(userWithLocalParams));
 
-    const payload: UserWithLocalProps = userWithLocalProps;
+    const payload: UserWithLocalParams = userWithLocalParams;
 
     actions$ = of(UserActions.updateUser({ payload }));
     effects.updateUser$.subscribe((action) => {
       expect(action).toEqual({
         type: UserActionTypes.UpdateUserSuccess,
-        payload: userWithLocalProps,
+        payload: userWithLocalParams,
       });
       done();
     });
@@ -154,7 +154,7 @@ describe('UserEffects', () => {
   it('should call updateUser$ and return error', (done) => {
     userServiceSpy.updateUser.and.throwError(testError);
 
-    const payload: UserWithLocalProps = userWithLocalProps;
+    const payload: UserWithLocalParams = userWithLocalParams;
 
     actions$ = of(UserActions.updateUser({ payload }));
     effects.updateUser$.subscribe({
@@ -167,7 +167,7 @@ describe('UserEffects', () => {
   });
 
   it('should call updateUserSuccess$, and user id is not same as myId, and call snackbar and navigateByUrl and removeUser and currentUser', (done) => {
-    const payload: UserWithLocalProps = { ...userWithLocalProps, id: 1 };
+    const payload: UserWithLocalParams = { ...userWithLocalParams, id: 1 };
     actions$ = of(UserActions.updateUserSuccess({ payload }));
     let counter = 0;
     const actions: Array<
@@ -193,7 +193,7 @@ describe('UserEffects', () => {
   });
 
   it('should call updateUserSuccess$, and user id is same as myId, and call snackbar and navigateByUrl', (done) => {
-    const payload: UserWithLocalProps = { ...userWithLocalProps, id: 1 };
+    const payload: UserWithLocalParams = { ...userWithLocalParams, id: 1 };
     actions$ = of(UserActions.updateUserSuccess({ payload }));
 
     effects.updateUserSuccess$.subscribe({
@@ -332,7 +332,7 @@ describe('UserEffects', () => {
    * Delete user
    */
   it('should call deleteUser$ and return response', (done) => {
-    userServiceSpy.deleteUserSoft.and.returnValue(of(userWithLocalProps));
+    userServiceSpy.deleteUserSoft.and.returnValue(of(userWithLocalParams));
 
     const payload = testIdWithParams;
 
@@ -340,7 +340,7 @@ describe('UserEffects', () => {
     effects.deleteUser$.subscribe((action) => {
       expect(action).toEqual({
         type: UserActionTypes.DeleteUserSuccess,
-        payload: userWithLocalProps,
+        payload: userWithLocalParams,
       });
       done();
     });
@@ -363,7 +363,7 @@ describe('UserEffects', () => {
 
   it('should call deleteUserSuccess$ and return response', (done) => {
     actions$ = of(
-      UserActions.deleteUserSuccess({ payload: userWithLocalProps })
+      UserActions.deleteUserSuccess({ payload: userWithLocalParams })
     );
     effects.deleteUserSuccess$.subscribe(() => done());
 
@@ -416,7 +416,7 @@ describe('UserEffects', () => {
    * Delete user hard
    */
   it('should call deleteUserHard$ and return response', (done) => {
-    userServiceSpy.deleteUser.and.returnValue(of(userWithLocalProps));
+    userServiceSpy.deleteUser.and.returnValue(of(userWithLocalParams));
 
     const payload = testIdWithParams;
 
@@ -424,7 +424,7 @@ describe('UserEffects', () => {
     effects.deleteUserHard$.subscribe((action) => {
       expect(action).toEqual({
         type: UserActionTypes.DeleteUserHardSuccess,
-        payload: userWithLocalProps.returnUrl,
+        payload: userWithLocalParams.returnUrl,
       });
       done();
     });
@@ -448,7 +448,7 @@ describe('UserEffects', () => {
   it('should call deleteUserHardSuccess$ and return response', (done) => {
     actions$ = of(
       UserActions.deleteUserHardSuccess({
-        payload: userWithLocalProps.returnUrl as string,
+        payload: userWithLocalParams.returnUrl as string,
       })
     );
     effects.deleteUserHardSuccess$.subscribe(() => done());

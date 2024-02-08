@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { User, UserWithLocalProps } from '../models/user.model';
+import { User, UserWithLocalParams } from '../models/user.model';
 import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { BaseError } from 'src/app/shared/models/error.model';
 import { UsersRequest } from '../models/users-request';
@@ -40,12 +40,12 @@ export enum UserActionTypes {
 
 export const createUser = createAction(
   UserActionTypes.CreateUser,
-  props<{ payload: UserWithLocalProps }>()
+  props<{ payload: UserWithLocalParams }>()
 );
 
 export const createUserSuccess = createAction(
   UserActionTypes.CreateUserSuccess,
-  props<{ payload: UserWithLocalProps }>()
+  props<{ payload: UserWithLocalParams }>()
 );
 
 export const createUserFail = createAction(
@@ -55,12 +55,12 @@ export const createUserFail = createAction(
 
 export const updateUser = createAction(
   UserActionTypes.UpdateUser,
-  props<{ payload: UserWithLocalProps }>()
+  props<{ payload: UserWithLocalParams }>()
 );
 
 export const updateUserSuccess = createAction(
   UserActionTypes.UpdateUserSuccess,
-  props<{ payload: UserWithLocalProps }>()
+  props<{ payload: UserWithLocalParams }>()
 );
 
 export const updateUserFail = createAction(
@@ -136,7 +136,7 @@ export const deleteUser = createAction(
 
 export const deleteUserSuccess = createAction(
   UserActionTypes.DeleteUserSuccess,
-  props<{ payload: UserWithLocalProps }>()
+  props<{ payload: UserWithLocalParams }>()
 );
 
 export const deleteUserFail = createAction(

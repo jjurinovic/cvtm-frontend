@@ -21,7 +21,7 @@ export const testUserWithAddress = {
   address: testAddress,
 };
 
-export const userWithLocalProps = {
+export const userWithLocalParams = {
   ...testUser,
   returnUrl: '/test',
   myId: 1,

@@ -4,7 +4,7 @@ import {
   testError,
   testIdWithParams,
   testUser,
-  userWithLocalProps,
+  userWithLocalParams,
 } from 'src/test-data/data';
 
 describe('User reducers', () => {
@@ -25,7 +25,7 @@ describe('User reducers', () => {
       isLoading: true,
     };
 
-    const action = UserActions.createUser({ payload: userWithLocalProps });
+    const action = UserActions.createUser({ payload: userWithLocalParams });
     const state = fromReducer.reducer(initialState, action);
 
     expect(state).toEqual(newState);
@@ -38,7 +38,7 @@ describe('User reducers', () => {
     };
 
     const action = UserActions.createUserSuccess({
-      payload: userWithLocalProps,
+      payload: userWithLocalParams,
     });
     const state = fromReducer.reducer(initialState, action);
 
@@ -65,7 +65,7 @@ describe('User reducers', () => {
       isLoading: true,
     };
 
-    const action = UserActions.updateUser({ payload: userWithLocalProps });
+    const action = UserActions.updateUser({ payload: userWithLocalParams });
     const state = fromReducer.reducer(initialState, action);
 
     expect(state).toEqual(newState);
@@ -78,7 +78,7 @@ describe('User reducers', () => {
     };
 
     const action = UserActions.updateUserSuccess({
-      payload: userWithLocalProps,
+      payload: userWithLocalParams,
     });
     const state = fromReducer.reducer(initialState, action);
 
@@ -115,11 +115,11 @@ describe('User reducers', () => {
     const newState: fromReducer.State = {
       ...initialState,
       isLoading: false,
-      user: userWithLocalProps,
+      user: userWithLocalParams,
     };
 
     const action = UserActions.getUserByIdSuccess({
-      payload: userWithLocalProps,
+      payload: userWithLocalParams,
     });
     const state = fromReducer.reducer(initialState, action);
 
@@ -309,9 +309,9 @@ describe('User reducers', () => {
     const newState: fromReducer.State = {
       ...initialState,
       isLoading: false,
-      user: userWithLocalProps,
+      user: userWithLocalParams,
     };
-    const payload = userWithLocalProps;
+    const payload = userWithLocalParams;
 
     const action = UserActions.deleteUserSuccess({ payload });
     const state = fromReducer.reducer(initialState, action);
