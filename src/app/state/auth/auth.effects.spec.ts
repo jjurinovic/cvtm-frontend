@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { provideMockActions } from '@ngrx/effects/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -64,7 +65,7 @@ describe('AuthEffects', () => {
     userServiceSpy = jasmine.createSpyObj('UsersService', ['getCurrentUser']);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
         provideMockActions(() => actions$),
         AuthEffects,
@@ -76,7 +77,6 @@ describe('AuthEffects', () => {
           provide: AuthService,
           useValue: authServiceSpy,
         },
-
         provideMockStore({
           initialState: testInitalState,
           selectors: [{ selector: selectCurrentUser, value: null }],
@@ -147,7 +147,7 @@ describe('AuthEffects', () => {
   });
 
   it('should call logout$ and navigate to /login', () => {
-    actions$ = of(logout());
+    actions$ = of(logout({}));
 
     // subscribe to execute the Effect
     effects.logout$.subscribe();

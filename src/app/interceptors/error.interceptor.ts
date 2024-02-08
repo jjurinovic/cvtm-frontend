@@ -22,7 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
-          this.store.dispatch(logout());
+          this.store.dispatch(logout({ payload: true }));
         }
         this.snackBar.error(error.error.detail || 'Server error');
         return throwError(() => error);

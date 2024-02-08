@@ -31,7 +31,10 @@ export const loginFailure = createAction(
   props<{ payload: BaseError }>()
 );
 
-export const logout = createAction(AuthActionTypes.Logout);
+export const logout = createAction(
+  AuthActionTypes.Logout,
+  props<{ payload?: boolean }>()
+);
 
 export const currentUser = createAction(AuthActionTypes.CurrentUser);
 

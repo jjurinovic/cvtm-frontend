@@ -142,7 +142,7 @@ describe('Auth reducers', () => {
     it('should return initial state', () => {
       const { initialState } = fromReducer;
 
-      const action = AuthActions.logout();
+      const action = AuthActions.logout({});
       const state = fromReducer.reducer(initialState, action);
 
       expect(state).toEqual(initialState);

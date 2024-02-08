@@ -81,6 +81,6 @@ describe('HeaderComponent', () => {
   it('should call logout', () => {
     component.logout();
 
-    expect(store.dispatch).toHaveBeenCalledWith(logout());
+    expect(store.dispatch).toHaveBeenCalledWith(logout({}));
   });
 });

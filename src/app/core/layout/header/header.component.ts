@@ -25,7 +25,7 @@ export class HeaderComponent {
   }
 
   logout(): void {
-    this.store.dispatch(logout());
+    this.store.dispatch(logout({}));
   }
 
   openDialog(): void {

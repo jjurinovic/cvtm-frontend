@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -54,10 +54,16 @@ export class AuthEffects {
           this._auth.setToken(payload.access_token);
           this._auth.setRole(payload.user.role);
 
-          if (this._auth.getRole() === Role.ROOT) {
-            this.router.navigateByUrl('/admin');
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+
+          if (returnUrl) {
+            this.router.navigateByUrl(returnUrl);
           } else {
-            this.router.navigateByUrl('/');
+            if (this._auth.getRole() === Role.ROOT) {
+              this.router.navigateByUrl('/admin');
+            } else {
+              this.router.navigateByUrl('/');
+            }
           }
         })
       ),
@@ -68,10 +74,13 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActionTypes.Logout),
-        tap(() => {
+        tap(({ payload }) => {
           this._auth.removeToken();
           this.dialog.closeAll();
-          this.router.navigateByUrl('/login');
+
+          let returnUrl = '';
+          if (payload) returnUrl = '?returnUrl=' + this.router.url;
+          this.router.navigateByUrl('/login' + returnUrl);
         })
       ),
     { dispatch: false }
@@ -116,6 +125,7 @@ export class AuthEffects {
     private router: Router,
     private _users: UsersService,
     private store: Store,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute
   ) {}
 }

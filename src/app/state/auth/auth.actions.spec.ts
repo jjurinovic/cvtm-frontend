@@ -53,7 +53,7 @@ describe('Login Fail', () => {
 
 describe('Logout', () => {
   it('should create an action', () => {
-    const action = AuthActions.logout();
+    const action = AuthActions.logout({});
 
     expect({ ...action }).toEqual({
       type: AuthActionTypes.Logout,
