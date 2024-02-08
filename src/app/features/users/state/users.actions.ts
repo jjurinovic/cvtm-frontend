@@ -151,7 +151,7 @@ export const deleteUserHard = createAction(
 
 export const deleteUserHardSuccess = createAction(
   UserActionTypes.DeleteUserHardSuccess,
-  props<{ payload: UserWithLocalProps }>()
+  props<{ payload: string }>()
 );
 
 export const deleteUserHardFail = createAction(
@@ -170,6 +170,6 @@ export const restoreSuccess = createAction(
 );
 
 export const restoreFail = createAction(
-  UserActionTypes.ChangeStatusFail,
+  UserActionTypes.RestoreFail,
   props<{ payload: BaseError }>()
 );

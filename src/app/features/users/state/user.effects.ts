@@ -315,7 +315,7 @@ export class UserEffects {
         this._user.deleteUser(payload.id).pipe(
           map((data) => ({
             type: UserActionTypes.DeleteUserHardSuccess,
-            payload: { ...data, returnUrl: payload.returnUrl },
+            payload: payload.returnUrl,
           })),
           catchError(({ error }) =>
             of({
@@ -334,8 +334,8 @@ export class UserEffects {
         ofType(UserActionTypes.DeleteUserHardSuccess),
         tap(({ payload }: any) => {
           this._snackbar.success('User successfully deleted!', 10000);
-          if (payload.returnUrl) {
-            this.router.navigateByUrl(payload.returnUrl);
+          if (payload) {
+            this.router.navigateByUrl(payload);
           }
         })
       ),

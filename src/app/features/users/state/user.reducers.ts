@@ -140,6 +140,7 @@ export const reducer = createReducer(
   on(UserActions.deleteUserHardSuccess, (state) => ({
     ...state,
     isLoading: false,
+    user: null,
   })),
   on(UserActions.deleteUserHardFail, (state, { payload }) => ({
     ...state,

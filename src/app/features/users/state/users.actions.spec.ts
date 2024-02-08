@@ -5,6 +5,7 @@ import { UserActionTypes, resetUserForm } from './users.actions';
 import { UsersRequest } from '../models/users-request';
 import { PageResponse } from 'src/app/shared/models/page-response';
 import { PasswordChange } from '../models/password-change.model';
+import { IdWithParams } from 'src/app/shared/models/id-with-params.model';
 
 const testUser: User = {
   first_name: 'test first name',
@@ -15,8 +16,18 @@ const testUser: User = {
   role: 0,
 };
 
+const testUserWithLocalProps: UserWithLocalProps = {
+  ...testUser,
+  returnUrl: '/test',
+};
+
 const testError: BaseError = {
   detail: 'test error',
+};
+
+const testIdWithParams: IdWithParams = {
+  id: 1,
+  returnUrl: '/test',
 };
 
 describe('CreateUser', () => {
@@ -216,6 +227,146 @@ describe('PasswordChangeFail', () => {
 
     expect({ ...action }).toEqual({
       type: UserActionTypes.PasswordChangeFail,
+      payload,
+    });
+  });
+});
+
+describe('ChangeStatus', () => {
+  it('should create an action', () => {
+    const action = UserActions.changeStatus({ payload: 1 });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.ChangeStatus,
+      payload: 1,
+    });
+  });
+});
+
+describe('ChangeStatusSuccess', () => {
+  it('should create an action', () => {
+    const payload = testUser;
+    const action = UserActions.changeStatusSuccess({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.ChangeStatusSuccess,
+      payload: testUser,
+    });
+  });
+});
+
+describe('ChangeStatusFail', () => {
+  it('should create an action', () => {
+    const payload: BaseError = testError;
+    const action = UserActions.changeStatusFail({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.ChangeStatusFail,
+      payload,
+    });
+  });
+});
+
+describe('DeleteUser', () => {
+  it('should create an action', () => {
+    const action = UserActions.deleteUser({ payload: testIdWithParams });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.DeleteUser,
+      payload: testIdWithParams,
+    });
+  });
+});
+
+describe('DeleteUserSuccess', () => {
+  it('should create an action', () => {
+    const payload = testUserWithLocalProps;
+    const action = UserActions.deleteUserSuccess({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.DeleteUserSuccess,
+      payload: testUserWithLocalProps,
+    });
+  });
+});
+
+describe('DeleteUserFail', () => {
+  it('should create an action', () => {
+    const payload: BaseError = testError;
+    const action = UserActions.deleteUserFail({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.DeleteUserFail,
+      payload,
+    });
+  });
+});
+
+describe('DeleteUserHard', () => {
+  it('should create an action', () => {
+    const action = UserActions.deleteUserHard({ payload: testIdWithParams });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.DeleteUserHard,
+      payload: testIdWithParams,
+    });
+  });
+});
+
+describe('DeleteUserHardSuccess', () => {
+  it('should create an action', () => {
+    const payload = '/test';
+    const action = UserActions.deleteUserHardSuccess({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.DeleteUserHardSuccess,
+      payload: '/test',
+    });
+  });
+});
+
+describe('DeleteUserHardFail', () => {
+  it('should create an action', () => {
+    const payload: BaseError = testError;
+    const action = UserActions.deleteUserHardFail({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.DeleteUserHardFail,
+      payload,
+    });
+  });
+});
+
+describe('Restore', () => {
+  it('should create an action', () => {
+    const action = UserActions.restore({ payload: 1 });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.Restore,
+      payload: 1,
+    });
+  });
+});
+
+describe('RestoreSuccess', () => {
+  it('should create an action', () => {
+    const payload = testUser;
+    const action = UserActions.restoreSuccess({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.RestoreSuccess,
+      payload: testUser,
+    });
+  });
+});
+
+describe('RestoreFail', () => {
+  it('should create an action', () => {
+    const payload: BaseError = testError;
+    const action = UserActions.restoreFail({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.RestoreFail,
       payload,
     });
   });
