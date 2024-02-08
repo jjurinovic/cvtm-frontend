@@ -45,7 +45,7 @@ export const reducer = createReducer(
   })),
   on(CompanyActions.getAllFailure, (state, { payload }) => ({
     ...state,
-    error: payload.error,
+    error: payload.detail,
     isLoading: false,
   })),
   on(CompanyActions.createCompany, (state) => ({ ...state, isLoading: true })),

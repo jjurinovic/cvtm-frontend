@@ -1,4 +1,5 @@
 import { Address } from 'src/app/shared/models/address.model';
+import { LocalParams } from 'src/app/shared/models/local-params.model';
 
 export interface Company {
   id?: number;
@@ -6,3 +7,5 @@ export interface Company {
   vat: string;
   address: Address;
 }
+
+export interface CompanyWithLocalParams extends Company, LocalParams {}

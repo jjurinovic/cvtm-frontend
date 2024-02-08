@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -15,23 +14,8 @@ export class CompanyEffects {
   getAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CompanyActionTypes.GetAll),
-      map((data: any) => {
-        let params = new HttpParams();
-        params = params.append('size', data.payload.size);
-        params = params.append('page', data.payload.page);
-
-        if (data.payload.sort) {
-          params = params.append('sort', data.payload.sort);
-          params = params.append('sort_field', data.payload.sortField);
-        }
-
-        if (data.payload.q) {
-          params = params.append('q', data.payload.q);
-        }
-        return params;
-      }),
-      exhaustMap((params) =>
-        this._company.getAllCompanies(params).pipe(
+      exhaustMap(({ payload }) =>
+        this._company.getAllCompanies(payload).pipe(
           map((data) => ({
             type: CompanyActionTypes.GetAllSuccess,
             payload: data,
@@ -147,6 +131,137 @@ export class CompanyEffects {
         ofType(CompanyActionTypes.GetCompanyByIdFail),
         tap(() => {
           this.router.navigateByUrl('/admin');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  changeStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CompanyActionTypes.ChangeStatus),
+      exhaustMap(({ payload }) =>
+        this._company.statusChange(payload).pipe(
+          map((data) => ({
+            type: CompanyActionTypes.ChangeStatusSuccess,
+            payload: data,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: CompanyActionTypes.ChangeStatusFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  changeStatusSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CompanyActionTypes.ChangeStatusSuccess),
+        tap(({ payload }: any) => {
+          this._snackbar.success('Status changed!', 10000);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteCompany$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CompanyActionTypes.DeleteCompany),
+      exhaustMap(({ payload }: any) =>
+        this._company.deleteCompanySoft(payload.id).pipe(
+          map((data) => ({
+            type: CompanyActionTypes.DeleteCompanySuccess,
+            payload: { ...data, returnUrl: payload.returnUrl },
+          })),
+          catchError(({ error }) =>
+            of({
+              type: CompanyActionTypes.DeleteCompanyFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  deleteCompanySuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CompanyActionTypes.DeleteCompanySuccess),
+        tap(({ payload }: any) => {
+          this._snackbar.success('Company successfully deleted!', 10000);
+
+          if (payload.returnUrl) {
+            this.router.navigateByUrl(payload.returnUrl);
+          }
+        })
+      ),
+    { dispatch: false }
+  );
+
+  restore$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CompanyActionTypes.Restore),
+      exhaustMap(({ payload }) =>
+        this._company.restore(payload).pipe(
+          map((data) => ({
+            type: CompanyActionTypes.RestoreSuccess,
+            payload: data,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: CompanyActionTypes.RestoreFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  restoreSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CompanyActionTypes.RestoreSuccess),
+        tap(({ payload }: any) => {
+          this._snackbar.success('Company successfully restored!', 10000);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteCompanyHard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CompanyActionTypes.DeleteCompanyHard),
+      exhaustMap(({ payload }: any) =>
+        this._company.deleteCompany(payload.id).pipe(
+          map((data) => ({
+            type: CompanyActionTypes.DeleteCompanyHardSuccess,
+            payload: payload.returnUrl,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: CompanyActionTypes.DeleteCompanyHardFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  deleteCompanyHardSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CompanyActionTypes.DeleteCompanyHardSuccess),
+        tap(({ payload }: any) => {
+          this._snackbar.success('Company successfully deleted!', 10000);
+          if (payload) {
+            this.router.navigateByUrl(payload);
+          }
         })
       ),
     { dispatch: false }
