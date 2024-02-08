@@ -123,9 +123,10 @@ export const reducer = createReducer(
     ...state,
     isLoading: true,
   })),
-  on(UserActions.deleteUserSuccess, (state) => ({
+  on(UserActions.deleteUserSuccess, (state, { payload }) => ({
     ...state,
     isLoading: false,
+    user: payload,
   })),
   on(UserActions.deleteUserFail, (state, { payload }) => ({
     ...state,

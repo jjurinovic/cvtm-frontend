@@ -242,6 +242,106 @@ export class UserEffects {
     { dispatch: false }
   );
 
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActionTypes.DeleteUser),
+      exhaustMap(({ payload }: any) =>
+        this._user.deleteUserSoft(payload.id).pipe(
+          map((data) => ({
+            type: UserActionTypes.DeleteUserSuccess,
+            payload: { ...data, returnUrl: payload.returnUrl },
+          })),
+          catchError(({ error }) =>
+            of({
+              type: UserActionTypes.DeleteUserFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  deleteUserSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActionTypes.DeleteUserSuccess),
+        tap(({ payload }: any) => {
+          this._snackbar.success('User successfully deleted!', 10000);
+
+          if (payload.returnUrl) {
+            this.router.navigateByUrl(payload.returnUrl);
+          }
+        })
+      ),
+    { dispatch: false }
+  );
+
+  restore$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActionTypes.Restore),
+      exhaustMap(({ payload }) =>
+        this._user.restore(payload).pipe(
+          map((data) => ({
+            type: UserActionTypes.RestoreSuccess,
+            payload: data,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: UserActionTypes.RestoreFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  restoreSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActionTypes.RestoreSuccess),
+        tap(({ payload }: any) => {
+          this._snackbar.success('User successfully restored!', 10000);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteUserHard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActionTypes.DeleteUserHard),
+      exhaustMap(({ payload }: any) =>
+        this._user.deleteUser(payload.id).pipe(
+          map((data) => ({
+            type: UserActionTypes.DeleteUserHardSuccess,
+            payload: { ...data, returnUrl: payload.returnUrl },
+          })),
+          catchError(({ error }) =>
+            of({
+              type: UserActionTypes.DeleteUserHardFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  deleteUserHardSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActionTypes.DeleteUserHardSuccess),
+        tap(({ payload }: any) => {
+          this._snackbar.success('User successfully deleted!', 10000);
+          if (payload.returnUrl) {
+            this.router.navigateByUrl(payload.returnUrl);
+          }
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private _user: UsersService,

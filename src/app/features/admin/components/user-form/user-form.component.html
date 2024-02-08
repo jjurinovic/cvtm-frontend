@@ -157,26 +157,44 @@
       [color]="form.get('inactive')?.value ? 'primary' : 'warn'"
       type="button"
       id="user-toggle-status"
-      (click)="toggleStatus()"
+      (click)="openDialog('status')"
     >
       {{ form.get("inactive")?.value ? "Activate" : "Deactivate" }}
     </button>
 
     <!-- Soft delete  -->
-    <button mat-flat-button color="warn" type="button" id="user-soft-delete">
+    <button
+      mat-flat-button
+      color="warn"
+      type="button"
+      id="user-soft-delete"
+      (click)="openDialog('delete')"
+    >
       Delete
     </button>
     }
 
     <!-- Restore -->
     @if (form.get('deleted')?.value) {
-    <button mat-flat-button color="primary" type="button" id="restore">
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      id="restore"
+      (click)="openDialog('restore')"
+    >
       Restore
     </button>
     }
 
     <!-- Hard delete  -->
-    <button mat-flat-button color="warn" type="button" id="user-hard-delete">
+    <button
+      mat-flat-button
+      color="warn"
+      type="button"
+      id="user-hard-delete"
+      (click)="openDialog('deleteHard')"
+    >
       Delete (No Undo)
     </button>
     }

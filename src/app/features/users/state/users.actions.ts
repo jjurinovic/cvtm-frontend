@@ -5,6 +5,7 @@ import { PageResponse } from 'src/app/shared/models/page-response';
 import { BaseError } from 'src/app/shared/models/error';
 import { UsersRequest } from '../models/users-request';
 import { PasswordChange } from '../models/password-change.model';
+import { IdWithParams } from 'src/app/shared/models/id-with-params.model';
 
 export enum UserActionTypes {
   CreateUser = '[User] Create New User',
@@ -130,12 +131,12 @@ export const changeStatusFail = createAction(
 
 export const deleteUser = createAction(
   UserActionTypes.DeleteUser,
-  props<{ payload: number }>()
+  props<{ payload: IdWithParams }>()
 );
 
 export const deleteUserSuccess = createAction(
   UserActionTypes.DeleteUserSuccess,
-  props<{ payload: any }>()
+  props<{ payload: UserWithLocalProps }>()
 );
 
 export const deleteUserFail = createAction(
@@ -145,12 +146,12 @@ export const deleteUserFail = createAction(
 
 export const deleteUserHard = createAction(
   UserActionTypes.DeleteUserHard,
-  props<{ payload: number }>()
+  props<{ payload: IdWithParams }>()
 );
 
 export const deleteUserHardSuccess = createAction(
   UserActionTypes.DeleteUserHardSuccess,
-  props<{ payload: any }>()
+  props<{ payload: UserWithLocalProps }>()
 );
 
 export const deleteUserHardFail = createAction(

@@ -3,11 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { MatDialog } from '@angular/material/dialog';
+
 import { Role } from 'src/app/features/users/enums/role.enum';
 import * as UserActions from '../../../users/state/users.actions';
 import { selectUserData } from 'src/app/features/users/state/user.selectors';
 import { User } from 'src/app/features/users/models/user.model';
 import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-user-form',
@@ -20,10 +23,13 @@ export class UserFormComponent implements OnDestroy {
   companyId?: number;
   currentUser!: User;
 
+  private returnUrl?: string;
+
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) {
     this.form = this.fb.group({
       first_name: [null, Validators.required],
@@ -45,6 +51,8 @@ export class UserFormComponent implements OnDestroy {
     this.route.params.subscribe((params) => {
       this.userId = params['id'];
       this.companyId = params['companyId'];
+
+      this.returnUrl = `/admin/company/${this.companyId}/edit`;
 
       if (this.userId) {
         this.store.dispatch(UserActions.getUserById({ payload: this.userId }));
@@ -78,7 +86,7 @@ export class UserFormComponent implements OnDestroy {
             payload: {
               ...this.form.value,
               id: this.userId,
-              returnUrl: `/admin/company/${this.companyId}/edit`,
+              returnUrl: this.returnUrl,
               myId: this.currentUser.id,
             },
           })
@@ -90,12 +98,46 @@ export class UserFormComponent implements OnDestroy {
               ...this.form.value,
               role: this.form.value.role,
               company_id: this.companyId,
-              returnUrl: `/admin/company/${this.companyId}/edit`,
+              returnUrl: this.returnUrl,
             },
           })
         );
       }
     }
+  }
+
+  openDialog(type: string): void {
+    let title: string = '';
+    let message: string = '';
+    let action: any;
+
+    if (type === 'restore') {
+      title = 'Restore User';
+      message = 'Are you sure you want to restore deleted user?';
+      action = this.restore.bind(this);
+    } else if (type === 'delete') {
+      title = 'Delete User';
+      message = 'Are you sure you want to delete user?';
+      action = this.deleteUser.bind(this);
+    } else if (type === 'deleteHard') {
+      title = 'Delete User (NO UNDO)';
+      message = 'Are you sure you want to delete user without undo?';
+      action = this.deleteHard.bind(this);
+    } else if (type === 'status') {
+      title = this.form.get('inactive')?.value ? 'Activate' : 'Deactivate';
+      message = `Are you sure you want to ${title} user?`;
+      action = this.toggleStatus.bind(this);
+    }
+
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title,
+        message,
+        onYes: () => {
+          action();
+        },
+      },
+    });
   }
 
   toggleStatus(): void {
@@ -104,5 +146,32 @@ export class UserFormComponent implements OnDestroy {
         UserActions.changeStatus({ payload: this.userId as number })
       );
     }
+  }
+
+  deleteUser(): void {
+    this.store.dispatch(
+      UserActions.deleteUser({
+        payload: {
+          id: this.userId as number,
+        },
+      })
+    );
+  }
+
+  restore(): void {
+    this.store.dispatch(
+      UserActions.restore({ payload: this.userId as number })
+    );
+  }
+
+  deleteHard(): void {
+    this.store.dispatch(
+      UserActions.deleteUserHard({
+        payload: {
+          id: this.userId as number,
+          returnUrl: this.returnUrl,
+        },
+      })
+    );
   }
 }
