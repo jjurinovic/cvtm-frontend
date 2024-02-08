@@ -54,7 +54,11 @@ export class UserFormComponent implements OnDestroy {
     this.store.select(selectUserData).subscribe((user) => {
       if (user) this.form.patchValue(user);
 
-      if (user?.inactive || user?.deleted) this.form.disable();
+      if (user?.inactive || user?.deleted) {
+        this.form.disable();
+      } else {
+        this.form.enable();
+      }
     });
 
     this.store
@@ -91,6 +95,14 @@ export class UserFormComponent implements OnDestroy {
           })
         );
       }
+    }
+  }
+
+  toggleStatus(): void {
+    if (!this.form.get('deleted')?.value) {
+      this.store.dispatch(
+        UserActions.changeStatus({ payload: this.userId as number })
+      );
     }
   }
 }

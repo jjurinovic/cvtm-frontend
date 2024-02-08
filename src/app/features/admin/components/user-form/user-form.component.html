@@ -147,6 +147,8 @@
     </button>
     }
 
+    <!-- Buttons only if user exists -->
+    @if (userId) {
     <!-- Buttons -->
     @if(!form.get('deleted')?.value) {
     <!-- Activate/Deactivate -->
@@ -155,6 +157,7 @@
       [color]="form.get('inactive')?.value ? 'primary' : 'warn'"
       type="button"
       id="user-toggle-status"
+      (click)="toggleStatus()"
     >
       {{ form.get("inactive")?.value ? "Activate" : "Deactivate" }}
     </button>
@@ -176,5 +179,6 @@
     <button mat-flat-button color="warn" type="button" id="user-hard-delete">
       Delete (No Undo)
     </button>
+    }
   </form>
 </mat-card>

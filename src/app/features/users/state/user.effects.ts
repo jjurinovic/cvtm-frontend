@@ -211,6 +211,37 @@ export class UserEffects {
     { dispatch: false }
   );
 
+  changeStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActionTypes.ChangeStatus),
+      exhaustMap(({ payload }) =>
+        this._user.statusChange(payload).pipe(
+          map((data) => ({
+            type: UserActionTypes.ChangeStatusSuccess,
+            payload: data,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: UserActionTypes.ChangeStatusFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  changeStatusSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActionTypes.ChangeStatusSuccess),
+        tap(({ payload }: any) => {
+          this._snackbar.success('Status changed!', 10000);
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private _user: UsersService,
