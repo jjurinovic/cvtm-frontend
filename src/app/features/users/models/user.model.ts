@@ -14,6 +14,8 @@ export interface User {
   created_date?: string;
   updated_date?: string;
   password_changed?: boolean;
+  deleted?: boolean;
+  inactive?: boolean;
 }
 
 export interface UserWithLocalProps extends User {
