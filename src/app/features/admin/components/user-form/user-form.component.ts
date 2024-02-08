@@ -30,6 +30,8 @@ export class UserFormComponent implements OnDestroy {
       last_name: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       role: [Role.USER],
+      inactive: [false],
+      deleted: [false],
       address: this.fb.group({
         address1: [null, Validators.required],
         address2: [null],
@@ -51,6 +53,8 @@ export class UserFormComponent implements OnDestroy {
 
     this.store.select(selectUserData).subscribe((user) => {
       if (user) this.form.patchValue(user);
+
+      if (user?.inactive || user?.deleted) this.form.disable();
     });
 
     this.store

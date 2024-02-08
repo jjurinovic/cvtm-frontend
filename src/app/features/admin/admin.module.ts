@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminRoutingModule } from './admin.routing';
@@ -45,6 +46,7 @@ import { RolePipe } from 'src/app/shared/pipes/role.pipe';
     RolePipe,
     MatSelectModule,
     MatChipsModule,
+    MatSlideToggleModule,
   ],
 })
 export class AdminModule {}

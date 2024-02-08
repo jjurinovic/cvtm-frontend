@@ -1,4 +1,11 @@
 <mat-card class="user-form">
+  @if(form.get('inactive')?.value) {
+  <div class="form-error">User is inactive</div>
+  } @if(form.get('deleted')?.value) {
+  <div class="form-error">
+    User is deleted. Please restore user if you want to modify user!
+  </div>
+  }
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="company-create__basic">
       <h4 class="form-title">User Info</h4>
@@ -133,8 +140,41 @@
       </div>
     </div>
 
-    <button mat-flat-button color="primary" type="submit" id="company-submit">
+    <!-- Save -->
+    @if(!form.get('inactive')?.value && !form.get('deleted')?.value || !form) {
+    <button mat-flat-button color="primary" type="submit" id="user-submit">
       Save
+    </button>
+    }
+
+    <!-- Buttons -->
+    @if(!form.get('deleted')?.value) {
+    <!-- Activate/Deactivate -->
+    <button
+      mat-flat-button
+      [color]="form.get('inactive')?.value ? 'primary' : 'warn'"
+      type="button"
+      id="user-toggle-status"
+    >
+      {{ form.get("inactive")?.value ? "Activate" : "Deactivate" }}
+    </button>
+
+    <!-- Soft delete  -->
+    <button mat-flat-button color="warn" type="button" id="user-soft-delete">
+      Delete
+    </button>
+    }
+
+    <!-- Restore -->
+    @if (form.get('deleted')?.value) {
+    <button mat-flat-button color="primary" type="button" id="restore">
+      Restore
+    </button>
+    }
+
+    <!-- Hard delete  -->
+    <button mat-flat-button color="warn" type="button" id="user-hard-delete">
+      Delete (No Undo)
     </button>
   </form>
 </mat-card>
