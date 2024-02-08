@@ -1,34 +1,16 @@
 import { BaseError } from 'src/app/shared/models/error.model';
 import { User, UserWithLocalProps } from '../models/user.model';
 import * as UserActions from './users.actions';
-import { UserActionTypes, resetUserForm } from './users.actions';
+import { UserActionTypes } from './users.actions';
 import { UsersRequest } from '../models/users-request';
 import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { PasswordChange } from '../models/password-change.model';
-import { IdWithParams } from 'src/app/shared/models/id-with-params.model';
-
-const testUser: User = {
-  first_name: 'test first name',
-  last_name: 'test last name',
-  company_id: 1,
-  email: 'test@email.com',
-  id: 999,
-  role: 0,
-};
-
-const testUserWithLocalProps: UserWithLocalProps = {
-  ...testUser,
-  returnUrl: '/test',
-};
-
-const testError: BaseError = {
-  detail: 'test error',
-};
-
-const testIdWithParams: IdWithParams = {
-  id: 1,
-  returnUrl: '/test',
-};
+import {
+  testError,
+  testIdWithParams,
+  testUser,
+  userWithLocalProps,
+} from '../../../../test-data/data';
 
 describe('CreateUser', () => {
   it('should create an action', () => {
@@ -280,12 +262,12 @@ describe('DeleteUser', () => {
 
 describe('DeleteUserSuccess', () => {
   it('should create an action', () => {
-    const payload = testUserWithLocalProps;
+    const payload = userWithLocalProps;
     const action = UserActions.deleteUserSuccess({ payload });
 
     expect({ ...action }).toEqual({
       type: UserActionTypes.DeleteUserSuccess,
-      payload: testUserWithLocalProps,
+      payload: userWithLocalProps,
     });
   });
 });

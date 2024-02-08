@@ -15,19 +15,13 @@ import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
 import { AuthService } from '../../services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { PageTitleComponent } from '../page-title/page-title.component';
+import { initialState } from '../../../state/auth/auth.reducers';
 
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
   let store: MockStore;
   let service: AuthService;
-
-  const initialState = {
-    isLoggedIn: false,
-    error: null,
-    isLoading: false,
-    user: null,
-  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

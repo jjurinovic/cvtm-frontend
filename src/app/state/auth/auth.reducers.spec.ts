@@ -1,14 +1,6 @@
 import * as fromReducer from './auth.reducers';
 import * as AuthActions from './auth.actions';
-
-const testUser = {
-  first_name: 'test first name',
-  last_name: 'test last name',
-  company_id: 1,
-  email: 'test@email.com',
-  id: 999,
-  role: 0,
-};
+import { testUser } from 'src/test-data/data';
 
 describe('Auth reducers', () => {
   describe('unknown action', () => {

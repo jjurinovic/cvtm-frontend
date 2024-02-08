@@ -1,3 +1,4 @@
+import { testUser } from 'src/test-data/data';
 import {
   selectCurrentUser,
   selectError,
@@ -10,13 +11,7 @@ describe('Auth Selectors', () => {
     isLoggedIn: false,
     error: 'this is error',
     isLoading: false,
-    user: {
-      name: 'test user',
-      company_id: 1,
-      email: 'test@email.com',
-      id: 999,
-      role: 0,
-    },
+    user: testUser,
   };
 
   it('should selectIsLoggedIn return false', () => {
@@ -36,12 +31,6 @@ describe('Auth Selectors', () => {
 
   it('should selectCurrentUser return loading state', () => {
     expect(selectCurrentUser.projector(state)).toBeDefined();
-    expect(selectCurrentUser.projector(state)).toEqual({
-      name: 'test user',
-      company_id: 1,
-      email: 'test@email.com',
-      id: 999,
-      role: 0,
-    });
+    expect(selectCurrentUser.projector(state)).toEqual(testUser);
   });
 });

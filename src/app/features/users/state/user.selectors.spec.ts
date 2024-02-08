@@ -1,3 +1,4 @@
+import { testUser } from 'src/test-data/data';
 import { State } from './user.reducers';
 import {
   selectAllUsers,
@@ -22,39 +23,14 @@ describe('User Selectors', () => {
     sort: 'asc',
     sortField: 'testField',
     total: 1,
-    user: {
-      first_name: 'test first name',
-      last_name: 'test last name',
-      company_id: 1,
-      email: 'test@email.com',
-      id: 999,
-      role: 0,
-    },
-    users: [
-      {
-        first_name: 'test first name',
-        last_name: 'test last name',
-        company_id: 1,
-        email: 'test@email.com',
-        id: 999,
-        role: 0,
-      },
-    ],
+    user: testUser,
+    users: [testUser],
   };
 
   it('should selectAllUsers return users array', () => {
     expect(selectAllUsers.projector(state)).toBeDefined();
     expect(selectAllUsers.projector(state).length).toEqual(1);
-    expect(selectAllUsers.projector(state)).toEqual([
-      {
-        first_name: 'test first name',
-        last_name: 'test last name',
-        company_id: 1,
-        email: 'test@email.com',
-        id: 999,
-        role: 0,
-      },
-    ]);
+    expect(selectAllUsers.projector(state)).toEqual([testUser]);
   });
 
   it('should selectTotalUsers return total number of users', () => {
@@ -89,14 +65,7 @@ describe('User Selectors', () => {
 
   it('should selectUserData return user', () => {
     expect(selectUserData.projector(state)).toBeDefined();
-    expect(selectUserData.projector(state)).toEqual({
-      first_name: 'test first name',
-      last_name: 'test last name',
-      company_id: 1,
-      email: 'test@email.com',
-      id: 999,
-      role: 0,
-    });
+    expect(selectUserData.projector(state)).toEqual(testUser);
   });
 
   it('should selectError return error', () => {

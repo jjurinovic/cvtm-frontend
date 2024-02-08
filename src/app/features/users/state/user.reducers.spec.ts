@@ -1,29 +1,11 @@
-import { BaseError } from 'src/app/shared/models/error.model';
-import { User, UserWithLocalProps } from '../models/user.model';
 import * as fromReducer from './user.reducers';
 import * as UserActions from './users.actions';
-import { IdWithParams } from 'src/app/shared/models/id-with-params.model';
-
-const testUser: User = {
-  first_name: 'test first name',
-  last_name: 'test last name',
-  company_id: 1,
-  email: 'test@email.com',
-  id: 999,
-  role: 0,
-};
-
-const userWithLocalProps: UserWithLocalProps = {
-  ...testUser,
-  returnUrl: '/test',
-};
-
-const testIdWithParams: IdWithParams = {
-  id: 999,
-  returnUrl: '/test',
-};
-
-const testError: BaseError = { detail: 'test error' };
+import {
+  testError,
+  testIdWithParams,
+  testUser,
+  userWithLocalProps,
+} from 'src/test-data/data';
 
 describe('User reducers', () => {
   const { initialState } = fromReducer;

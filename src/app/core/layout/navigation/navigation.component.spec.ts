@@ -11,18 +11,13 @@ import { NavigationComponent } from './navigation.component';
 import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
 import { AuthService } from '../../services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
+import { testLinks } from 'src/test-data/data';
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
   let fixture: ComponentFixture<NavigationComponent>;
   let service: AuthService;
   let store: MockStore;
-
-  const testLinks = [
-    { link: 'test1', title: 'Test 1' },
-    { link: 'test2', title: 'Test 2', excludeRole: Role.MODERATOR },
-    { link: 'test3', title: 'Test 3', minRole: Role.ROOT },
-  ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

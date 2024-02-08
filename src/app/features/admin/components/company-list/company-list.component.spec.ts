@@ -1,48 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSortModule } from '@angular/material/sort';
-import { ReactiveFormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
 
 import { CompanyListComponent } from './company-list.component';
-import { Company } from 'src/app/features/company/models/company.model';
 import { RouterTestingModule } from '@angular/router/testing';
+import { testCompanies } from 'src/test-data/data';
 
 describe('CompanyListComponent', () => {
   let component: CompanyListComponent;
   let fixture: ComponentFixture<CompanyListComponent>;
   let store: MockStore;
-  let testCompanies: Company[] = [
-    {
-      name: 'test1',
-      vat: 'test1',
-      address: {
-        address1: 'address1 test 1',
-        address2: 'address2 test 1',
-        city: 'city test 1',
-        postcode: 'postcode test 1',
-        county: 'county test 1',
-        country: 'country test 1',
-      },
-    },
-    {
-      name: 'test1',
-      vat: 'test2',
-      address: {
-        address1: 'address1 test 2',
-        address2: 'address2 test 2',
-        city: 'city test 2',
-        postcode: 'postcode test 2',
-        county: 'county test 2',
-        country: 'country test 2',
-      },
-    },
-  ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

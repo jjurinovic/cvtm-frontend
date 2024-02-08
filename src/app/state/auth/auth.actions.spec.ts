@@ -4,6 +4,7 @@ import { AuthActionTypes } from './auth.actions';
 import { AuthResponse } from 'src/app/core/models/auth-response.model';
 import { BaseError } from 'src/app/shared/models/error.model';
 import { User } from 'src/app/features/users/models/user.model';
+import { testError, testUser } from 'src/test-data/data';
 
 describe('Login', () => {
   it('should create an action', () => {
@@ -21,14 +22,7 @@ describe('Login Success', () => {
   it('should create an action', () => {
     const payload: AuthResponse = {
       access_token: 'token',
-      user: {
-        first_name: 'test first name',
-        last_name: 'test last name',
-        company_id: 1,
-        email: 'test@email.com',
-        id: 999,
-        role: 0,
-      },
+      user: testUser,
     };
     const action = AuthActions.loginSuccess({ payload });
 
@@ -41,7 +35,7 @@ describe('Login Success', () => {
 
 describe('Login Fail', () => {
   it('should create an action', () => {
-    const payload: BaseError = { detail: 'This is error' };
+    const payload: BaseError = testError;
     const action = AuthActions.loginFailure({ payload });
 
     expect({ ...action }).toEqual({
@@ -73,14 +67,7 @@ describe('Current User', () => {
 
 describe('Current User Success', () => {
   it('should create an action', () => {
-    const payload: User = {
-      first_name: 'test first name',
-      last_name: 'test last name',
-      company_id: 1,
-      email: 'test@email.com',
-      id: 999,
-      role: 0,
-    };
+    const payload: User = testUser;
     const action = AuthActions.currentUserSuccess({ payload });
 
     expect({ ...action }).toEqual({
@@ -92,7 +79,7 @@ describe('Current User Success', () => {
 
 describe('Current User Fail', () => {
   it('should create an action', () => {
-    const payload: BaseError = { detail: 'This is error' };
+    const payload: BaseError = testError;
     const action = AuthActions.currentUserFail({ payload });
 
     expect({ ...action }).toEqual({

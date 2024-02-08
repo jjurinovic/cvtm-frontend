@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { provideMockActions } from '@ngrx/effects/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Action } from '@ngrx/store';
-import { Observable, catchError, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { AuthEffects } from './auth.effects';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -18,32 +18,12 @@ import {
   loginSuccess,
   logout,
 } from './auth.actions';
-import { AuthResponse } from 'src/app/core/models/auth-response.model';
 import { Auth } from 'src/app/core/models/auth.model';
-import { BaseError } from 'src/app/shared/models/error.model';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { UsersService } from 'src/app/features/users/services/users.service';
-import { initialState } from '../../features/users/state/user.reducers';
-import { User } from 'src/app/features/users/models/user.model';
 import { selectCurrentUser } from './auth.selectors';
-
-const testUser: User = {
-  first_name: 'test user',
-  last_name: 'test user',
-  company_id: 1,
-  email: 'test@email.com',
-  id: 999,
-  role: 0,
-};
-
-const testAuthResponse: AuthResponse = {
-  access_token: 'test',
-  user: testUser,
-};
-
-const testError: BaseError = { detail: 'test error' };
-
-const testInitalState = { ...initialState };
+import { initialState } from './auth.reducers';
+import { testAuthResponse, testError, testUser } from 'src/test-data/data';
 
 describe('AuthEffects', () => {
   let actions$: Observable<Action>;
@@ -78,7 +58,7 @@ describe('AuthEffects', () => {
           useValue: authServiceSpy,
         },
         provideMockStore({
-          initialState: testInitalState,
+          initialState: initialState,
           selectors: [{ selector: selectCurrentUser, value: null }],
         }),
       ],

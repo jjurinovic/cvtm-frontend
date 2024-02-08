@@ -8,68 +8,27 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
-import { User, UserWithLocalProps } from '../models/user.model';
+import { UserWithLocalProps } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error.model';
-import { State, initialState } from './user.reducers';
 import { UserEffects } from './user.effects';
 import { UsersService } from '../services/users.service';
 import { selectCurrentUser } from '../../../state/auth/auth.selectors';
-import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { UsersRequest } from '../models/users-request';
 import * as UserActions from './users.actions';
-import { UserActionTypes, deleteUser, restore } from './users.actions';
+import { UserActionTypes } from './users.actions';
 import { PasswordChange } from '../models/password-change.model';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AuthActionTypes } from 'src/app/state/auth/auth.actions';
-import { IdWithParams } from 'src/app/shared/models/id-with-params.model';
-
-const testUser: User = {
-  first_name: 'test user',
-  last_name: 'test user',
-  company_id: 1,
-  email: 'test@email.com',
-  id: 999,
-  role: 0,
-};
-
-const userWithLocalProps: UserWithLocalProps = {
-  ...testUser,
-  returnUrl: '/test',
-  myId: 1,
-};
-
-const testUsersRequest: UsersRequest = {
-  companyId: 999,
-  page: 1,
-  size: 2,
-  sort: 'asc',
-  sortField: 'name',
-  q: 'test',
-};
-
-const testPageResponse: PageResponse<User> = {
-  results: [testUser],
-  size: 10,
-  page: 1,
-  total: 1,
-  sort: 'asc',
-  sort_field: 'name',
-  q: 'test',
-};
-
-const testError: BaseError = { detail: 'test error' };
-
-const testInitialState: State = { ...initialState };
-
-const passChangeObj: PasswordChange = {
-  old_password: 'old',
-  new_password: 'new',
-};
-
-const testIdWithParams: IdWithParams = {
-  id: 999,
-  returnUrl: '/test',
-};
+import { initialState } from './user.reducers';
+import {
+  passChangeObj,
+  testError,
+  testIdWithParams,
+  testPageResponse,
+  testUser,
+  testUsersRequest,
+  userWithLocalProps,
+} from 'src/test-data/data';
 
 describe('UserEffects', () => {
   let actions$: Observable<Action>;
@@ -103,7 +62,7 @@ describe('UserEffects', () => {
           useValue: userServiceSpy,
         },
         provideMockStore({
-          initialState: testInitialState,
+          initialState: initialState,
           selectors: [{ selector: selectCurrentUser, value: null }],
         }),
       ],

@@ -9,18 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { HeaderComponent } from './header.component';
 import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
-import { User } from 'src/app/features/users/models/user.model';
-import { Role } from 'src/app/features/users/enums/role.enum';
 import { logout } from 'src/app/state/auth/auth.actions';
-
-const testUser: User = {
-  id: 2,
-  first_name: 'test first name',
-  last_name: 'test last name',
-  email: 'abc@test.com',
-  role: Role.ADMIN,
-  company_id: 1,
-};
+import { testUser } from 'src/test-data/data';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;

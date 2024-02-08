@@ -1,39 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
+import { ActivatedRoute } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 
 import { CompanyFormComponent } from './company-form.component';
-import { Company } from 'src/app/features/company/models/company.model';
-import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { UserListComponent } from '../user-list/user-list.component';
+import { testCompany } from 'src/test-data/data';
 
 describe('CompanyFormComponent', () => {
   let component: CompanyFormComponent;
   let fixture: ComponentFixture<CompanyFormComponent>;
   let store: MockStore;
-
-  const testCompany: Company = {
-    name: 'test company',
-    vat: '1234',
-    address: {
-      address1: 'test address1',
-      address2: 'test address2',
-      city: 'test city',
-      postcode: 'test postcode',
-      county: 'test county',
-      country: 'test country',
-    },
-  };
 
   const requiredFields = ['name', 'address1', 'city', 'postcode', 'country'];
 
