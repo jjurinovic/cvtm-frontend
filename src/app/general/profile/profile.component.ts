@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
 
+import { MatDialog } from '@angular/material/dialog';
+
 import { User } from 'src/app/features/users/models/user.model';
 import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import * as UserActions from '../../features/users/state/users.actions';
 import { Role } from 'src/app/features/users/enums/role.enum';
-import { MatDialog } from '@angular/material/dialog';
 import { PasswordChangeDialogComponent } from '../password-change-dialog/password-change-dialog.component';
 
 @Component({
@@ -44,10 +45,6 @@ export class ProfileComponent {
         });
       }
     });
-
-    this.store
-      .select(selectCurrentUser)
-      .subscribe((user) => (this.currentUser = user));
   }
 
   public submit(): void {
@@ -58,7 +55,7 @@ export class ProfileComponent {
             ...this.form.value,
             id: this.user.id,
             company_id: this.user.company_id,
-            myId: this.currentUser.id,
+            myId: this.user.id,
           },
         })
       );
