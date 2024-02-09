@@ -6,6 +6,7 @@ export interface Company {
   name: string;
   vat: string;
   address: Address;
+  inactive: boolean;
 }
 
 export interface CompanyWithLocalParams extends Company, LocalParams {}
