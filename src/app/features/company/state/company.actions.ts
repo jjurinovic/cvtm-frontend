@@ -24,12 +24,7 @@ export enum CompanyActionTypes {
   DeleteCompany = '[Company] Delete company',
   DeleteCompanySuccess = '[Company] Delete company Success',
   DeleteCompanyFail = '[Company] Delete company Fail',
-  DeleteCompanyHard = '[Company] Delete company HARD',
-  DeleteCompanyHardSuccess = '[Company] Delete company HARD Success',
-  DeleteCompanyHardFail = '[Company] Delete company HARD Fail',
-  Restore = '[Company] Restore company',
-  RestoreSuccess = '[Company] Restore company Success',
-  RestoreFail = '[Company] Restore company Fail',
+  ResetCompanyForm = '[Company] Reset form',
 }
 
 export const getAll = createAction(
@@ -122,32 +117,6 @@ export const deleteCompanyFail = createAction(
   props<{ payload: BaseError }>()
 );
 
-export const deleteCompanyHard = createAction(
-  CompanyActionTypes.DeleteCompanyHard,
-  props<{ payload: IdWithParams }>()
-);
-
-export const deleteCompanyHardSuccess = createAction(
-  CompanyActionTypes.DeleteCompanyHardSuccess,
-  props<{ payload: string }>()
-);
-
-export const deleteCompanyHardFail = createAction(
-  CompanyActionTypes.DeleteCompanyHardFail,
-  props<{ payload: BaseError }>()
-);
-
-export const restore = createAction(
-  CompanyActionTypes.Restore,
-  props<{ payload: number }>()
-);
-
-export const restoreSuccess = createAction(
-  CompanyActionTypes.RestoreSuccess,
-  props<{ payload: Company }>()
-);
-
-export const restoreFail = createAction(
-  CompanyActionTypes.RestoreFail,
-  props<{ payload: BaseError }>()
+export const resetCompanyForm = createAction(
+  CompanyActionTypes.ResetCompanyForm
 );

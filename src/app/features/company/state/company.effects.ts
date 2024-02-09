@@ -171,7 +171,7 @@ export class CompanyEffects {
     this.actions$.pipe(
       ofType(CompanyActionTypes.DeleteCompany),
       exhaustMap(({ payload }: any) =>
-        this._company.deleteCompanySoft(payload.id).pipe(
+        this._company.deleteCompany(payload.id).pipe(
           map((data) => ({
             type: CompanyActionTypes.DeleteCompanySuccess,
             payload: { ...data, returnUrl: payload.returnUrl },
@@ -196,71 +196,6 @@ export class CompanyEffects {
 
           if (payload.returnUrl) {
             this.router.navigateByUrl(payload.returnUrl);
-          }
-        })
-      ),
-    { dispatch: false }
-  );
-
-  restore$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CompanyActionTypes.Restore),
-      exhaustMap(({ payload }) =>
-        this._company.restore(payload).pipe(
-          map((data) => ({
-            type: CompanyActionTypes.RestoreSuccess,
-            payload: data,
-          })),
-          catchError(({ error }) =>
-            of({
-              type: CompanyActionTypes.RestoreFail,
-              payload: error,
-            })
-          )
-        )
-      )
-    )
-  );
-
-  restoreSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(CompanyActionTypes.RestoreSuccess),
-        tap(({ payload }: any) => {
-          this._snackbar.success('Company successfully restored!', 10000);
-        })
-      ),
-    { dispatch: false }
-  );
-
-  deleteCompanyHard$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CompanyActionTypes.DeleteCompanyHard),
-      exhaustMap(({ payload }: any) =>
-        this._company.deleteCompany(payload.id).pipe(
-          map((data) => ({
-            type: CompanyActionTypes.DeleteCompanyHardSuccess,
-            payload: payload.returnUrl,
-          })),
-          catchError(({ error }) =>
-            of({
-              type: CompanyActionTypes.DeleteCompanyHardFail,
-              payload: error,
-            })
-          )
-        )
-      )
-    )
-  );
-
-  deleteCompanyHardSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(CompanyActionTypes.DeleteCompanyHardSuccess),
-        tap(({ payload }: any) => {
-          this._snackbar.success('Company successfully deleted!', 10000);
-          if (payload) {
-            this.router.navigateByUrl(payload);
           }
         })
       ),

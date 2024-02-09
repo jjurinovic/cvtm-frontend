@@ -76,5 +76,29 @@ export const reducer = createReducer(
   on(CompanyActions.updateCompanyFail, (state) => ({
     ...state,
     isLoading: false,
+  })),
+  on(CompanyActions.deleteCompany, (state) => ({ ...state, isLoading: true })),
+  on(CompanyActions.deleteCompanySuccess, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(CompanyActions.deleteCompanyFail, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(CompanyActions.changeStatus, (state) => ({ ...state, isLoading: true })),
+  on(CompanyActions.changeStatusSuccess, (state, { payload }) => ({
+    ...state,
+    isLoading: false,
+    currentCompany: payload,
+  })),
+  on(CompanyActions.changeStatusFail, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(CompanyActions.resetCompanyForm, (state) => ({
+    ...state,
+    isLoading: false,
+    currentCompany: null,
   }))
 );
