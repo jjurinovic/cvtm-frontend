@@ -8,6 +8,9 @@
   >
     <mat-tab label="Info"
       ><div class="tab-content">
+        @if(form.get('inactive')?.value) {
+        <div class="form-error">Company is inactive</div>
+        }
         <form [formGroup]="form" (ngSubmit)="submit()">
           <div class="company-create__basic">
             <h4 class="form-title">Company Info</h4>
@@ -120,9 +123,34 @@
             color="primary"
             type="submit"
             id="company-submit"
+            [disabled]="form.get('inactive')?.value"
           >
             Save
           </button>
+
+          @if (companyId) {
+          <!-- Activate/Deactivate -->
+          <button
+            mat-flat-button
+            [color]="form.get('inactive')?.value ? 'primary' : 'warn'"
+            type="button"
+            id="user-toggle-status"
+            (click)="openDialog('status')"
+          >
+            {{ form.get("inactive")?.value ? "Activate" : "Deactivate" }}
+          </button>
+
+          <!-- Hard delete  -->
+          <button
+            mat-flat-button
+            color="warn"
+            type="button"
+            id="user-hard-delete"
+            (click)="openDialog('delete')"
+          >
+            Delete (No Undo)
+          </button>
+          }
         </form>
       </div></mat-tab
     >
@@ -130,7 +158,10 @@
     <mat-tab label="Users">
       <mat-card class="company-users">
         <div class="tab-content">
-          <app-user-list [companyId]="companyId"></app-user-list>
+          <app-user-list
+            [companyId]="companyId"
+            [companyInactive]="form.get('inactive')?.value"
+          ></app-user-list>
         </div>
       </mat-card>
     </mat-tab>

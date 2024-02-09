@@ -45,6 +45,7 @@ export class UserListComponent {
   private debounceTime = 500;
 
   @Input() companyId!: number;
+  @Input() companyInactive: boolean = false;
   @ViewChild('input') input?: ElementRef;
 
   constructor(private store: Store) {}

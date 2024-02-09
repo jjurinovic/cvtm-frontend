@@ -1,7 +1,12 @@
 <div class="user-list">
+  @if (!companyInactive) {
+  <!-- Add Company-->
   <a routerLink="/admin/company/{{ companyId }}/user/create">
     <button mat-flat-button color="primary">Add User</button>
   </a>
+  }
+
+  <!-- Users search -->
   <div class="user-list__search">
     <mat-form-field class="example-form-field">
       <mat-label>Search</mat-label>
@@ -75,6 +80,7 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
+          @if (!companyInactive) {
           <a
             routerLink="/admin/company/{{ companyId }}/user/{{
               element.id
@@ -84,9 +90,11 @@
               <mat-icon>edit</mat-icon>
             </button>
           </a>
+          }
         </td>
       </ng-container>
 
+      <!-- No data row -->
       <tr class="mat-row" *matNoDataRow>
         <td class="table-no-data" colspan="6">No data</td>
       </tr>
