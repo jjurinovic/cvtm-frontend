@@ -13,6 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
 
 import { CompanyFormComponent } from './company-form.component';
 import { UserListComponent } from '../user-list/user-list.component';
@@ -38,6 +39,7 @@ describe('CompanyFormComponent', () => {
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
+        MatButtonModule,
       ],
       providers: [
         provideMockStore(),
@@ -79,6 +81,7 @@ describe('CompanyFormComponent', () => {
     expect(component.form.value).toEqual({
       name: null,
       vat: null,
+      inactive: false,
       address: {
         address1: null,
         address2: null,

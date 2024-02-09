@@ -56,6 +56,7 @@ export const testCompany = {
   name: 'Company Test',
   vat: '1234',
   address: testAddress,
+  inactive: false,
 };
 
 export const testCompanies = [
@@ -63,11 +64,13 @@ export const testCompanies = [
     name: 'Company Test 1',
     vat: '1234',
     address: testAddress,
+    inactive: false,
   },
   {
     name: 'Company Test 2',
     vat: '1234',
     address: testAddress,
+    inactive: false,
   },
 ];
 
