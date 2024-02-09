@@ -74,29 +74,11 @@ export class CompanyService {
   }
 
   /**
-   * Delete company, set flag deleted to true
-   * @param {number} id
-   * @returns Delete company and return message
-   */
-  public deleteCompanySoft(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}/soft`);
-  }
-
-  /**
    * Toggle inactive status
    * @param id company id
    * @returns {Company} Returns company object
    */
   public statusChange(id: number): Observable<Company> {
     return this.http.put<Company>(`${this.baseUrl}/${id}/status-change`, {});
-  }
-
-  /**
-   * Restore deleted company
-   * @param {number} id company id
-   * @returns Return restored company
-   */
-  public restore(id: number): Observable<Company> {
-    return this.http.put<Company>(`${this.baseUrl}/${id}/restore`, {});
   }
 }
