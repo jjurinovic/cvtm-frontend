@@ -14,15 +14,24 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 
 import { CompanyFormComponent } from './company-form.component';
 import { UserListComponent } from '../user-list/user-list.component';
 import { testCompany } from 'src/test-data/data';
+import { initialState } from '../../../company/state/company.reducers';
+import { selectCurrentCompany } from 'src/app/features/company/state/company.selectors';
+import {
+  changeStatus,
+  deleteCompany,
+} from 'src/app/features/company/state/company.actions';
+import { setAdminCompanyTab } from '../../state/admin.actions';
 
 describe('CompanyFormComponent', () => {
   let component: CompanyFormComponent;
   let fixture: ComponentFixture<CompanyFormComponent>;
   let store: MockStore;
+  let dialog: MatDialog;
 
   const requiredFields = ['name', 'address1', 'city', 'postcode', 'country'];
 
@@ -42,7 +51,15 @@ describe('CompanyFormComponent', () => {
         MatButtonModule,
       ],
       providers: [
-        provideMockStore(),
+        provideMockStore({
+          initialState,
+          selectors: [
+            {
+              selector: selectCurrentCompany,
+              value: null,
+            },
+          ],
+        }),
         {
           provide: ActivatedRoute,
           useValue: {
@@ -56,6 +73,7 @@ describe('CompanyFormComponent', () => {
     spyOn(store, 'select').and.callThrough();
     fixture = TestBed.createComponent(CompanyFormComponent);
     component = fixture.componentInstance;
+    dialog = TestBed.inject(MatDialog);
     fixture.detectChanges();
   });
 
@@ -142,5 +160,103 @@ describe('CompanyFormComponent', () => {
         Object.keys(input.attributes).indexOf('required') > -1;
       expect(hasRequiredAttr).toBeTrue();
     });
+  });
+
+  it('should have disabled form, disabled save btn and error message when company is inactive', () => {
+    store.overrideSelector(selectCurrentCompany, {
+      ...testCompany,
+      inactive: true,
+    });
+    store.refreshState();
+    fixture.detectChanges();
+
+    expect(component.form.disabled).toBeTrue();
+
+    const btn = fixture.debugElement.query(By.css('button'));
+    expect(btn.nativeElement.disabled).toBeTrue();
+
+    const errorMsg = fixture.debugElement.query(By.css('#error-msg'));
+    expect(errorMsg).toBeTruthy();
+    expect(errorMsg.nativeElement.textContent).toEqual('Company is inactive');
+    store.resetSelectors();
+  });
+
+  it('should Activate/Deactivate button open confirm dialog', () => {
+    const openDialogSpy = spyOn(component, 'openDialog').and.callThrough();
+    const dialogOpenSpy = spyOn(dialog, 'open').and.callThrough();
+    const btn = fixture.debugElement.query(By.css('#company-toggle-status'));
+    btn.nativeElement.click();
+
+    expect(openDialogSpy).toHaveBeenCalledWith('status');
+    expect(dialogOpenSpy).toHaveBeenCalled();
+  });
+
+  it('should Delete button open confirm dialog', () => {
+    const openDialogSpy = spyOn(component, 'openDialog').and.callThrough();
+    const dialogOpenSpy = spyOn(dialog, 'open').and.callThrough();
+    const btn = fixture.debugElement.query(By.css('#company-delete'));
+    btn.nativeElement.click();
+
+    expect(openDialogSpy).toHaveBeenCalledWith('delete');
+    expect(dialogOpenSpy).toHaveBeenCalled();
+  });
+
+  it('should show only save button if no companyId', () => {
+    component.companyId = null;
+    fixture.detectChanges();
+
+    const saveBtn = fixture.debugElement.query(By.css('#company-submit'));
+    const toggleBtn = fixture.debugElement.query(
+      By.css('#company-toggle-status')
+    );
+    const deleteBtn = fixture.debugElement.query(By.css('#company-delete'));
+
+    expect(saveBtn).toBeTruthy();
+    expect(toggleBtn).toBeFalsy();
+    expect(toggleBtn).toBeFalsy();
+  });
+
+  it('should toggleStatus() dispatch action', () => {
+    const toggleStatusSpy = spyOn(component, 'toggleStatus').and.callThrough();
+    const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
+
+    component.toggleStatus();
+
+    expect(toggleStatusSpy).toHaveBeenCalled();
+    expect(dispatchSpy).toHaveBeenCalledOnceWith(
+      changeStatus({ payload: component.companyId as number })
+    );
+  });
+
+  it('should deleteCompany() dispatch action', () => {
+    const deleteCompanySpy = spyOn(
+      component,
+      'deleteCompany'
+    ).and.callThrough();
+    const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
+
+    component.deleteCompany();
+
+    expect(deleteCompanySpy).toHaveBeenCalled();
+    expect(dispatchSpy).toHaveBeenCalledOnceWith(
+      deleteCompany({
+        payload: { id: component.companyId as number, returnUrl: '/admin' },
+      })
+    );
+  });
+
+  it('should changeTab() dispatch action', () => {
+    const changeTabSpy = spyOn(component, 'changeTab').and.callThrough();
+    const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
+
+    component.changeTab(1);
+
+    expect(changeTabSpy).toHaveBeenCalled();
+    expect(component.selectedTabIndex).toEqual(1);
+    expect(dispatchSpy).toHaveBeenCalledOnceWith(
+      setAdminCompanyTab({
+        payload: component.selectedTabIndex,
+      })
+    );
   });
 });
