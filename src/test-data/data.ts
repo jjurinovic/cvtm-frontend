@@ -90,3 +90,12 @@ export const testAuthResponse = {
   access_token: 'test',
   user: testUser,
 };
+
+export const testPageFilter = {
+  size: 10,
+  page: 1,
+  total: 10,
+  sort: 'asc',
+  q: 'test',
+  sort_field: 'test',
+};

@@ -1,28 +1,18 @@
-import { testUser } from 'src/test-data/data';
+import { testPageFilter, testUser } from 'src/test-data/data';
 import { State } from './user.reducers';
 import {
   selectAllUsers,
   selectError,
   selectIsLoading,
-  selectPageUsers,
-  selectSearchUsers,
-  selectSizeUsers,
-  selectSortFieldUsers,
-  selectSortUsers,
-  selectTotalUsers,
   selectUserData,
+  selectUsersPageFilter,
 } from './user.selectors';
 
 describe('User Selectors', () => {
   const state: State = {
     isLoading: false,
     error: 'test error',
-    page: 1,
-    size: 10,
-    q: 'test',
-    sort: 'asc',
-    sortField: 'testField',
-    total: 1,
+    pageFilter: testPageFilter,
     user: testUser,
     users: [testUser],
   };
@@ -34,33 +24,8 @@ describe('User Selectors', () => {
   });
 
   it('should selectTotalUsers return total number of users', () => {
-    expect(selectTotalUsers.projector(state)).toBeDefined();
-    expect(selectTotalUsers.projector(state)).toEqual(1);
-  });
-
-  it('should selectPageUsers return page number', () => {
-    expect(selectPageUsers.projector(state)).toBeDefined();
-    expect(selectPageUsers.projector(state)).toEqual(1);
-  });
-
-  it('should selectSizeUsers return size, number of items per page', () => {
-    expect(selectSizeUsers.projector(state)).toBeDefined();
-    expect(selectSizeUsers.projector(state)).toEqual(10);
-  });
-
-  it('should selectSortUsers return sort direction', () => {
-    expect(selectSortUsers.projector(state)).toBeDefined();
-    expect(selectSortUsers.projector(state)).toEqual('asc');
-  });
-
-  it('should selectSortFieldUsers return sort field', () => {
-    expect(selectSortFieldUsers.projector(state)).toBeDefined();
-    expect(selectSortFieldUsers.projector(state)).toEqual('testField');
-  });
-
-  it('should selectSearchUsers return search query', () => {
-    expect(selectSearchUsers.projector(state)).toBeDefined();
-    expect(selectSearchUsers.projector(state)).toEqual('test');
+    expect(selectUsersPageFilter.projector(state)).toBeDefined();
+    expect(selectUsersPageFilter.projector(state)).toEqual(testPageFilter);
   });
 
   it('should selectUserData return user', () => {

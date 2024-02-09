@@ -2,15 +2,16 @@ import { BaseError } from 'src/app/shared/models/error.model';
 import { User, UserWithLocalParams } from '../models/user.model';
 import * as UserActions from './users.actions';
 import { UserActionTypes } from './users.actions';
-import { UsersRequest } from '../models/users-page-filter.model';
 import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { PasswordChange } from '../models/password-change.model';
 import {
   testError,
   testIdWithParams,
+  testPageFilter,
   testUser,
   userWithLocalParams,
 } from '../../../../test-data/data';
+import { UsersPageFilter } from '../models/users-page-filter.model';
 
 describe('CreateUser', () => {
   it('should create an action', () => {
@@ -121,11 +122,7 @@ describe('GetUserByIdFail', () => {
 
 describe('GetAllUsers', () => {
   it('should create an action', () => {
-    const payload: UsersRequest = {
-      companyId: 999,
-      page: 1,
-      size: 2,
-    };
+    const payload: UsersPageFilter = { ...testPageFilter, companyId: 1 };
     const action = UserActions.getAllUsers({ payload });
 
     expect({ ...action }).toEqual({
@@ -139,12 +136,7 @@ describe('GetAllUsersSuccess', () => {
   it('should create an action', () => {
     const payload: PageResponse<User> = {
       results: [],
-      size: 10,
-      page: 1,
-      total: 0,
-      sort: null,
-      sort_field: null,
-      q: null,
+      page_filter: testPageFilter,
     };
     const action = UserActions.getAllUsersSuccess({ payload });
 

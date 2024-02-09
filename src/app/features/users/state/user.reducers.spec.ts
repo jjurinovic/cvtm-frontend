@@ -1,5 +1,6 @@
 import * as fromReducer from './user.reducers';
 import * as UserActions from './users.actions';
+import { testPageFilter } from '../../../../test-data/data';
 import {
   testError,
   testIdWithParams,
@@ -147,7 +148,7 @@ describe('User reducers', () => {
     };
 
     const action = UserActions.getAllUsers({
-      payload: { page: 1, size: 10, companyId: 1 },
+      payload: { ...testPageFilter, companyId: 1 },
     });
     const state = fromReducer.reducer(initialState, action);
 
@@ -159,23 +160,13 @@ describe('User reducers', () => {
       ...initialState,
       isLoading: false,
       users: [],
-      size: 10,
-      total: 10,
-      page: 1,
-      sort: null,
-      sortField: null,
-      q: null,
+      pageFilter: testPageFilter,
     };
 
     const action = UserActions.getAllUsersSuccess({
       payload: {
         results: [],
-        size: 10,
-        total: 10,
-        page: 1,
-        sort: null,
-        sort_field: null,
-        q: null,
+        page_filter: testPageFilter,
       },
     });
     const state = fromReducer.reducer(initialState, action);

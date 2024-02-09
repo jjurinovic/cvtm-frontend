@@ -77,7 +77,7 @@ describe('CompanyListComponent', () => {
 
   it('should clearSearch reset search value', () => {
     const spy = spyOn(component, 'clearSearch').and.callThrough();
-    component.searchValue = 'test';
+    component.pageFilter.q = 'test';
     fixture.detectChanges();
 
     const clearBtn = fixture.debugElement.query(By.css('#search-clear'));
@@ -86,17 +86,17 @@ describe('CompanyListComponent', () => {
     fixture.detectChanges();
 
     expect(spy).toHaveBeenCalled();
-    expect(component.searchValue).toBeFalsy();
+    expect(component.pageFilter.q).toBeFalsy();
   });
 
   it('should getSort() return current sort direction', () => {
-    component.sort = 'asc';
+    component.pageFilter.sort = 'asc';
 
     expect(component.getSort()).toEqual('asc');
   });
 
   it('should getSortField() return current sort field', () => {
-    component.sortField = 'name';
+    component.pageFilter.sort_field = 'name';
 
     expect(component.getSortField()).toEqual('name');
   });
@@ -105,8 +105,8 @@ describe('CompanyListComponent', () => {
     const getDataSpy = spyOn(component, 'getData').and.callThrough();
     component.onSort({ active: 'name', direction: 'asc' });
 
-    expect(component.sort).toEqual('asc');
-    expect(component.sortField).toEqual('name');
+    expect(component.pageFilter.sort).toEqual('asc');
+    expect(component.pageFilter.sort_field).toEqual('name');
     expect(getDataSpy).toHaveBeenCalled();
   });
 
@@ -114,8 +114,8 @@ describe('CompanyListComponent', () => {
     const getDataSpy = spyOn(component, 'getData').and.callThrough();
     component.pageChange({ pageIndex: 12, pageSize: 25 });
 
-    expect(component.page).toEqual(12);
-    expect(component.size).toEqual(25);
+    expect(component.pageFilter.page).toEqual(13);
+    expect(component.pageFilter.size).toEqual(25);
     expect(getDataSpy).toHaveBeenCalled();
   });
 });

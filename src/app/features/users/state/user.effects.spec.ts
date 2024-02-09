@@ -13,7 +13,6 @@ import { BaseError } from 'src/app/shared/models/error.model';
 import { UserEffects } from './user.effects';
 import { UsersService } from '../services/users.service';
 import { selectCurrentUser } from '../../../state/auth/auth.selectors';
-import { UsersRequest } from '../models/users-page-filter.model';
 import * as UserActions from './users.actions';
 import { UserActionTypes } from './users.actions';
 import { PasswordChange } from '../models/password-change.model';
@@ -29,6 +28,8 @@ import {
   testUsersRequest,
   userWithLocalParams,
 } from 'src/test-data/data';
+import { UsersPageFilter } from '../models/users-page-filter.model';
+import { testPageFilter } from '../../../../test-data/data';
 
 describe('UserEffects', () => {
   let actions$: Observable<Action>;
@@ -79,7 +80,7 @@ describe('UserEffects', () => {
   it('should call getAll$ and return response', (done) => {
     userServiceSpy.getAll.and.returnValue(of(testPageResponse));
 
-    const payload: UsersRequest = testUsersRequest;
+    const payload: UsersPageFilter = { ...testPageFilter, companyId: 1 };
 
     actions$ = of(UserActions.getAllUsers({ payload }));
     effects.getAll$.subscribe((action) => {
@@ -94,7 +95,7 @@ describe('UserEffects', () => {
   it('should call getAll$ and return error', (done) => {
     userServiceSpy.getAll.and.throwError(testError);
 
-    const payload: UsersRequest = testUsersRequest;
+    const payload: UsersPageFilter = { ...testPageFilter, companyId: 1 };
 
     actions$ = of(UserActions.getAllUsers({ payload }));
     effects.getAll$.subscribe({
