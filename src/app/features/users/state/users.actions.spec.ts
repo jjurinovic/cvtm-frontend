@@ -2,7 +2,7 @@ import { BaseError } from 'src/app/shared/models/error.model';
 import { User, UserWithLocalParams } from '../models/user.model';
 import * as UserActions from './users.actions';
 import { UserActionTypes } from './users.actions';
-import { UsersRequest } from '../models/users-request';
+import { UsersRequest } from '../models/users-page-filter.model';
 import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { PasswordChange } from '../models/password-change.model';
 import {

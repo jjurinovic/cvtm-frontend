@@ -19,13 +19,10 @@ import { Company } from 'src/app/features/company/models/company.model';
 import * as CompanyActions from '../../../company/state/company.actions';
 import {
   selectAllCompanies,
-  selectPageCompanies,
-  selectSearchCompanies,
-  selectSizeCompanies,
-  selectSortCompanies,
-  selectSortFieldCompanies,
-  selectTotalCompanies,
+  selectCompanyPageFilter,
 } from 'src/app/features/company/state/company.selectors';
+import { CompanyPageFilter } from 'src/app/features/company/models/company-page-filter.model';
+import { PageFilter } from 'src/app/shared/models/page-filter.mode';
 
 @Component({
   selector: 'app-company-list',
@@ -35,12 +32,14 @@ import {
 export class CompanyListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'vat', 'address', 'action'];
   companies: Company[] = [];
-  total: number | null = 0;
-  page: number = 1;
-  size: number = 10;
-  sort: string | null = null;
-  sortField: string | null = null;
-  searchValue: string | null = null;
+  pageFilter: CompanyPageFilter = {
+    page: 1,
+    size: 10,
+    total: 0,
+    sort: null,
+    sort_field: null,
+    q: null,
+  };
   private debounceTime = 500;
 
   @ViewChild('input') input?: ElementRef;
@@ -52,29 +51,10 @@ export class CompanyListComponent implements OnInit, AfterViewInit {
       this.companies = data;
     });
 
-    this.store
-      .select(selectTotalCompanies)
-      .subscribe((total) => (this.total = total));
+    this.store.select(selectCompanyPageFilter).subscribe((pageFilter) => {
+      this.pageFilter = { ...(pageFilter as PageFilter) };
+    });
 
-    this.store
-      .select(selectPageCompanies)
-      .subscribe((page) => (this.page = page - 1));
-
-    this.store
-      .select(selectSizeCompanies)
-      .subscribe((size) => (this.size = size));
-
-    this.store
-      .select(selectSortCompanies)
-      .subscribe((sort) => (this.sort = sort));
-
-    this.store
-      .select(selectSortFieldCompanies)
-      .subscribe((sortField) => (this.sortField = sortField));
-
-    this.store
-      .select(selectSearchCompanies)
-      .subscribe((q) => (this.searchValue = q));
     this.getData();
   }
 
@@ -85,7 +65,8 @@ export class CompanyListComponent implements OnInit, AfterViewInit {
         debounceTime(this.debounceTime),
         distinctUntilChanged(),
         tap(() => {
-          this.searchValue = this.input?.nativeElement.value;
+          console.log(this.pageFilter);
+          this.pageFilter.q = this.input?.nativeElement.value;
           this.getData();
         })
       )
@@ -95,13 +76,7 @@ export class CompanyListComponent implements OnInit, AfterViewInit {
   getData(): void {
     this.store.dispatch(
       CompanyActions.getAll({
-        payload: {
-          page: this.page + 1,
-          size: this.size,
-          sort: this.sort,
-          sortField: this.sortField,
-          q: this.searchValue,
-        },
+        payload: this.pageFilter,
       })
     );
   }
@@ -114,29 +89,28 @@ export class CompanyListComponent implements OnInit, AfterViewInit {
     pageIndex: number;
     pageSize: number;
   }): void {
-    console.log('page change');
-    this.page = pageIndex;
-    this.size = pageSize;
+    this.pageFilter.page = pageIndex + 1;
+    this.pageFilter.size = pageSize;
     this.getData();
   }
 
   /** On sort */
   onSort({ active, direction }: { active: string; direction: string }): void {
-    this.sort = direction;
-    this.sortField = active;
+    this.pageFilter.sort = direction;
+    this.pageFilter.sort_field = active;
     this.getData();
   }
 
   getSortField(): string {
-    return this.sortField || '';
+    return this.pageFilter.sort_field || '';
   }
 
   getSort(): SortDirection {
-    return (this.sort as SortDirection) || '';
+    return (this.pageFilter.sort as SortDirection) || '';
   }
 
   clearSearch(): void {
-    this.searchValue = null;
+    this.pageFilter.q = null;
     this.getData();
   }
 }

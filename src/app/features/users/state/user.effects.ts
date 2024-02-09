@@ -31,27 +31,18 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(UserActionTypes.GetAllUsers),
       exhaustMap(({ payload }: any) =>
-        this._user
-          .getAll(
-            payload.companyId,
-            payload.page,
-            payload.size,
-            payload.sort,
-            payload.sortField,
-            payload.q
+        this._user.getAll(payload).pipe(
+          map((data) => ({
+            type: UserActionTypes.GetAllUsersSuccess,
+            payload: data,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: UserActionTypes.GetAllUsersFail,
+              payload: error,
+            })
           )
-          .pipe(
-            map((data) => ({
-              type: UserActionTypes.GetAllUsersSuccess,
-              payload: data,
-            })),
-            catchError(({ error }) =>
-              of({
-                type: UserActionTypes.GetAllUsersFail,
-                payload: error,
-              })
-            )
-          )
+        )
       )
     )
   );

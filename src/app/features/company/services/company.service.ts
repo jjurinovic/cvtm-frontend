@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Company } from '../models/company.model';
 import { environment } from 'src/environments/environment';
 import { PageResponse } from 'src/app/shared/models/page-response.model';
-import { PageRequest } from 'src/app/shared/models/page-request.model';
+import { CompanyPageFilter } from '../models/company-page-filter.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,14 +20,16 @@ export class CompanyService {
    * @param {PageRequest} req object with all params
    * @returns {Observable<PageResponse<Company>>} Returns observable with list of all companies
    */
-  public getAllCompanies(req: PageRequest): Observable<PageResponse<Company>> {
+  public getAllCompanies(
+    req: CompanyPageFilter
+  ): Observable<PageResponse<Company>> {
     let params = new HttpParams();
     params = params.append('size', req.size);
     params = params.append('page', req.page);
 
     if (req.sort) {
       params = params.append('sort', req.sort);
-      params = params.append('sort_field', req.sortField as string);
+      params = params.append('sort_field', req.sort_field as string);
     }
 
     if (req.q) {

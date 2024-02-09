@@ -9,32 +9,10 @@ export const selectAllUsers = createSelector(
   (state) => state.users
 );
 
-export const selectTotalUsers = createSelector(
+export const selectUsersPageFilter = createSelector(
   selectUser,
-  (state) => state.total
+  (state) => state.pageFilter
 );
-
-export const selectPageUsers = createSelector(
-  selectUser,
-  (state) => state.page
-);
-
-export const selectSizeUsers = createSelector(
-  selectUser,
-  (state) => state.size
-);
-
-export const selectSortUsers = createSelector(
-  selectUser,
-  (state) => state.sort
-);
-
-export const selectSortFieldUsers = createSelector(
-  selectUser,
-  (state) => state.sortField
-);
-
-export const selectSearchUsers = createSelector(selectUser, (state) => state.q);
 
 export const selectUserData = createSelector(selectUser, (state) => state.user);
 

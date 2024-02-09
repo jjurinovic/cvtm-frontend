@@ -2,17 +2,13 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { Company } from '../models/company.model';
 import * as CompanyActions from './company.actions';
+import { CompanyPageFilter } from '../models/company-page-filter.model';
 
 export interface State {
+  pageFilter: CompanyPageFilter;
   companies: Company[];
-  page: number;
-  total: number | null;
-  size: number;
   isLoading: boolean;
   error: string | null;
-  sort: string | null;
-  sortField: string | null;
-  q: string | null;
   currentCompany: Company | null;
 }
 
@@ -20,13 +16,15 @@ export const initialState: State = {
   companies: [],
   isLoading: false,
   error: null,
-  page: 1,
-  total: null,
-  size: 10,
-  sort: null,
-  sortField: null,
-  q: null,
   currentCompany: null,
+  pageFilter: {
+    page: 1,
+    size: 10,
+    total: 0,
+    q: null,
+    sort: null,
+    sort_field: null,
+  },
 };
 
 export const reducer = createReducer(
@@ -35,13 +33,8 @@ export const reducer = createReducer(
   on(CompanyActions.getAllSuccess, (state, { payload }) => ({
     ...state,
     companies: payload.results,
-    size: payload.size,
-    total: payload.total,
-    page: payload.page,
     isLoading: false,
-    sort: payload.sort,
-    sortField: payload.sort_field,
-    q: payload.q,
+    pageFilter: payload.page_filter,
   })),
   on(CompanyActions.getAllFailure, (state, { payload }) => ({
     ...state,

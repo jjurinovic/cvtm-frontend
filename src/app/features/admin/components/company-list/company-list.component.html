@@ -7,7 +7,7 @@
         matInput
         type="text"
         placeholder="Search companies"
-        [value]="searchValue"
+        [value]="pageFilter.q"
       />
       @if (input.value) {
       <button
@@ -74,9 +74,9 @@
     </table>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
-      [length]="total"
-      [pageIndex]="page"
-      [pageSize]="size"
+      [length]="pageFilter.total"
+      [pageIndex]="pageFilter.page - 1"
+      [pageSize]="pageFilter.size"
       showFirstLastButtons
       aria-label="Select page of periodic elements"
       (page)="pageChange($event)"

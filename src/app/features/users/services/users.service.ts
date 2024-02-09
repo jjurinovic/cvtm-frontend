@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { PasswordChange } from '../models/password-change.model';
+import { UsersPageFilter } from '../models/users-page-filter.model';
 
 @Injectable({
   providedIn: 'root',
@@ -90,26 +91,19 @@ export class UsersService {
    * @param {HttpParams} params pagination, search
    * @returns {Observable<PageResponse<User>>} Return Observable with page response with list of users
    */
-  public getAll(
-    companyId: number,
-    page: number,
-    size: number,
-    sort?: string,
-    sortField?: string,
-    q?: string
-  ): Observable<PageResponse<User>> {
+  public getAll(req: UsersPageFilter): Observable<PageResponse<User>> {
     let params = new HttpParams();
-    params = params.append('company_id', companyId);
-    params = params.append('size', size);
-    params = params.append('page', page);
+    params = params.append('company_id', req.companyId);
+    params = params.append('size', req.size);
+    params = params.append('page', req.page);
 
-    if (sort && sortField) {
-      params = params.append('sort', sort);
-      params = params.append('sort_field', sortField);
+    if (req.sort && req.sort_field) {
+      params = params.append('sort', req.sort);
+      params = params.append('sort_field', req.sort_field);
     }
 
-    if (q) {
-      params = params.append('q', q);
+    if (req.q) {
+      params = params.append('q', req.q);
     }
     return this.http.get<PageResponse<User>>(this.baseUrl, { params });
   }

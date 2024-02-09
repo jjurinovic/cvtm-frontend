@@ -11,15 +11,11 @@ import {
 import { User } from 'src/app/features/users/models/user.model';
 import {
   selectAllUsers,
-  selectPageUsers,
-  selectSearchUsers,
-  selectSizeUsers,
-  selectSortFieldUsers,
-  selectSortUsers,
-  selectTotalUsers,
+  selectUsersPageFilter,
 } from 'src/app/features/users/state/user.selectors';
 import * as UserActions from '../../../users/state/users.actions';
 import { SortDirection } from '@angular/material/sort';
+import { PageFilter } from 'src/app/shared/models/page-filter.mode';
 
 @Component({
   selector: 'app-user-list',
@@ -36,12 +32,14 @@ export class UserListComponent {
     'action',
   ];
   users: User[] = [];
-  total: number | null = 0;
-  page: number = 1;
-  size: number = 10;
-  sort: string | null = null;
-  sortField: string | null = null;
-  searchValue: string | null = null;
+  pageFilter: PageFilter = {
+    page: 1,
+    size: 10,
+    total: 0,
+    sort: null,
+    sort_field: null,
+    q: null,
+  };
   private debounceTime = 500;
 
   @Input() companyId!: number;
@@ -56,24 +54,9 @@ export class UserListComponent {
     });
 
     this.store
-      .select(selectTotalUsers)
-      .subscribe((total) => (this.total = total));
+      .select(selectUsersPageFilter)
+      .subscribe((pageFilter) => (this.pageFilter = { ...pageFilter }));
 
-    this.store
-      .select(selectPageUsers)
-      .subscribe((page) => (this.page = page - 1));
-
-    this.store.select(selectSizeUsers).subscribe((size) => (this.size = size));
-
-    this.store.select(selectSortUsers).subscribe((sort) => (this.sort = sort));
-
-    this.store
-      .select(selectSortFieldUsers)
-      .subscribe((sortField) => (this.sortField = sortField));
-
-    this.store
-      .select(selectSearchUsers)
-      .subscribe((q) => (this.searchValue = q));
     this.getData();
   }
 
@@ -84,7 +67,7 @@ export class UserListComponent {
         debounceTime(this.debounceTime),
         distinctUntilChanged(),
         tap(() => {
-          this.searchValue = this.input?.nativeElement.value;
+          this.pageFilter.q = this.input?.nativeElement.value;
           this.getData();
         })
       )
@@ -92,16 +75,11 @@ export class UserListComponent {
   }
 
   getData(): void {
-    console.log(this.page);
     this.store.dispatch(
       UserActions.getAllUsers({
         payload: {
           companyId: this.companyId,
-          page: this.page + 1,
-          size: this.size,
-          sort: this.sort,
-          sortField: this.sortField,
-          q: this.searchValue,
+          ...this.pageFilter,
         },
       })
     );
@@ -115,29 +93,28 @@ export class UserListComponent {
     pageIndex: number;
     pageSize: number;
   }): void {
-    console.log('page change');
-    this.page = pageIndex;
-    this.size = pageSize;
+    this.pageFilter.page = pageIndex + 1;
+    this.pageFilter.size = pageSize;
     this.getData();
   }
 
   /** On sort */
   onSort({ active, direction }: { active: string; direction: string }): void {
-    this.sort = direction;
-    this.sortField = active;
+    this.pageFilter.sort = direction;
+    this.pageFilter.sort_field = active;
     this.getData();
   }
 
   getSortField(): string {
-    return this.sortField || '';
+    return this.pageFilter.sort_field || '';
   }
 
   getSort(): SortDirection {
-    return (this.sort as SortDirection) || '';
+    return (this.pageFilter.sort as SortDirection) || '';
   }
 
   clearSearch(): void {
-    this.searchValue = null;
+    this.pageFilter.q = null;
     this.getData();
   }
 }

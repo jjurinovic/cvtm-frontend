@@ -13,7 +13,7 @@ import { BaseError } from 'src/app/shared/models/error.model';
 import { UserEffects } from './user.effects';
 import { UsersService } from '../services/users.service';
 import { selectCurrentUser } from '../../../state/auth/auth.selectors';
-import { UsersRequest } from '../models/users-request';
+import { UsersRequest } from '../models/users-page-filter.model';
 import * as UserActions from './users.actions';
 import { UserActionTypes } from './users.actions';
 import { PasswordChange } from '../models/password-change.model';

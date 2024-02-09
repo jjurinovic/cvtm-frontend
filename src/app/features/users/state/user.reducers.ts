@@ -2,18 +2,14 @@ import { createReducer, on } from '@ngrx/store';
 
 import * as UserActions from './users.actions';
 import { User } from '../models/user.model';
+import { PageFilter } from 'src/app/shared/models/page-filter.mode';
 
 export interface State {
   isLoading: boolean;
   user: User | null;
   users: User[];
-  page: number;
-  total: number | null;
-  size: number;
   error: string | null;
-  sort: string | null;
-  sortField: string | null;
-  q: string | null;
+  pageFilter: PageFilter;
 }
 
 export const initialState: State = {
@@ -21,12 +17,14 @@ export const initialState: State = {
   user: null,
   users: [],
   error: null,
-  page: 1,
-  total: null,
-  size: 10,
-  sort: null,
-  sortField: null,
-  q: null,
+  pageFilter: {
+    page: 1,
+    size: 10,
+    total: 0,
+    q: null,
+    sort: null,
+    sort_field: null,
+  },
 };
 
 export const reducer = createReducer(
@@ -75,13 +73,7 @@ export const reducer = createReducer(
   on(UserActions.getAllUsersSuccess, (state, { payload }) => ({
     ...state,
     users: payload.results,
-    size: payload.size,
-    total: payload.total,
-    page: payload.page,
-    isLoading: false,
-    sort: payload.sort,
-    sortField: payload.sort_field,
-    q: payload.q,
+    pageFilter: payload.page_filter,
   })),
   on(UserActions.getAllUsersFail, (state, { payload }) => ({
     ...state,

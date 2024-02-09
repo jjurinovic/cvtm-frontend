@@ -8,34 +8,9 @@ export const selectAllCompanies = createSelector(
   (state) => state.companies
 );
 
-export const selectTotalCompanies = createSelector(
+export const selectCompanyPageFilter = createSelector(
   selectCompany,
-  (state) => state.total
-);
-
-export const selectPageCompanies = createSelector(
-  selectCompany,
-  (state) => state.page
-);
-
-export const selectSizeCompanies = createSelector(
-  selectCompany,
-  (state) => state.size
-);
-
-export const selectSortCompanies = createSelector(
-  selectCompany,
-  (state) => state.sort
-);
-
-export const selectSortFieldCompanies = createSelector(
-  selectCompany,
-  (state) => state.sortField
-);
-
-export const selectSearchCompanies = createSelector(
-  selectCompany,
-  (state) => state.q
+  (state) => state.pageFilter
 );
 
 export const selectCurrentCompany = createSelector(
