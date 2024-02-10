@@ -46,9 +46,10 @@ export const reducer = createReducer(
     ...state,
     isLoading: false,
   })),
-  on(CompanyActions.createCompanyFail, (state) => ({
+  on(CompanyActions.createCompanyFail, (state, { payload }) => ({
     ...state,
     isLoading: false,
+    error: payload.detail,
   })),
   on(CompanyActions.getCompanyById, (state) => ({ ...state, isLoading: true })),
   on(CompanyActions.getCompanyByIdSuccess, (state, { payload }) => ({
@@ -56,9 +57,10 @@ export const reducer = createReducer(
     isLoading: false,
     currentCompany: payload,
   })),
-  on(CompanyActions.getCompanyByIdFail, (state) => ({
+  on(CompanyActions.getCompanyByIdFail, (state, { payload }) => ({
     ...state,
     isLoading: false,
+    error: payload.detail,
   })),
   on(CompanyActions.updateCompany, (state) => ({ ...state, isLoading: true })),
   on(CompanyActions.updateCompanySuccess, (state, { payload }) => ({
@@ -66,18 +68,20 @@ export const reducer = createReducer(
     currentCompany: payload,
     isLoading: false,
   })),
-  on(CompanyActions.updateCompanyFail, (state) => ({
+  on(CompanyActions.updateCompanyFail, (state, { payload }) => ({
     ...state,
     isLoading: false,
+    error: payload.detail,
   })),
   on(CompanyActions.deleteCompany, (state) => ({ ...state, isLoading: true })),
   on(CompanyActions.deleteCompanySuccess, (state) => ({
     ...state,
     isLoading: false,
   })),
-  on(CompanyActions.deleteCompanyFail, (state) => ({
+  on(CompanyActions.deleteCompanyFail, (state, { payload }) => ({
     ...state,
     isLoading: false,
+    error: payload.detail,
   })),
   on(CompanyActions.changeStatus, (state) => ({ ...state, isLoading: true })),
   on(CompanyActions.changeStatusSuccess, (state, { payload }) => ({
@@ -85,9 +89,10 @@ export const reducer = createReducer(
     isLoading: false,
     currentCompany: payload,
   })),
-  on(CompanyActions.changeStatusFail, (state) => ({
+  on(CompanyActions.changeStatusFail, (state, { payload }) => ({
     ...state,
     isLoading: false,
+    error: payload.detail,
   })),
   on(CompanyActions.resetCompanyForm, (state) => ({
     ...state,

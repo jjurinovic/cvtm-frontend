@@ -31,11 +31,6 @@ export class CompanyEffects {
     )
   );
 
-  getAllSuccess$ = createEffect(
-    () => this.actions$.pipe(ofType(CompanyActionTypes.GetAllSuccess)),
-    { dispatch: false }
-  );
-
   createCompany$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CompanyActionTypes.CreateCompany),
@@ -120,11 +115,6 @@ export class CompanyEffects {
     )
   );
 
-  getCompanyByIdSuccess$ = createEffect(
-    () => this.actions$.pipe(ofType(CompanyActionTypes.GetCompanyByIdSuccess)),
-    { dispatch: false }
-  );
-
   getCompanyByIdFail$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -174,7 +164,7 @@ export class CompanyEffects {
         this._company.deleteCompany(payload.id).pipe(
           map((data) => ({
             type: CompanyActionTypes.DeleteCompanySuccess,
-            payload: { ...data, returnUrl: payload.returnUrl },
+            payload: payload.returnUrl,
           })),
           catchError(({ error }) =>
             of({
@@ -194,8 +184,8 @@ export class CompanyEffects {
         tap(({ payload }: any) => {
           this._snackbar.success('Company successfully deleted!', 10000);
 
-          if (payload.returnUrl) {
-            this.router.navigateByUrl(payload.returnUrl);
+          if (payload) {
+            this.router.navigateByUrl(payload);
           }
         })
       ),
