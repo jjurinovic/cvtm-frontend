@@ -59,6 +59,12 @@ export const testCompany = {
   inactive: false,
 };
 
+export const testCompanyWithParams = {
+  ...testCompany,
+  returnUrl: '/test',
+  myId: 1,
+};
+
 export const testCompanies = [
   {
     name: 'Company Test 1',
@@ -98,4 +104,9 @@ export const testPageFilter = {
   sort: 'asc',
   q: 'test',
   sort_field: 'test',
+};
+
+export const testCompanyPageResponse = {
+  page_filter: testPageFilter,
+  results: testCompanies,
 };
