@@ -39,6 +39,13 @@ const routes: Routes = [
             (m) => m.CompanyModule
           ),
       },
+      {
+        path: 'time-tracking',
+        loadChildren: () =>
+          import('./features/time-tracking/time-tracking.module').then(
+            (m) => m.TimeTrackingModule
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: '/' },
