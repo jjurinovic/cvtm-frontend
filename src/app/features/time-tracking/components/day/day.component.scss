@@ -1,0 +1,79 @@
+.day {
+  width: 600px;
+  border: 1px solid #28b851;
+  height: 600px;
+  box-sizing: border-box;
+
+  &__title {
+    padding: 10px;
+    text-align: center;
+    background-color: #88cf9c;
+    height: 40px;
+    box-sizing: border-box;
+  }
+
+  &__timeline {
+    overflow: auto;
+    height: 558px;
+    box-sizing: border-box;
+    &-content {
+      height: 2880px;
+      position: relative;
+    }
+
+    &-now {
+      height: 1px;
+      width: 100%;
+      background-color: red;
+      position: absolute;
+      left: 0;
+    }
+
+    &-hour {
+      width: 100%;
+      height: 120px;
+      background-color: #e7e7e7;
+      border-bottom: 1px solid #28b851;
+      box-sizing: border-box;
+    }
+
+    &-quarter {
+      height: 30px;
+      width: 100%;
+      border-bottom: 1px dashed #919191;
+      box-sizing: border-box;
+
+      span {
+        font-size: 11px;
+      }
+
+      &:hover {
+        background-color: #88cf9c;
+        cursor: pointer;
+      }
+    }
+    &-item {
+      position: absolute;
+      width: calc(100% - 100px);
+      background-color: #28b851;
+      left: 50px;
+      z-index: 3;
+      border-radius: 15px;
+      box-shadow: 1px 1px 10px #ccc;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      span {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+  }
+}

@@ -1,1 +1,14 @@
-<p>time-tracking works!</p>
+<mat-card>
+  <mat-tab-group
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    class="time-tracking"
+  >
+    <mat-tab label="Day"
+      ><div class="tab-content">
+        <app-day></app-day></div
+    ></mat-tab>
+    <mat-tab label="Week"><div class="tab-content"></div></mat-tab>
+    <mat-tab label="Month"><div class="tab-content"></div></mat-tab>
+  </mat-tab-group>
+</mat-card>
