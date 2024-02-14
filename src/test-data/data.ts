@@ -110,3 +110,64 @@ export const testCompanyPageResponse = {
   page_filter: testPageFilter,
   results: testCompanies,
 };
+
+export const testDayRequest = {
+  date: '14.02.2024',
+  user_id: 999,
+  company_id: 999,
+  start: '01.02.2024',
+  end: '14.02.2024',
+};
+
+export const testDayEntries = [
+  {
+    start_time: '10:00',
+    end_time: '12:00',
+    notes: 'test',
+    pause: 30,
+    day_id: 999,
+    id: 999,
+  },
+  {
+    start_time: '13:00',
+    end_time: '17:00',
+    notes: 'test',
+    pause: 30,
+    day_id: 999,
+    id: 998,
+  },
+];
+
+export const testDay = {
+  id: 999,
+  date: '14.02.2024',
+  user_id: 999,
+  company_id: 999,
+  entries: testDayEntries,
+};
+
+export const testDays = [
+  {
+    id: 998,
+    date: '14.02.2024',
+    user_id: 999,
+    company_id: 999,
+    entries: testDayEntries,
+  },
+  {
+    id: 999,
+    date: '14.02.2024',
+    user_id: 999,
+    company_id: 999,
+    entries: testDayEntries,
+  },
+];
+
+export const testDayEntry = {
+  start_time: '10:00',
+  end_time: '12:00',
+  notes: 'test',
+  pause: 30,
+  day_id: 999,
+  id: 999,
+};
