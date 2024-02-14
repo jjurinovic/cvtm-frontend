@@ -29,8 +29,14 @@ export class TimeTrackingService {
    * @param {number} id id of specific day
    * @returns {Observable} Returns observable with day data
    */
-  public getDayById(id: number): Observable<Day> {
-    return this.http.get<Day>(this.baseUrl + '/' + id);
+  public getDayById(req: DayRequest): Observable<Day> {
+    let params = new HttpParams();
+
+    if (!!req.user_id && !!req.date) {
+      params = params.set('user_id', req.user_id);
+      params = params.set('date', req.date as string);
+    }
+    return this.http.get<Day>(this.baseUrl, { params });
   }
 
   /**
@@ -40,8 +46,10 @@ export class TimeTrackingService {
    */
   public getDays(req: DayRequest): Observable<Day[]> {
     let params = new HttpParams();
-    params.set('user_id', req.user_id);
-    params.set('company_id', req.company_id);
+    if (req.user_id && req.company_id) {
+      params.set('user_id', req.user_id);
+      params.set('company_id', req.company_id);
+    }
 
     if (req.start) {
       params.set('start', req.start);
@@ -50,7 +58,7 @@ export class TimeTrackingService {
     if (req.end) {
       params.set('end', req.end);
     }
-    return this.http.get<Day[]>(this.baseUrl, { params });
+    return this.http.get<Day[]>(this.baseUrl + '/list', { params });
   }
 
   /**
