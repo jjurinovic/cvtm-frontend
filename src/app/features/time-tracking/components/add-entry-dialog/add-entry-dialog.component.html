@@ -1,8 +1,38 @@
 <h2 mat-dialog-title>Add Entry</h2>
 <mat-dialog-content>
   <form [formGroup]="form" (submit)="submit()">
-    <div class="form-row"></div>
-    <div class="form-row"></div>
+    <div class="form-row">
+      <mat-form-field>
+        <input
+          matInput
+          name="startTime"
+          [format]="24"
+          formControlName="startTime"
+          [ngxMatTimepicker]="startPicker"
+          placeholder="16:00"
+          readonly
+        />
+        <mat-icon matSuffix (click)="startPicker.open()">
+          watch_later
+        </mat-icon>
+      </mat-form-field>
+      <ngx-mat-timepicker color="primary" #startPicker></ngx-mat-timepicker>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <input
+          matInput
+          name="endTime"
+          [format]="24"
+          formControlName="endTime"
+          [ngxMatTimepicker]="endPicker"
+          placeholder="16:00"
+          readonly
+        />
+        <mat-icon matSuffix (click)="endPicker.open()"> watch_later </mat-icon>
+      </mat-form-field>
+      <ngx-mat-timepicker color="primary" #endPicker></ngx-mat-timepicker>
+    </div>
     <div class="form-row"></div>
 
     <button hidden type="submit" #submitBtn></button>

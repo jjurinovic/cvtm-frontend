@@ -26,6 +26,7 @@ import { metaReducers } from './state/meta.reducers';
 import { UserEffects } from './features/users/state/user.effects';
 import { ProfileComponent } from './general/profile/profile.component';
 import { PasswordChangeDialogComponent } from './general/password-change-dialog/password-change-dialog.component';
+import { TimeTrackingEffects } from './features/time-tracking/state/time-tracking.effects';
 
 @NgModule({
   declarations: [AppComponent, ProfileComponent, PasswordChangeDialogComponent],
@@ -33,7 +34,12 @@ import { PasswordChangeDialogComponent } from './general/password-change-dialog/
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([AuthEffects, CompanyEffects, UserEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      CompanyEffects,
+      UserEffects,
+      TimeTrackingEffects,
+    ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     CoreModule,
     BrowserAnimationsModule,

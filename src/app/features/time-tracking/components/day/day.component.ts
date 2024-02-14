@@ -1,7 +1,13 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { TimeEntry } from '../../models/time-entry.model';
+
+import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
+
+import { TimeEntry } from '../../models/time-entry.model';
 import { AddEntryDialogComponent } from '../add-entry-dialog/add-entry-dialog.component';
+import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
+import { User } from 'src/app/features/users/models/user.model';
+import * as TimeTrackingActions from './../../state/time-tracking.actions';
 
 @Component({
   selector: 'app-day',
@@ -14,6 +20,8 @@ export class DayComponent implements AfterViewInit {
   now: Date = new Date();
   totalMinutes: number = 0;
   interval: any;
+  currentUser!: User;
+  date!: string;
 
   items: TimeEntry[] = [
     new TimeEntry('8:00', '12:33', 'Project 1', 'red'),
@@ -23,7 +31,39 @@ export class DayComponent implements AfterViewInit {
 
   @ViewChild('timelineEl') timelineEl!: ElementRef;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private store: Store) {
+    // create timeline
+    this.createTimeline();
+
+    // set now
+    this.setNow();
+
+    // get today's date
+    this.date = this.now.toISOString().split('T')[0];
+    // Select current user from
+    this.store.select(selectCurrentUser).subscribe((user) => {
+      if (user) {
+        this.currentUser = user;
+        this.getDay();
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.setScroll();
+    clearInterval(this.interval);
+  }
+
+  private setNow(): void {
+    this.totalMinutes = (this.now.getHours() * 60 + this.now.getMinutes()) * 2;
+    this.interval = setInterval(() => {
+      this.now = new Date();
+      this.totalMinutes =
+        (this.now.getHours() * 60 + this.now.getMinutes()) * 2;
+    }, 30000);
+  }
+
+  private createTimeline(): void {
     Array(24)
       .fill(null)
       .forEach((el, i) => {
@@ -35,16 +75,6 @@ export class DayComponent implements AfterViewInit {
       .forEach((el, i) => {
         this.quarter.push(i);
       });
-    this.totalMinutes = (this.now.getHours() * 60 + this.now.getMinutes()) * 2;
-    this.interval = setInterval(() => {
-      this.now = new Date();
-      this.totalMinutes =
-        (this.now.getHours() * 60 + this.now.getMinutes()) * 2;
-    }, 30000);
-  }
-
-  ngAfterViewInit(): void {
-    this.setScroll();
   }
 
   private setScroll(): void {
@@ -64,6 +94,16 @@ export class DayComponent implements AfterViewInit {
   }
 
   openDialog(): void {
-    this.dialog.open(AddEntryDialogComponent);
+    this.dialog.open(AddEntryDialogComponent, {
+      data: { dayId: 1, date: '14.02.2024' },
+    });
+  }
+
+  getDay(): void {
+    this.store.dispatch(
+      TimeTrackingActions.getDay({
+        payload: { date: this.date, user_id: this.currentUser.id },
+      })
+    );
   }
 }
