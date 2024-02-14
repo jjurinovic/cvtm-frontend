@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Add Entry</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" (submit)="submit()">
+    <div class="form-row"></div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>New Password</mat-label>
+        <input
+          matInput
+          id="new_password"
+          name="new_password"
+          formControlName="new_password"
+          type="password"
+        />
+        @if (form.get('new_password')?.hasError('required')) {
+        <mat-error>New password is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="form-row"></div>
+
+    <button hidden type="submit" #submitBtn></button>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button
+    mat-button
+    type="button"
+    cdkFocusInitial
+    color="primary"
+    (click)="submitBtn.click()"
+  >
+    Save
+  </button>
+</mat-dialog-actions>

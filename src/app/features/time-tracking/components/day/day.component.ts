@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { TimeEntry } from '../../models/time-entry.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEntryDialogComponent } from '../add-entry-dialog/add-entry-dialog.component';
 
 @Component({
   selector: 'app-day',
@@ -21,7 +23,7 @@ export class DayComponent implements AfterViewInit {
 
   @ViewChild('timelineEl') timelineEl!: ElementRef;
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
     Array(24)
       .fill(null)
       .forEach((el, i) => {
@@ -59,5 +61,9 @@ export class DayComponent implements AfterViewInit {
     h = h == 24 ? 0 : h;
 
     return `${h}:${qt}`;
+  }
+
+  openDialog(): void {
+    this.dialog.open(AddEntryDialogComponent);
   }
 }
