@@ -43,7 +43,7 @@ describe('Time Tracking Actions', () => {
   });
 
   it('should getDay create action', () => {
-    const payload: number = 999;
+    const payload: Day = testDay;
     const action = TimeTrackingActions.getDay({ payload });
 
     expect(action).toEqual({
