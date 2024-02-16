@@ -2,10 +2,15 @@
   Add Entry
 </button>
 <div class="day">
-  <div class="day__title">Monday 3.3.2024</div>
+  <div class="day__title">
+    {{ date | date : "cccc, dd.MM.yyyy" }}
+  </div>
   <div class="day__timeline" #timelineEl>
     <div class="day__timeline-content">
+      <!-- Current time line -->
       <div class="day__timeline-now" [style.top.px]="totalMinutes"></div>
+
+      <!-- Make div every hour -->
       @for (time of timeline; track time) {
       <div class="day__timeline-hour">
         @for (q of quarter; track q) {
@@ -16,7 +21,10 @@
         </div>
         }
       </div>
-      } @for (item of items; track $index) {
+      }
+
+      <!-- Add all timeline items for day -->
+      @for (item of items; track $index) {
       <div
         class="day__timeline-item"
         [style.top.px]="item.totalStartMinutes() * 2"

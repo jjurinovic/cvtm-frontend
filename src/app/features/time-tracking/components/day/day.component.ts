@@ -8,6 +8,8 @@ import { AddEntryDialogComponent } from '../add-entry-dialog/add-entry-dialog.co
 import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { User } from 'src/app/features/users/models/user.model';
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
+import { selectDay } from '../../state/time-tracking.selectors';
+import { Day } from '../../models/day.model';
 
 @Component({
   selector: 'app-day',
@@ -22,12 +24,9 @@ export class DayComponent implements AfterViewInit {
   interval: any;
   currentUser!: User;
   date!: string;
+  day?: Day;
 
-  items: TimeEntry[] = [
-    new TimeEntry('8:00', '12:33', 'Project 1', 'red'),
-    new TimeEntry('13:00', '14:33', 'Project 2', 'green'),
-    new TimeEntry('15:00', '18:33', 'Project 3', 'blue'),
-  ];
+  items: TimeEntry[] = [];
 
   @ViewChild('timelineEl') timelineEl!: ElementRef;
 
@@ -45,6 +44,26 @@ export class DayComponent implements AfterViewInit {
       if (user) {
         this.currentUser = user;
         this.getDay();
+      }
+    });
+
+    // Select day from store
+    this.store.select(selectDay).subscribe((day) => {
+      if (day) {
+        this.items = [];
+        this.day = day;
+
+        this.day.entries.forEach((entry) => {
+          this.items.push(
+            new TimeEntry(
+              entry.start_time,
+              entry.end_time,
+              entry.date,
+              entry.title,
+              'red'
+            )
+          );
+        });
       }
     });
   }
@@ -95,7 +114,7 @@ export class DayComponent implements AfterViewInit {
 
   openDialog(): void {
     this.dialog.open(AddEntryDialogComponent, {
-      data: { dayId: 1, date: '14.02.2024' },
+      data: { dayId: this.day?.id, date: this.date, user: this.currentUser },
     });
   }
 

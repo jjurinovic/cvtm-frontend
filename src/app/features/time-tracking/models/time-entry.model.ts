@@ -1,6 +1,7 @@
 export interface TimeModel {
   startTime: string;
   endTime: string;
+  date: string;
 }
 
 export class TimeEntry implements TimeModel {
@@ -8,12 +9,20 @@ export class TimeEntry implements TimeModel {
   endTime: string;
   color: string;
   title: string;
+  date: string;
 
-  constructor(start: string, end: string, title: string, color: string) {
+  constructor(
+    start: string,
+    end: string,
+    date: string,
+    title: string,
+    color: string
+  ) {
     this.startTime = start;
     this.endTime = end;
     this.color = color;
     this.title = title;
+    this.date = date;
   }
 
   getStartHours(): number {

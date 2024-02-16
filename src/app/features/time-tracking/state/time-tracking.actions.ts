@@ -69,17 +69,17 @@ export const getDaysFail = createAction(
 );
 
 /** CREATE DAY ENTRY */
-export const getDayEntry = createAction(
+export const createDayEntry = createAction(
   TimeTrackingActionTypes.CreateDayEntry,
   props<{ payload: DayEntry }>()
 );
 
-export const getDayEntrySuccess = createAction(
+export const createDayEntrySuccess = createAction(
   TimeTrackingActionTypes.CreateDayEntrySuccess,
   props<{ payload: DayEntry }>()
 );
 
-export const getDayEntryFail = createAction(
+export const createDayEntryFail = createAction(
   TimeTrackingActionTypes.CreateDayEntryFail,
   props<{ payload: BaseError }>()
 );

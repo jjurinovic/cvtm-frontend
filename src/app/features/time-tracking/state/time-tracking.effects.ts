@@ -12,6 +12,7 @@ import {
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TimeTrackingService } from '../services/time-tracking.service';
 import { of } from 'rxjs';
+import { DayEntry } from '../models/day-entry.model';
 
 @Injectable()
 export class TimeTrackingEffects {
@@ -22,7 +23,7 @@ export class TimeTrackingEffects {
         this._time.createDay(payload).pipe(
           map((data) => ({
             type: TimeTrackingActionTypes.CreateDaySuccess,
-            payload: data.entries[0],
+            payload: { ...payload.entries[0], day_id: data.id },
           })),
           catchError(({ error }) =>
             of({
@@ -38,9 +39,9 @@ export class TimeTrackingEffects {
   createDaySuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TimeTrackingActionTypes.CreateDaySuccess),
-      map((data) => ({
+      map(({ payload }) => ({
         type: TimeTrackingActionTypes.CreateDayEntry,
-        payload: data,
+        payload: payload,
       }))
     )
   );
@@ -85,10 +86,24 @@ export class TimeTrackingEffects {
     )
   );
 
+  createDayEntrySuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TimeTrackingActionTypes.CreateDayEntrySuccess),
+      tap((data) => {
+        this.dialog.closeAll();
+        this._snackbar.success('Successfully added Time entry!');
+      }),
+      map(({ payload }: any) => ({
+        type: TimeTrackingActionTypes.GetDay,
+        payload: { date: payload.date, user_id: payload.user_id },
+      }))
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private _snackbar: SnackbarService,
-    private dialogRef: MatDialog,
+    private dialog: MatDialog,
     private _time: TimeTrackingService
   ) {}
 }
