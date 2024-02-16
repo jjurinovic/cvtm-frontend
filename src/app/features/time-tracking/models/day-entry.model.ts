@@ -8,4 +8,5 @@ export interface DayEntry {
   date: string;
   title: string;
   user_id: number;
+  color: string;
 }

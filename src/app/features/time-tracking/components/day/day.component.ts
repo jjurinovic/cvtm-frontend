@@ -61,7 +61,7 @@ export class DayComponent implements AfterViewInit {
               entry.end_time,
               entry.date,
               entry.title,
-              'red',
+              entry.color,
               entry.id,
               entry.pause,
               entry.notes

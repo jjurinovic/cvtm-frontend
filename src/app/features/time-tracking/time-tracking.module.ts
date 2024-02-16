@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 import { TimeTrackingComponent } from './components/time-tracking/time-tracking.component';
 import { TimeTrackingRoutingModule } from './time-tracking.routing';
@@ -28,6 +29,7 @@ import { AddEntryDialogComponent } from './components/add-entry-dialog/add-entry
     ReactiveFormsModule,
     NgxMatTimepickerModule,
     MatIconModule,
+    MatSelectModule,
   ],
 })
 export class TimeTrackingModule {}

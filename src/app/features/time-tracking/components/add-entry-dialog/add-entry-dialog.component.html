@@ -1,15 +1,30 @@
 <h2 mat-dialog-title>{{ dialogTitle }}</h2>
 <mat-dialog-content>
   <form [formGroup]="form" (submit)="submit()">
+    <!-- Title -->
     <div class="form-row">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          name="title"
+          formControlName="title"
+          placeholder="Title"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Start time -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Start Time</mat-label>
         <input
           matInput
           name="startTime"
           [format]="24"
           formControlName="startTime"
           [ngxMatTimepicker]="startPicker"
-          placeholder="16:00"
+          placeholder="Start time"
           readonly
         />
         <mat-icon matSuffix (click)="startPicker.open()">
@@ -18,22 +33,37 @@
       </mat-form-field>
       <ngx-mat-timepicker color="primary" #startPicker></ngx-mat-timepicker>
     </div>
+
+    <!-- End time -->
     <div class="form-row">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>End Time</mat-label>
         <input
           matInput
           name="endTime"
           [format]="24"
           formControlName="endTime"
           [ngxMatTimepicker]="endPicker"
-          placeholder="16:00"
+          placeholder="End Time"
           readonly
         />
         <mat-icon matSuffix (click)="endPicker.open()"> watch_later </mat-icon>
       </mat-form-field>
       <ngx-mat-timepicker color="primary" #endPicker></ngx-mat-timepicker>
     </div>
-    <div class="form-row"></div>
+
+    <!-- Color -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Color</mat-label>
+        <mat-select formControlName="color" id="color">
+          @for (color of colors; track $index) {
+
+          <mat-option [value]="color.value">{{ color.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
 
     <button hidden type="submit" #submitBtn></button>
   </form>
