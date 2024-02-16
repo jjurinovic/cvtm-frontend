@@ -15,9 +15,12 @@ export enum TimeTrackingActionTypes {
   GetDays = '[Time Tracking] Get Days',
   GetDaysSuccess = '[Time Tracking] Get Days Success',
   GetDaysFail = '[Time Tracking] Get Days Fail',
-  CreateDayEntry = '[Time Tracking] Create Day Entry by id',
-  CreateDayEntrySuccess = '[Time Tracking] Create Day Entry by id Success',
-  CreateDayEntryFail = '[Time Tracking] Create Day Entry by id Fail',
+  CreateDayEntry = '[Time Tracking] Create Day Entry',
+  CreateDayEntrySuccess = '[Time Tracking] Create Day Entry Success',
+  CreateDayEntryFail = '[Time Tracking] Create Day Entry Fail',
+  UpdateDayEntry = '[Time Tracking] Update Day Entry by id',
+  UpdateDayEntrySuccess = '[Time Tracking] Update Day Entry Success',
+  UpdateDayEntryFail = '[Time Tracking] Update Day Entry Fail',
 }
 
 /** CREATE DAY */
@@ -81,5 +84,21 @@ export const createDayEntrySuccess = createAction(
 
 export const createDayEntryFail = createAction(
   TimeTrackingActionTypes.CreateDayEntryFail,
+  props<{ payload: BaseError }>()
+);
+
+/** UPDATE DAY ENTRY */
+export const updateDayEntry = createAction(
+  TimeTrackingActionTypes.UpdateDayEntry,
+  props<{ payload: DayEntry }>()
+);
+
+export const updateDayEntrySuccess = createAction(
+  TimeTrackingActionTypes.UpdateDayEntrySuccess,
+  props<{ payload: DayEntry }>()
+);
+
+export const updateDayEntryFail = createAction(
+  TimeTrackingActionTypes.UpdateDayEntryFail,
   props<{ payload: BaseError }>()
 );

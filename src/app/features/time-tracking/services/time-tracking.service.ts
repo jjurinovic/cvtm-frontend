@@ -69,4 +69,13 @@ export class TimeTrackingService {
   public createDayEntry(req: DayEntry): Observable<DayEntry> {
     return this.http.post<DayEntry>(this.baseUrl + '/entry', req);
   }
+
+  /**
+   * Update time entry
+   * @param {DayEntry} req day entry object for update
+   * @returns {Observable<DayEntry>} Returns Observable with DayEntry object
+   */
+  public updateDayEntry(req: DayEntry): Observable<DayEntry> {
+    return this.http.put<DayEntry>(this.baseUrl + '/entry', req);
+  }
 }
