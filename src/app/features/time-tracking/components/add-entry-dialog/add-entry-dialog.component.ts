@@ -49,14 +49,21 @@ export class AddEntryDialogComponent {
       title: 'Test',
       date: this.data.date,
       user_id: this.data.user.id,
+      id: this.data.entry.id,
     };
 
     if (this.data.dayId) {
-      this.store.dispatch(
-        TimeTrackingActions.createDayEntry({
-          payload: dayEntry,
-        })
-      );
+      if (this.data.entry) {
+        this.store.dispatch(
+          TimeTrackingActions.updateDayEntry({ payload: dayEntry })
+        );
+      } else {
+        this.store.dispatch(
+          TimeTrackingActions.createDayEntry({
+            payload: dayEntry,
+          })
+        );
+      }
     } else {
       this.store.dispatch(
         TimeTrackingActions.createDay({

@@ -5,6 +5,7 @@ export interface TimeModel {
 }
 
 export class TimeEntry implements TimeModel {
+  id?: number;
   startTime: string;
   endTime: string;
   color: string;
@@ -19,9 +20,12 @@ export class TimeEntry implements TimeModel {
     date: string,
     title: string,
     color: string,
+    id?: number,
     pause?: number,
     notes?: string
   ) {
+    this.id = id;
+
     const s = start.split(':');
     if (s.length === 3) {
       this.startTime = s[0] + ':' + s[1];
