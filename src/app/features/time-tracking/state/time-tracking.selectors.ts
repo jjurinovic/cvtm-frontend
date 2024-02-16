@@ -1,6 +1,13 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { State } from './time-tracking.reducers';
 
-const selectUser = createFeatureSelector<State>('timeTracking');
+const selectTImeTracking = createFeatureSelector<State>('timeTracking');
 
-export const selectDay = createSelector(selectUser, (state) => state.day);
+export const selectDay = createSelector(
+  selectTImeTracking,
+  (state) => state.day
+);
+export const selectDays = createSelector(
+  selectTImeTracking,
+  (state) => state.days
+);
