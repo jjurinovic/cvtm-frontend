@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
 import { User } from 'src/app/features/users/models/user.model';
+import { TimeEntry } from '../../models/time-entry.model';
 
 @Component({
   selector: 'app-add-entry-dialog',
@@ -12,18 +13,32 @@ import { User } from 'src/app/features/users/models/user.model';
   styleUrl: './add-entry-dialog.component.scss',
 })
 export class AddEntryDialogComponent {
+  dialogTitle: string = 'Add Entry';
   form: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
-    public data: { dayId: number; date: string; user: User },
+    public data: {
+      dayId: number;
+      date: string;
+      user: User;
+      entry: TimeEntry;
+      period: { start: string; end: string };
+    },
     private store: Store,
     private dialogRef: MatDialogRef<AddEntryDialogComponent>
   ) {
     this.form = this.fb.group({
-      startTime: ['14:22', Validators.required],
-      endTime: ['14:22', Validators.required],
+      startTime: [this.data.period.start, Validators.required],
+      endTime: [this.data.period.end, Validators.required],
     });
+
+    if (this.data.entry) {
+      console.log(this.data.entry);
+      this.dialogTitle = 'Edit Entry';
+      this.form.patchValue(this.data.entry);
+    }
   }
 
   submit(): void {

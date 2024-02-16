@@ -10,6 +10,7 @@ import { User } from 'src/app/features/users/models/user.model';
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
 import { selectDay } from '../../state/time-tracking.selectors';
 import { Day } from '../../models/day.model';
+import { getNowTime } from 'src/app/utils/date';
 
 @Component({
   selector: 'app-day',
@@ -60,7 +61,9 @@ export class DayComponent implements AfterViewInit {
               entry.end_time,
               entry.date,
               entry.title,
-              'red'
+              'red',
+              entry.pause,
+              entry.notes
             )
           );
         });
@@ -112,10 +115,43 @@ export class DayComponent implements AfterViewInit {
     return `${h}:${qt}`;
   }
 
-  openDialog(): void {
+  openDialog(period: { start: string; end: string }, entry?: TimeEntry): void {
     this.dialog.open(AddEntryDialogComponent, {
-      data: { dayId: this.day?.id, date: this.date, user: this.currentUser },
+      data: {
+        dayId: this.day?.id,
+        date: this.date,
+        user: this.currentUser,
+        entry,
+        period,
+      },
     });
+  }
+
+  /** Reutrns start and end time based on current time.
+   * End Time is now and Start time is hour before
+   */
+  private currentPeriod(): { start: string; end: string } {
+    const end = getNowTime();
+    const start = getNowTime(-60);
+    return { start, end };
+  }
+
+  addEntry(): void {
+    this.openDialog(this.currentPeriod());
+  }
+
+  editEntry(entry: TimeEntry): void {
+    this.openDialog(this.currentPeriod(), entry);
+  }
+
+  quarterClick(h: number, m: number): void {
+    const end = this.getTime(h, m);
+
+    const startH = m === 0 ? h - 1 : h;
+    const startM = m === 0 ? 3 : m - 1;
+    const start = this.getTime(startH, startM);
+
+    this.openDialog({ start, end });
   }
 
   getDay(): void {

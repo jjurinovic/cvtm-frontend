@@ -1,6 +1,4 @@
-<button mat-flat-button color="primary" (click)="openDialog()">
-  Add Entry
-</button>
+<button mat-flat-button color="primary" (click)="addEntry()">Add Entry</button>
 <div class="day">
   <div class="day__title">
     {{ date | date : "cccc, dd.MM.yyyy" }}
@@ -14,7 +12,7 @@
       @for (time of timeline; track time) {
       <div class="day__timeline-hour">
         @for (q of quarter; track q) {
-        <div class="day__timeline-quarter">
+        <div class="day__timeline-quarter" (click)="quarterClick(time, q)">
           <span>
             {{ getTime(time, q) }}
           </span>
@@ -33,6 +31,7 @@
         [title]="
           item.title + ' (' + item.startTime + ' - ' + item.endTime + ')'
         "
+        (click)="editEntry(item)"
       >
         <span>{{ item.title }}</span>
       </div>

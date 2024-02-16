@@ -10,19 +10,37 @@ export class TimeEntry implements TimeModel {
   color: string;
   title: string;
   date: string;
+  pause?: number;
+  notes?: string;
 
   constructor(
     start: string,
     end: string,
     date: string,
     title: string,
-    color: string
+    color: string,
+    pause?: number,
+    notes?: string
   ) {
-    this.startTime = start;
-    this.endTime = end;
+    const s = start.split(':');
+    if (s.length === 3) {
+      this.startTime = s[0] + ':' + s[1];
+    } else {
+      this.startTime = start;
+    }
+
+    const e = end.split(':');
+
+    if (e.length === 3) {
+      this.endTime = e[0] + ':' + e[1];
+    } else {
+      this.endTime = end;
+    }
+
     this.color = color;
     this.title = title;
     this.date = date;
+    (this.pause = pause), (this.notes = notes);
   }
 
   getStartHours(): number {
