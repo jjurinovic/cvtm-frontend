@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 import { TimeEntry } from '../../models/time-entry.model';
 import { AddEntryDialogComponent } from '../add-entry-dialog/add-entry-dialog.component';
@@ -10,7 +11,7 @@ import { User } from 'src/app/features/users/models/user.model';
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
 import { selectDay } from '../../state/time-tracking.selectors';
 import { Day } from '../../models/day.model';
-import { MS_PER_MINUTE, getNowTime } from 'src/app/utils/date';
+import { DATE_FORMAT, MS_PER_MINUTE, getNowTime } from 'src/app/utils/date';
 
 @Component({
   selector: 'app-day',
@@ -20,7 +21,7 @@ import { MS_PER_MINUTE, getNowTime } from 'src/app/utils/date';
 export class DayComponent implements AfterViewInit {
   timeline: number[] = [];
   quarter: number[] = [];
-  now: Date = new Date();
+  now: moment.Moment = moment();
   totalMinutes: number = 0;
   interval: any;
   currentUser!: User;
@@ -77,23 +78,20 @@ export class DayComponent implements AfterViewInit {
 
   /** On date change in datepicekr */
   dateChange(): void {
-    // added one hour because of timezones
-    this.dateObj = new Date(this.dateObj.getTime() + 60 * MS_PER_MINUTE);
     this.getDay();
   }
 
   /** Get date in format YYYY-MM-DD from Date object */
   getDate(): string {
-    return this.dateObj.toISOString().split('T')[0];
+    return moment(this.dateObj).format(DATE_FORMAT);
   }
 
   /** Set now and add red line for current time */
   private setNow(): void {
-    this.totalMinutes = (this.now.getHours() * 60 + this.now.getMinutes()) * 2;
+    this.totalMinutes = (this.now.hour() * 60 + this.now.minute()) * 2;
     this.interval = setInterval(() => {
-      this.now = new Date();
-      this.totalMinutes =
-        (this.now.getHours() * 60 + this.now.getMinutes()) * 2;
+      this.now = moment();
+      this.totalMinutes = (this.now.hour() * 60 + this.now.minute()) * 2;
     }, 30000);
   }
 

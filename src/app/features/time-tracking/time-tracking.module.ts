@@ -11,21 +11,19 @@ import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {
-  MAT_DATE_FORMATS,
-  provideNativeDateAdapter,
-} from '@angular/material/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 import { TimeTrackingComponent } from './components/time-tracking/time-tracking.component';
 import { TimeTrackingRoutingModule } from './time-tracking.routing';
 import { DayComponent } from './components/day/day.component';
 import { AddEntryDialogComponent } from './components/add-entry-dialog/add-entry-dialog.component';
+import { MomentDateModule } from '@angular/material-moment-adapter';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
   },
   display: {
-    dateInput: 'YYYY-MM-DD',
+    dateInput: 'DD.MM.YYYY',
     monthYearLabel: 'YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'YYYY',
@@ -48,10 +46,8 @@ export const MY_FORMATS = {
     MatSelectModule,
     MatDatepickerModule,
     FormsModule,
+    MomentDateModule,
   ],
-  providers: [
-    provideNativeDateAdapter(),
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ],
+  providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }],
 })
 export class TimeTrackingModule {}

@@ -1,5 +1,8 @@
 export const MS_PER_MINUTE = 60000;
 
+export const DATE_FORMAT = 'YYYY-MM-DD';
+export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY';
+
 export const getNowTime = (add?: number) => {
   let now = new Date();
 
