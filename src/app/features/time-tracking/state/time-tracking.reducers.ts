@@ -1,6 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { Day } from '../models/day.model';
 import * as TimeTrackingActions from './time-tracking.actions';
 import { DayEntry } from '../models/day-entry.model';
 
@@ -34,28 +33,28 @@ export const reducer = createReducer(
     isLoading: false,
     error: payload.detail,
   })),
-  on(TimeTrackingActions.createDayEntry, (state) => ({
+  on(TimeTrackingActions.createTimeEntry, (state) => ({
     ...state,
     isLoading: true,
   })),
-  on(TimeTrackingActions.createDayEntrySuccess, (state) => ({
+  on(TimeTrackingActions.createTimeEntrySuccess, (state) => ({
     ...state,
     isLoading: false,
   })),
-  on(TimeTrackingActions.createDayEntryFail, (state, { payload }) => ({
+  on(TimeTrackingActions.createTimeEntryFail, (state, { payload }) => ({
     ...state,
     isLoading: false,
     error: payload.detail,
   })),
-  on(TimeTrackingActions.updateDayEntry, (state) => ({
+  on(TimeTrackingActions.updateTimeEntry, (state) => ({
     ...state,
     isLoading: true,
   })),
-  on(TimeTrackingActions.updateDayEntrySuccess, (state) => ({
+  on(TimeTrackingActions.updateTimeEntrySuccess, (state) => ({
     ...state,
     isLoading: false,
   })),
-  on(TimeTrackingActions.updateDayEntryFail, (state, { payload }) => ({
+  on(TimeTrackingActions.updateTimeEntryFail, (state, { payload }) => ({
     ...state,
     isLoading: false,
     error: payload.detail,

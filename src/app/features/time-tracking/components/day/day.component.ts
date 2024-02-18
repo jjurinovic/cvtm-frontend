@@ -10,7 +10,6 @@ import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { User } from 'src/app/features/users/models/user.model';
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
 import { selectDay } from '../../state/time-tracking.selectors';
-import { Day } from '../../models/day.model';
 import { DATE_FORMAT, MS_PER_MINUTE, getNowTime } from 'src/app/utils/date';
 import { DayEntry } from '../../models/day-entry.model';
 

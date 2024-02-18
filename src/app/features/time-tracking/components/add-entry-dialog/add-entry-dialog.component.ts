@@ -68,11 +68,11 @@ export class AddEntryDialogComponent {
   }
 
   private createEntry(payload: ITimeEntry): void {
-    this.store.dispatch(TimeTrackingActions.createDayEntry({ payload }));
+    this.store.dispatch(TimeTrackingActions.createTimeEntry({ payload }));
   }
 
   private updateEntry(payload: ITimeEntry): void {
-    this.store.dispatch(TimeTrackingActions.updateDayEntry({ payload }));
+    this.store.dispatch(TimeTrackingActions.updateTimeEntry({ payload }));
   }
 
   /** Close dialog */

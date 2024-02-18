@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
@@ -34,16 +33,16 @@ export class TimeTrackingEffects {
 
   createDayEntry$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TimeTrackingActionTypes.CreateDayEntry),
+      ofType(TimeTrackingActionTypes.CreateTimeEntry),
       exhaustMap(({ payload }: any) =>
         this._time.createDayEntry(payload).pipe(
           map((data) => ({
-            type: TimeTrackingActionTypes.CreateDayEntrySuccess,
+            type: TimeTrackingActionTypes.CreateTimeEntrySuccess,
             payload: data,
           })),
           catchError(({ error }) =>
             of({
-              type: TimeTrackingActionTypes.CreateDayEntryFail,
+              type: TimeTrackingActionTypes.CreateTimeEntryFail,
               payload: error,
             })
           )
@@ -54,7 +53,7 @@ export class TimeTrackingEffects {
 
   createDayEntrySuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TimeTrackingActionTypes.CreateDayEntrySuccess),
+      ofType(TimeTrackingActionTypes.CreateTimeEntrySuccess),
       tap((data) => {
         this.dialog.closeAll();
         this._snackbar.success('Successfully added Time entry!');
@@ -68,16 +67,16 @@ export class TimeTrackingEffects {
 
   updateDayEntry$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TimeTrackingActionTypes.UpdateDayEntry),
+      ofType(TimeTrackingActionTypes.UpdateTimeEntry),
       exhaustMap(({ payload }: any) =>
         this._time.updateDayEntry(payload).pipe(
           map((data) => ({
-            type: TimeTrackingActionTypes.UpdateDayEntrySuccess,
+            type: TimeTrackingActionTypes.UpdateTimeEntrySuccess,
             payload: data,
           })),
           catchError(({ error }) =>
             of({
-              type: TimeTrackingActionTypes.UpdateDayEntryFail,
+              type: TimeTrackingActionTypes.UpdateTimeEntryFail,
               payload: error,
             })
           )
@@ -88,7 +87,7 @@ export class TimeTrackingEffects {
 
   updateDayEntrySuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TimeTrackingActionTypes.UpdateDayEntrySuccess),
+      ofType(TimeTrackingActionTypes.UpdateTimeEntrySuccess),
       tap((data) => {
         this.dialog.closeAll();
         this._snackbar.success('Successfully updated Time entry!');

@@ -1,133 +1,103 @@
 import {
-  testDay,
-  testDayEntry,
+  testTimeEntriesRequest,
+  testTimeEntry,
   testDayRequest,
-  testDays,
+  testDayEntry,
   testError,
 } from 'src/test-data/data';
-import { DayRequest } from '../models/time-entries-request.model';
 import * as TimeTrackingActions from './time-tracking.actions';
-import { Day } from '../models/day.model';
 import { BaseError } from 'src/app/shared/models/error.model';
 import { DayEntry } from '../models/day-entry.model';
+import { ITimeEntry } from '../models/time-entry.model';
+import { TimeEntriesRequest } from '../models/time-entries-request.model';
 
 describe('Time Tracking Actions', () => {
-  it('should createDay create action', () => {
-    const payload: DayRequest = testDayRequest;
-    const action = TimeTrackingActions.createDay({ payload });
+  it('should getTimeEntries create action', () => {
+    const payload: TimeEntriesRequest = testTimeEntriesRequest;
+    const action = TimeTrackingActions.getTimeEntries({ payload });
 
     expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.CreateDay,
+      type: TimeTrackingActions.TimeTrackingActionTypes.GetTimeEntries,
       payload,
     });
   });
 
-  it('should createDaySuccess create action', () => {
-    const payload: Day = testDay;
-    const action = TimeTrackingActions.createDaySuccess({ payload });
-
-    expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.CreateDaySuccess,
-      payload,
-    });
-  });
-
-  it('should createDayFail create action', () => {
-    const payload: BaseError = testError;
-    const action = TimeTrackingActions.createDayFail({ payload });
-
-    expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.CreateDayFail,
-      payload,
-    });
-  });
-
-  it('should getDay create action', () => {
-    const payload: Day = testDay;
-    const action = TimeTrackingActions.getDay({ payload });
-
-    expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.GetDay,
-      payload,
-    });
-  });
-
-  it('should getDaySuccess create action', () => {
-    const payload: Day = testDay;
-    const action = TimeTrackingActions.getDaySuccess({ payload });
-
-    expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.GetDaySuccess,
-      payload,
-    });
-  });
-
-  it('should getDayFail create action', () => {
-    const payload: BaseError = testError;
-    const action = TimeTrackingActions.getDayFail({ payload });
-
-    expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.GetDayFail,
-      payload,
-    });
-  });
-
-  it('should getDays create action', () => {
-    const payload: DayRequest = testDayRequest;
-    const action = TimeTrackingActions.getDays({ payload });
-
-    expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.GetDays,
-      payload,
-    });
-  });
-
-  it('should getDaysSuccess create action', () => {
-    const payload: Day[] = testDays;
-    const action = TimeTrackingActions.getDaysSuccess({ payload });
-
-    expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.GetDaysSuccess,
-      payload,
-    });
-  });
-
-  it('should getDaysFail create action', () => {
-    const payload: BaseError = testError;
-    const action = TimeTrackingActions.getDaysFail({ payload });
-
-    expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.GetDaysFail,
-      payload,
-    });
-  });
-
-  it('should getDayEntry create action', () => {
+  it('should getTimeEntriesSuccess create action', () => {
     const payload: DayEntry = testDayEntry;
-    const action = TimeTrackingActions.getDayEntry({ payload });
+    const action = TimeTrackingActions.getTimeEntriesSuccess({ payload });
 
     expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.GetDayEntry,
+      type: TimeTrackingActions.TimeTrackingActionTypes.GetTimeEntriesSuccess,
       payload,
     });
   });
 
-  it('should getDayEntrySuccess create action', () => {
-    const payload: DayEntry = testDayEntry;
-    const action = TimeTrackingActions.getDayEntrySuccess({ payload });
-
-    expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.GetDayEntrySuccess,
-      payload,
-    });
-  });
-
-  it('should getDayEntryFail create action', () => {
+  it('should getTimeEntriesFail create action', () => {
     const payload: BaseError = testError;
-    const action = TimeTrackingActions.getDayEntryFail({ payload });
+    const action = TimeTrackingActions.getTimeEntriesFail({ payload });
 
     expect(action).toEqual({
-      type: TimeTrackingActions.TimeTrackingActionTypes.GetDayEntryFail,
+      type: TimeTrackingActions.TimeTrackingActionTypes.GetTimeEntriesFail,
+      payload,
+    });
+  });
+
+  it('should createTimeEntry create action', () => {
+    const payload: ITimeEntry = testTimeEntry;
+    const action = TimeTrackingActions.createTimeEntry({ payload });
+
+    expect(action).toEqual({
+      type: TimeTrackingActions.TimeTrackingActionTypes.CreateTimeEntry,
+      payload,
+    });
+  });
+
+  it('should createTimeEntrySuccess create action', () => {
+    const payload: ITimeEntry = testTimeEntry;
+    const action = TimeTrackingActions.createTimeEntrySuccess({ payload });
+
+    expect(action).toEqual({
+      type: TimeTrackingActions.TimeTrackingActionTypes.CreateTimeEntrySuccess,
+      payload,
+    });
+  });
+
+  it('should createTimeEntryFail create action', () => {
+    const payload: BaseError = testError;
+    const action = TimeTrackingActions.createTimeEntryFail({ payload });
+
+    expect(action).toEqual({
+      type: TimeTrackingActions.TimeTrackingActionTypes.CreateTimeEntryFail,
+      payload,
+    });
+  });
+
+  it('should updateTimeEntry update action', () => {
+    const payload: ITimeEntry = testTimeEntry;
+    const action = TimeTrackingActions.updateTimeEntry({ payload });
+
+    expect(action).toEqual({
+      type: TimeTrackingActions.TimeTrackingActionTypes.UpdateTimeEntry,
+      payload,
+    });
+  });
+
+  it('should updateTimeEntrySuccess update action', () => {
+    const payload: ITimeEntry = testTimeEntry;
+    const action = TimeTrackingActions.updateTimeEntrySuccess({ payload });
+
+    expect(action).toEqual({
+      type: TimeTrackingActions.TimeTrackingActionTypes.UpdateTimeEntrySuccess,
+      payload,
+    });
+  });
+
+  it('should updateTimeEntryFail update action', () => {
+    const payload: BaseError = testError;
+    const action = TimeTrackingActions.updateTimeEntryFail({ payload });
+
+    expect(action).toEqual({
+      type: TimeTrackingActions.TimeTrackingActionTypes.UpdateTimeEntryFail,
       payload,
     });
   });

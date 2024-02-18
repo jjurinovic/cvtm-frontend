@@ -1,7 +1,7 @@
-import { TimeEntry } from './time-entry.model';
+import { ITimeEntry, TimeEntry } from './time-entry.model';
 
 export interface DayEntry {
   date: string;
-  entries: TimeEntry[];
+  entries: ITimeEntry[];
   total: number;
 }

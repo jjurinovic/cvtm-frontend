@@ -112,11 +112,11 @@ export const testCompanyPageResponse = {
 };
 
 export const testDayRequest = {
-  date: '14.02.2024',
+  date: '2024-02-14',
   user_id: 999,
   company_id: 999,
-  start: '01.02.2024',
-  end: '14.02.2024',
+  start: '2024-02-01',
+  end: '2024-02-14',
 };
 
 export const testDayEntries = [
@@ -138,36 +138,33 @@ export const testDayEntries = [
   },
 ];
 
-export const testDay = {
-  id: 999,
-  date: '14.02.2024',
+export const testTimeEntriesRequest = {
+  date: '2024-02-14',
   user_id: 999,
   company_id: 999,
-  entries: testDayEntries,
 };
 
-export const testDays = [
-  {
-    id: 998,
-    date: '14.02.2024',
-    user_id: 999,
-    company_id: 999,
-    entries: testDayEntries,
-  },
-  {
-    id: 999,
-    date: '14.02.2024',
-    user_id: 999,
-    company_id: 999,
-    entries: testDayEntries,
-  },
-];
-
-export const testDayEntry = {
+export const testTimeEntry = {
   start_time: '10:00',
   end_time: '12:00',
   notes: 'test',
+  title: 'test',
+  color: 'red',
   pause: 30,
-  day_id: 999,
+  user_id: 999,
+  company_id: 999,
   id: 999,
+  date: '2024-02-14',
+};
+
+export const testDayEntry = {
+  date: '2024-02-14',
+  total: 2,
+  entries: [
+    {
+      ...testTimeEntry,
+      id: 998,
+    },
+    testTimeEntry,
+  ],
 };
