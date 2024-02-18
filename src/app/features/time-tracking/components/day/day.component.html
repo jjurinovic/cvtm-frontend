@@ -28,7 +28,7 @@
   <div class="day__timeline" #timelineEl>
     <div class="day__timeline-content">
       <!-- Current time line -->
-      <div class="now" [style.top.px]="totalMinutes"></div>
+      <div class="day__timeline-now" [style.top.px]="totalMinutes"></div>
 
       <!-- Timeline Grid -->
       <app-day-time-grid (periodClick)="openDialog($event)"></app-day-time-grid>
