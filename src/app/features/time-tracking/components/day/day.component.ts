@@ -19,8 +19,6 @@ import { DayEntry } from '../../models/day-entry.model';
   styleUrl: './day.component.scss',
 })
 export class DayComponent implements AfterViewInit {
-  timeline: number[] = [];
-  quarter: number[] = [];
   now: moment.Moment = moment();
   totalMinutes: number = 0;
   interval: any;
@@ -33,9 +31,6 @@ export class DayComponent implements AfterViewInit {
   @ViewChild('timelineEl') timelineEl!: ElementRef;
 
   constructor(private dialog: MatDialog, private store: Store) {
-    // create timeline
-    this.createTimeline();
-
     // set now
     this.setNow();
 
@@ -84,36 +79,11 @@ export class DayComponent implements AfterViewInit {
     }, 30000);
   }
 
-  /** Create timeline with hours and minutes */
-  private createTimeline(): void {
-    Array(24)
-      .fill(null)
-      .forEach((el, i) => {
-        this.timeline.push(i);
-      });
-
-    Array(4)
-      .fill(null)
-      .forEach((el, i) => {
-        this.quarter.push(i);
-      });
-  }
-
   /** Set scroll of timeline */
   private setScroll(): void {
     setTimeout(() => {
       this.timelineEl.nativeElement.scrollTop = this.totalMinutes - 150;
     });
-  }
-
-  getTime(h: number, q: number) {
-    let qt: any = (q + 1) * 15;
-    h = qt === 60 ? h + 1 : h;
-    qt = qt === 60 ? '00' : qt;
-
-    h = h == 24 ? 0 : h;
-
-    return `${h}:${qt}`;
   }
 
   /** Open dialog */
@@ -145,17 +115,6 @@ export class DayComponent implements AfterViewInit {
   /** Open dialog for editing existing entry */
   editEntry(entry: TimeEntry): void {
     this.openDialog({ start: entry.start_time, end: entry.end_time }, entry);
-  }
-
-  /** Open dialog on range where user clikced */
-  quarterClick(h: number, m: number): void {
-    const end = this.getTime(h, m);
-
-    const startH = m === 0 ? h - 1 : h;
-    const startM = m === 0 ? 3 : m - 1;
-    const start = this.getTime(startH, startM);
-
-    this.openDialog({ start, end });
   }
 
   /** Ger new day by given date */

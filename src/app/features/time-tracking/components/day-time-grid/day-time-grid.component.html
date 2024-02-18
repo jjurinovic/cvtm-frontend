@@ -1,0 +1,12 @@
+<!-- Make div every hour -->
+@for (time of timeline; track time) {
+<div class="hour">
+  @for (q of quarter; track q) {
+  <div class="hour-quarter" (click)="quarterClick(time, q)">
+    <span>
+      {{ getTime(time, q) }}
+    </span>
+  </div>
+  }
+</div>
+}
