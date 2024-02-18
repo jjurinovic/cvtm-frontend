@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DayEntry } from '../models/day-entry.model';
 import { TimeEntriesRequest } from '../models/time-entries-request.model';
+import { ITimeEntry } from '../models/time-entry.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,19 +37,19 @@ export class TimeTrackingService {
 
   /**
    * Create new day entry
-   * @param {DayEntry} req day entry object for create
-   * @returns {Observable<DayEntry>} Returns Observable with DayEntry object
+   * @param {ITimeEntry} req day entry object for create
+   * @returns {Observable<ITimeEntry>} Returns Observable with ITimeEntry object
    */
-  public createDayEntry(req: DayEntry): Observable<DayEntry> {
-    return this.http.post<DayEntry>(this.baseUrl + '/entry', req);
+  public createTimeEntry(req: ITimeEntry): Observable<ITimeEntry> {
+    return this.http.post<ITimeEntry>(this.baseUrl + '/entry', req);
   }
 
   /**
    * Update time entry
-   * @param {DayEntry} req day entry object for update
-   * @returns {Observable<DayEntry>} Returns Observable with DayEntry object
+   * @param {ITimeEntry} req day entry object for update
+   * @returns {Observable<ITimeEntry>} Returns Observable with ITimeEntry object
    */
-  public updateDayEntry(req: DayEntry): Observable<DayEntry> {
-    return this.http.put<DayEntry>(this.baseUrl + '/entry', req);
+  public updateTimeEntry(req: ITimeEntry): Observable<ITimeEntry> {
+    return this.http.put<ITimeEntry>(this.baseUrl + '/entry', req);
   }
 }

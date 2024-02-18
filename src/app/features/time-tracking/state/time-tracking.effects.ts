@@ -35,7 +35,7 @@ export class TimeTrackingEffects {
     this.actions$.pipe(
       ofType(TimeTrackingActionTypes.CreateTimeEntry),
       exhaustMap(({ payload }: any) =>
-        this._time.createDayEntry(payload).pipe(
+        this._time.createTimeEntry(payload).pipe(
           map((data) => ({
             type: TimeTrackingActionTypes.CreateTimeEntrySuccess,
             payload: data,
@@ -69,7 +69,7 @@ export class TimeTrackingEffects {
     this.actions$.pipe(
       ofType(TimeTrackingActionTypes.UpdateTimeEntry),
       exhaustMap(({ payload }: any) =>
-        this._time.updateDayEntry(payload).pipe(
+        this._time.updateTimeEntry(payload).pipe(
           map((data) => ({
             type: TimeTrackingActionTypes.UpdateTimeEntrySuccess,
             payload: data,
