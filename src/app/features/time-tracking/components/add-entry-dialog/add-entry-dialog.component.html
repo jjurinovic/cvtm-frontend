@@ -22,7 +22,7 @@
           matInput
           name="startTime"
           [format]="24"
-          formControlName="startTime"
+          formControlName="start_time"
           [ngxMatTimepicker]="startPicker"
           placeholder="Start time"
           readonly
@@ -42,7 +42,7 @@
           matInput
           name="endTime"
           [format]="24"
-          formControlName="endTime"
+          formControlName="end_time"
           [ngxMatTimepicker]="endPicker"
           placeholder="End Time"
           readonly
@@ -62,6 +62,21 @@
           <mat-option [value]="color.value">{{ color.name }}</mat-option>
           }
         </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Notes -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Notes</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          formControlName="notes"
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
       </mat-form-field>
     </div>
 

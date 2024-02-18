@@ -45,18 +45,10 @@
 
       <!-- Add all timeline items for day -->
       @for (item of items; track $index) {
-      <div
-        class="day__timeline-item"
-        [style.top.px]="item.totalStartMinutes() * 2"
-        [style.height.px]="item.totalDurationMinutes() * 2"
-        [style.backgroundColor]="item.color"
-        [title]="
-          item.title + ' (' + item.start_time + ' - ' + item.end_time + ')'
-        "
-        (click)="editEntry(item)"
-      >
-        <span>{{ item.title }}</span>
-      </div>
+      <app-time-entry
+        [timeEntry]="item"
+        (onEdit)="editEntry($event)"
+      ></app-time-entry>
       }
     </div>
   </div>

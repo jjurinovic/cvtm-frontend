@@ -18,6 +18,7 @@ import { TimeTrackingRoutingModule } from './time-tracking.routing';
 import { DayComponent } from './components/day/day.component';
 import { AddEntryDialogComponent } from './components/add-entry-dialog/add-entry-dialog.component';
 import { MomentDateModule } from '@angular/material-moment-adapter';
+import { TimeEntryComponent } from './components/time-entry/time-entry.component';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -31,7 +32,7 @@ export const MY_FORMATS = {
 };
 
 @NgModule({
-  declarations: [TimeTrackingComponent, DayComponent, AddEntryDialogComponent],
+  declarations: [TimeTrackingComponent, DayComponent, AddEntryDialogComponent, TimeEntryComponent],
   imports: [
     CommonModule,
     TimeTrackingRoutingModule,

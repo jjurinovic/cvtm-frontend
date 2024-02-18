@@ -1,0 +1,17 @@
+<div
+  class="time-entry"
+  [style.top.px]="timeEntry.totalStartMinutes() * 2"
+  [style.height.px]="timeEntry.totalDurationMinutes() * 2"
+  [style.backgroundColor]="timeEntry.color"
+  [title]="
+    timeEntry.title +
+    ' (' +
+    timeEntry.start_time +
+    ' - ' +
+    timeEntry.end_time +
+    ')'
+  "
+  (click)="editEntry()"
+>
+  <span>{{ timeEntry.title }}</span>
+</div>

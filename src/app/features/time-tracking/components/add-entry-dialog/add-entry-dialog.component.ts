@@ -37,9 +37,10 @@ export class AddEntryDialogComponent {
   ) {
     this.form = this.fb.group({
       title: ['', Validators.required],
-      startTime: [this.data.period.start, Validators.required],
-      endTime: [this.data.period.end, Validators.required],
+      start_time: [this.data.period.start, Validators.required],
+      end_time: [this.data.period.end, Validators.required],
       color: ['#0c963c', Validators.required],
+      notes: [''],
     });
 
     if (this.data.entry) {
@@ -50,10 +51,7 @@ export class AddEntryDialogComponent {
 
   submit(): void {
     const dayEntry = {
-      start_time: this.form.get('startTime')?.value,
-      end_time: this.form.get('endTime')?.value,
-      title: this.form.get('title')?.value,
-      color: this.form.get('color')?.value,
+      ...this.form.value,
       date: this.data.date,
       user_id: this.data.user.id,
       company_id: this.data.user.company_id,
