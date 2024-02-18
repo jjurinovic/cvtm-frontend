@@ -5,7 +5,7 @@ import {
   testDays,
   testError,
 } from 'src/test-data/data';
-import { DayRequest } from '../models/day-request.model';
+import { DayRequest } from '../models/time-entries-request.model';
 import * as TimeTrackingActions from './time-tracking.actions';
 import { Day } from '../models/day.model';
 import { BaseError } from 'src/app/shared/models/error.model';

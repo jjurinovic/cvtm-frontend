@@ -2,12 +2,13 @@ import { createReducer, on } from '@ngrx/store';
 
 import { Day } from '../models/day.model';
 import * as TimeTrackingActions from './time-tracking.actions';
+import { DayEntry } from '../models/day-entry.model';
 
 export interface State {
   isLoading: boolean;
-  day: Day | null;
+  day: DayEntry | null;
   error: string | null;
-  days: Day[];
+  days: DayEntry[];
 }
 
 export const initialState: State = {
@@ -19,44 +20,16 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(TimeTrackingActions.getDay, (state) => ({
+  on(TimeTrackingActions.getTimeEntries, (state) => ({
     ...state,
     isLoading: true,
   })),
-  on(TimeTrackingActions.getDaySuccess, (state, { payload }) => ({
+  on(TimeTrackingActions.getTimeEntriesSuccess, (state, { payload }) => ({
     ...state,
     isLoading: false,
     day: payload,
   })),
-  on(TimeTrackingActions.getDayFail, (state, { payload }) => ({
-    ...state,
-    isLoading: false,
-    error: payload.detail,
-  })),
-  on(TimeTrackingActions.createDay, (state) => ({
-    ...state,
-    isLoading: true,
-  })),
-  on(TimeTrackingActions.createDaySuccess, (state, { payload }) => ({
-    ...state,
-    isLoading: false,
-    day: payload,
-  })),
-  on(TimeTrackingActions.createDayFail, (state, { payload }) => ({
-    ...state,
-    isLoading: false,
-    error: payload.detail,
-  })),
-  on(TimeTrackingActions.getDays, (state) => ({
-    ...state,
-    isLoading: true,
-  })),
-  on(TimeTrackingActions.getDaysSuccess, (state, { payload }) => ({
-    ...state,
-    isLoading: false,
-    days: payload,
-  })),
-  on(TimeTrackingActions.getDaysFail, (state, { payload }) => ({
+  on(TimeTrackingActions.getTimeEntriesFail, (state, { payload }) => ({
     ...state,
     isLoading: false,
     error: payload.detail,

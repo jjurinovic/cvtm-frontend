@@ -1,66 +1,61 @@
-export interface TimeModel {
-  startTime: string;
-  endTime: string;
-  date: string;
-}
+import * as moment from 'moment';
 
-export class TimeEntry implements TimeModel {
+export interface ITimeEntry {
   id?: number;
-  startTime: string;
-  endTime: string;
+  start_time: string;
+  end_time: string;
   color: string;
   title: string;
   date: string;
   pause?: number;
   notes?: string;
+  user_id: number;
+  company_id: number;
+}
 
-  constructor(
-    start: string,
-    end: string,
-    date: string,
-    title: string,
-    color: string,
-    id?: number,
-    pause?: number,
-    notes?: string
-  ) {
-    this.id = id;
+export class TimeEntry implements ITimeEntry {
+  id?: number;
+  start_time: string;
+  end_time: string;
+  color: string;
+  title: string;
+  date: string;
+  pause?: number;
+  notes?: string;
+  user_id: number;
+  company_id: number;
 
-    const s = start.split(':');
-    if (s.length === 3) {
-      this.startTime = s[0] + ':' + s[1];
-    } else {
-      this.startTime = start;
-    }
+  constructor(timeEntry: ITimeEntry) {
+    this.id = timeEntry.id;
+    this.user_id = timeEntry.user_id;
+    this.company_id = timeEntry.company_id;
 
-    const e = end.split(':');
+    const start = timeEntry.start_time.split(':');
+    this.start_time = start[0] + ':' + start[1];
 
-    if (e.length === 3) {
-      this.endTime = e[0] + ':' + e[1];
-    } else {
-      this.endTime = end;
-    }
-
-    this.color = color;
-    this.title = title;
-    this.date = date;
-    (this.pause = pause), (this.notes = notes);
+    const end = timeEntry.end_time.split(':');
+    this.end_time = end[0] + ':' + end[1];
+    this.pause = timeEntry.pause;
+    this.title = timeEntry.title;
+    this.notes = timeEntry.notes;
+    this.date = timeEntry.date;
+    this.color = timeEntry.color;
   }
 
   getStartHours(): number {
-    return parseInt(this.startTime.split(':')[0]);
+    return parseInt(this.start_time.split(':')[0]);
   }
 
   getStartMinutes(): number {
-    return parseInt(this.startTime.split(':')[1]);
+    return parseInt(this.start_time.split(':')[1]);
   }
 
   getEndHours(): number {
-    return parseInt(this.endTime.split(':')[0]);
+    return parseInt(this.end_time.split(':')[0]);
   }
 
   getEndMinutes(): number {
-    return parseInt(this.endTime.split(':')[1]);
+    return parseInt(this.end_time.split(':')[1]);
   }
 
   totalStartMinutes(): number {

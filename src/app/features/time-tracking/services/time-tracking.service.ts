@@ -3,62 +3,35 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { Day } from '../models/day.model';
-import { DayRequest } from '../models/day-request.model';
 import { DayEntry } from '../models/day-entry.model';
+import { TimeEntriesRequest } from '../models/time-entries-request.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TimeTrackingService {
-  private baseUrl = environment.apiUrl + '/day';
+  private baseUrl = environment.apiUrl + '/time-entry';
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Create new day for specific day and user
-   * @param {DayRequest} req object with date and ids
-   * @returns {Observable<Day>} Returns observable with day data
+   * Get time entries for specific date
+   * @param {TimeEntriesRequest} req object with params
+   * @returns {Observable} Returns observable with time entries for specific date
    */
-  public createDay(req: DayRequest): Observable<Day> {
-    return this.http.post<Day>(this.baseUrl, req);
-  }
-
-  /**
-   * Get day data by given id
-   * @param {number} id id of specific day
-   * @returns {Observable} Returns observable with day data
-   */
-  public getDayById(req: DayRequest): Observable<Day> {
+  public getTimeEntries(req: TimeEntriesRequest): Observable<DayEntry> {
     let params = new HttpParams();
+    params = params.set('date', req.date);
 
-    if (!!req.user_id && !!req.date) {
+    if (!!req.user_id) {
       params = params.set('user_id', req.user_id);
-      params = params.set('date', req.date as string);
-    }
-    return this.http.get<Day>(this.baseUrl, { params });
-  }
-
-  /**
-   * Return all days by given start and end date
-   * @param {DayRequest} req object with params
-   * @returns Returns observable with list of days
-   */
-  public getDays(req: DayRequest): Observable<Day[]> {
-    let params = new HttpParams();
-    if (req.user_id && req.company_id) {
-      params.set('user_id', req.user_id);
-      params.set('company_id', req.company_id);
     }
 
-    if (req.start) {
-      params.set('start', req.start);
+    if (!!req.company_id) {
+      params = params.set('company_id', req.company_id);
     }
 
-    if (req.end) {
-      params.set('end', req.end);
-    }
-    return this.http.get<Day[]>(this.baseUrl + '/list', { params });
+    return this.http.get<DayEntry>(this.baseUrl, { params });
   }
 
   /**

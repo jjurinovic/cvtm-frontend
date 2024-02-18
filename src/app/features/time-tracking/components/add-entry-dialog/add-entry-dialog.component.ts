@@ -5,9 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
 import { User } from 'src/app/features/users/models/user.model';
-import { TimeEntry } from '../../models/time-entry.model';
+import { ITimeEntry, TimeEntry } from '../../models/time-entry.model';
 import { DayEntry } from '../../models/day-entry.model';
-import { DayRequest } from '../../models/day-request.model';
 
 @Component({
   selector: 'app-add-entry-dialog',
@@ -28,7 +27,6 @@ export class AddEntryDialogComponent {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      dayId: number;
       date: string;
       user: User;
       entry: TimeEntry;
@@ -52,42 +50,28 @@ export class AddEntryDialogComponent {
 
   submit(): void {
     const dayEntry = {
-      day_id: this.data.dayId,
       start_time: this.form.get('startTime')?.value,
       end_time: this.form.get('endTime')?.value,
       title: this.form.get('title')?.value,
       color: this.form.get('color')?.value,
       date: this.data.date,
       user_id: this.data.user.id,
-      id: this.data.entry.id,
+      company_id: this.data.user.company_id,
+      id: this.data.entry?.id,
     };
 
-    if (this.data.dayId) {
-      if (this.data.entry) {
-        this.updateEntry(dayEntry);
-      } else {
-        this.createEntry(dayEntry);
-      }
+    if (this.data.entry) {
+      this.updateEntry(dayEntry);
     } else {
-      const payload = {
-        date: this.data.date,
-        user_id: this.data.user.id,
-        company_id: this.data.user.company_id,
-        entries: [dayEntry],
-      };
-      this.createDay(payload);
+      this.createEntry(dayEntry);
     }
   }
 
-  private createDay(payload: DayRequest): void {
-    this.store.dispatch(TimeTrackingActions.createDay({ payload }));
-  }
-
-  private createEntry(payload: DayEntry): void {
+  private createEntry(payload: ITimeEntry): void {
     this.store.dispatch(TimeTrackingActions.createDayEntry({ payload }));
   }
 
-  private updateEntry(payload: DayEntry): void {
+  private updateEntry(payload: ITimeEntry): void {
     this.store.dispatch(TimeTrackingActions.updateDayEntry({ payload }));
   }
 

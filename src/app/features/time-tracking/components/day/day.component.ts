@@ -12,6 +12,7 @@ import * as TimeTrackingActions from './../../state/time-tracking.actions';
 import { selectDay } from '../../state/time-tracking.selectors';
 import { Day } from '../../models/day.model';
 import { DATE_FORMAT, MS_PER_MINUTE, getNowTime } from 'src/app/utils/date';
+import { DayEntry } from '../../models/day-entry.model';
 
 @Component({
   selector: 'app-day',
@@ -26,7 +27,7 @@ export class DayComponent implements AfterViewInit {
   interval: any;
   currentUser!: User;
   dateObj: Date = new Date();
-  day?: Day;
+  day?: DayEntry;
 
   items: TimeEntry[] = [];
 
@@ -43,7 +44,7 @@ export class DayComponent implements AfterViewInit {
     this.store.select(selectCurrentUser).subscribe((user) => {
       if (user) {
         this.currentUser = user;
-        this.getDay();
+        this.getTimeEntries();
       }
     });
 
@@ -54,18 +55,7 @@ export class DayComponent implements AfterViewInit {
         this.day = day;
 
         this.day.entries.forEach((entry) => {
-          this.items.push(
-            new TimeEntry(
-              entry.start_time,
-              entry.end_time,
-              entry.date,
-              entry.title,
-              entry.color,
-              entry.id,
-              entry.pause,
-              entry.notes
-            )
-          );
+          this.items.push(new TimeEntry(entry));
         });
       }
     });
@@ -78,7 +68,7 @@ export class DayComponent implements AfterViewInit {
 
   /** On date change in datepicekr */
   dateChange(): void {
-    this.getDay();
+    this.getTimeEntries();
   }
 
   /** Get date in format YYYY-MM-DD from Date object */
@@ -131,7 +121,6 @@ export class DayComponent implements AfterViewInit {
   openDialog(period: { start: string; end: string }, entry?: TimeEntry): void {
     this.dialog.open(AddEntryDialogComponent, {
       data: {
-        dayId: this.day?.id,
         date: this.getDate(),
         user: this.currentUser,
         entry,
@@ -156,7 +145,7 @@ export class DayComponent implements AfterViewInit {
 
   /** Open dialog for editing existing entry */
   editEntry(entry: TimeEntry): void {
-    this.openDialog(this.currentPeriod(), entry);
+    this.openDialog({ start: entry.start_time, end: entry.end_time }, entry);
   }
 
   /** Open dialog on range where user clikced */
@@ -171,9 +160,9 @@ export class DayComponent implements AfterViewInit {
   }
 
   /** Ger new day by given date */
-  getDay(): void {
+  getTimeEntries(): void {
     this.store.dispatch(
-      TimeTrackingActions.getDay({
+      TimeTrackingActions.getTimeEntries({
         payload: { date: this.getDate(), user_id: this.currentUser.id },
       })
     );

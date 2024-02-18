@@ -12,48 +12,18 @@ import { of } from 'rxjs';
 
 @Injectable()
 export class TimeTrackingEffects {
-  createDay$ = createEffect(() =>
+  getTimeEntries$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TimeTrackingActionTypes.CreateDay),
+      ofType(TimeTrackingActionTypes.GetTimeEntries),
       exhaustMap(({ payload }: any) =>
-        this._time.createDay(payload).pipe(
+        this._time.getTimeEntries(payload).pipe(
           map((data) => ({
-            type: TimeTrackingActionTypes.CreateDaySuccess,
-            payload: { ...payload.entries[0], day_id: data.id },
-          })),
-          catchError(({ error }) =>
-            of({
-              type: TimeTrackingActionTypes.CreateDayFail,
-              payload: error,
-            })
-          )
-        )
-      )
-    )
-  );
-
-  createDaySuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(TimeTrackingActionTypes.CreateDaySuccess),
-      map(({ payload }) => ({
-        type: TimeTrackingActionTypes.CreateDayEntry,
-        payload: payload,
-      }))
-    )
-  );
-
-  getDay$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(TimeTrackingActionTypes.GetDay),
-      exhaustMap(({ payload }: any) =>
-        this._time.getDayById(payload).pipe(
-          map((data) => ({
-            type: TimeTrackingActionTypes.GetDaySuccess,
+            type: TimeTrackingActionTypes.GetTimeEntriesSuccess,
             payload: data,
           })),
           catchError(({ error }) =>
             of({
-              type: TimeTrackingActionTypes.GetDayFail,
+              type: TimeTrackingActionTypes.GetTimeEntriesFail,
               payload: error,
             })
           )
@@ -90,7 +60,7 @@ export class TimeTrackingEffects {
         this._snackbar.success('Successfully added Time entry!');
       }),
       map(({ payload }: any) => ({
-        type: TimeTrackingActionTypes.GetDay,
+        type: TimeTrackingActionTypes.GetTimeEntries,
         payload: { date: payload.date, user_id: payload.user_id },
       }))
     )
@@ -121,10 +91,10 @@ export class TimeTrackingEffects {
       ofType(TimeTrackingActionTypes.UpdateDayEntrySuccess),
       tap((data) => {
         this.dialog.closeAll();
-        this._snackbar.success('Successfully added Time entry!');
+        this._snackbar.success('Successfully updated Time entry!');
       }),
       map(({ payload }: any) => ({
-        type: TimeTrackingActionTypes.GetDay,
+        type: TimeTrackingActionTypes.GetTimeEntries,
         payload: { date: payload.date, user_id: payload.user_id },
       }))
     )
