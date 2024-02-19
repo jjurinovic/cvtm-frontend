@@ -52,4 +52,13 @@ export class TimeTrackingService {
   public updateTimeEntry(req: ITimeEntry): Observable<ITimeEntry> {
     return this.http.put<ITimeEntry>(this.baseUrl + '/entry', req);
   }
+
+  /**
+   * Delete time entry
+   * @param {number} id id of item for delete
+   * @returns Message for succesfully delete time entry
+   */
+  public deleteTimeEntry(id: number): Observable<any> {
+    return this.http.delete(this.baseUrl + '/entry/' + id);
+  }
 }

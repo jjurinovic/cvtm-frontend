@@ -1,13 +1,23 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
+import {
+  map,
+  exhaustMap,
+  catchError,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { MatDialog } from '@angular/material/dialog';
+
 import { TimeTrackingActionTypes } from './time-tracking.actions';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TimeTrackingService } from '../services/time-tracking.service';
-import { of } from 'rxjs';
+import { selectDate } from './time-tracking.selectors';
+import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 
 @Injectable()
 export class TimeTrackingEffects {
@@ -31,7 +41,7 @@ export class TimeTrackingEffects {
     )
   );
 
-  createDayEntry$ = createEffect(() =>
+  createTimeEntry$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TimeTrackingActionTypes.CreateTimeEntry),
       exhaustMap(({ payload }: any) =>
@@ -51,21 +61,25 @@ export class TimeTrackingEffects {
     )
   );
 
-  createDayEntrySuccess$ = createEffect(() =>
+  createTimeEntrySuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TimeTrackingActionTypes.CreateTimeEntrySuccess),
       tap((data) => {
         this.dialog.closeAll();
         this._snackbar.success('Successfully added Time entry!');
       }),
-      map(({ payload }: any) => ({
+      withLatestFrom(
+        this.store.select(selectDate),
+        this.store.select(selectCurrentUser)
+      ),
+      map(([_, date, user]) => ({
         type: TimeTrackingActionTypes.GetTimeEntries,
-        payload: { date: payload.date, user_id: payload.user_id },
+        payload: { date: date, user_id: user.id },
       }))
     )
   );
 
-  updateDayEntry$ = createEffect(() =>
+  updateTimeEntry$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TimeTrackingActionTypes.UpdateTimeEntry),
       exhaustMap(({ payload }: any) =>
@@ -85,7 +99,7 @@ export class TimeTrackingEffects {
     )
   );
 
-  updateDayEntrySuccess$ = createEffect(() =>
+  updateTimeEntrySuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TimeTrackingActionTypes.UpdateTimeEntrySuccess),
       tap((data) => {
@@ -95,6 +109,52 @@ export class TimeTrackingEffects {
       map(({ payload }: any) => ({
         type: TimeTrackingActionTypes.GetTimeEntries,
         payload: { date: payload.date, user_id: payload.user_id },
+      })),
+      withLatestFrom(
+        this.store.select(selectDate),
+        this.store.select(selectCurrentUser)
+      ),
+      map(([_, date, user]) => ({
+        type: TimeTrackingActionTypes.GetTimeEntries,
+        payload: { date: date, user_id: user.id },
+      }))
+    )
+  );
+
+  deleteTimeEntry$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TimeTrackingActionTypes.DeleteTimeEntry),
+      exhaustMap(({ payload }: any) =>
+        this._time.deleteTimeEntry(payload).pipe(
+          map((data) => ({
+            type: TimeTrackingActionTypes.DeleteTimeEntrySuccess,
+            payload: data,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: TimeTrackingActionTypes.DeleteTimeEntryFail,
+              payload: error,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  deleteDayEntrySuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TimeTrackingActionTypes.DeleteTimeEntrySuccess),
+      tap((data) => {
+        this.dialog.closeAll();
+        this._snackbar.success('Successfully deleted Time entry!');
+      }),
+      withLatestFrom(
+        this.store.select(selectDate),
+        this.store.select(selectCurrentUser)
+      ),
+      map(([_, date, user]) => ({
+        type: TimeTrackingActionTypes.GetTimeEntries,
+        payload: { date: date, user_id: user.id },
       }))
     )
   );
@@ -103,6 +163,7 @@ export class TimeTrackingEffects {
     private actions$: Actions,
     private _snackbar: SnackbarService,
     private dialog: MatDialog,
-    private _time: TimeTrackingService
+    private _time: TimeTrackingService,
+    private store: Store
   ) {}
 }

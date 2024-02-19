@@ -16,9 +16,13 @@ import { TimeEntry } from '../../models/time-entry.model';
 export class TimeEntryComponent {
   @Input() timeEntry!: TimeEntry;
   @Output() onEdit: EventEmitter<TimeEntry> = new EventEmitter();
+  @Output() onDelete: EventEmitter<TimeEntry> = new EventEmitter();
 
-  /** Open dialog for editing existing entry */
   editEntry(): void {
     this.onEdit.emit(this.timeEntry);
+  }
+
+  deleteEntry(): void {
+    this.onDelete.emit(this.timeEntry);
   }
 }

@@ -11,3 +11,8 @@ export const selectDays = createSelector(
   selectTImeTracking,
   (state) => state.days
 );
+
+export const selectDate = createSelector(
+  selectTImeTracking,
+  (state) => state.date
+);

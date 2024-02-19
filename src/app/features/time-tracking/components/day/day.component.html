@@ -38,6 +38,7 @@
       <app-time-entry
         [timeEntry]="item"
         (onEdit)="editEntry($event)"
+        (onDelete)="openConfirmDialog($event)"
       ></app-time-entry>
       }
     </div>

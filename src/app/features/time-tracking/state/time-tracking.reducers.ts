@@ -8,6 +8,7 @@ export interface State {
   day: DayEntry | null;
   error: string | null;
   days: DayEntry[];
+  date: string | null;
 }
 
 export const initialState: State = {
@@ -15,6 +16,7 @@ export const initialState: State = {
   day: null,
   error: null,
   days: [],
+  date: null,
 };
 
 export const reducer = createReducer(
@@ -58,5 +60,22 @@ export const reducer = createReducer(
     ...state,
     isLoading: false,
     error: payload.detail,
+  })),
+  on(TimeTrackingActions.deleteTimeEntry, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(TimeTrackingActions.deleteTimeEntrySuccess, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(TimeTrackingActions.deleteTimeEntryFail, (state, { payload }) => ({
+    ...state,
+    isLoading: false,
+    error: payload.detail,
+  })),
+  on(TimeTrackingActions.setDate, (state, { payload }) => ({
+    ...state,
+    date: payload,
   }))
 );

@@ -15,6 +15,10 @@ export enum TimeTrackingActionTypes {
   UpdateTimeEntry = '[Time Tracking] Update Time Entry',
   UpdateTimeEntrySuccess = '[Time Tracking] Update Time Entry Success',
   UpdateTimeEntryFail = '[Time Tracking] Update Time Entry Fail',
+  DeleteTimeEntry = '[Time Tracking] Delete Time Entry',
+  DeleteTimeEntrySuccess = '[Time Tracking] Delete Time Entry Success',
+  DeleteTimeEntryFail = '[Time Tracking] Delete Time Entry Fail',
+  SetDate = '[Time Tracking] Set date',
 }
 
 /** GET TIME ENTRIES*/
@@ -63,4 +67,25 @@ export const updateTimeEntrySuccess = createAction(
 export const updateTimeEntryFail = createAction(
   TimeTrackingActionTypes.UpdateTimeEntryFail,
   props<{ payload: BaseError }>()
+);
+
+/** DELETE TIME ENTRY */
+export const deleteTimeEntry = createAction(
+  TimeTrackingActionTypes.DeleteTimeEntry,
+  props<{ payload: number }>()
+);
+
+export const deleteTimeEntrySuccess = createAction(
+  TimeTrackingActionTypes.DeleteTimeEntrySuccess,
+  props<{ payload: any }>()
+);
+
+export const deleteTimeEntryFail = createAction(
+  TimeTrackingActionTypes.DeleteTimeEntryFail,
+  props<{ payload: BaseError }>()
+);
+
+export const setDate = createAction(
+  TimeTrackingActionTypes.SetDate,
+  props<{ payload: string }>()
 );

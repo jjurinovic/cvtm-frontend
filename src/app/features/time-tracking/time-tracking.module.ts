@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { TimeTrackingComponent } from './components/time-tracking/time-tracking.component';
 import { TimeTrackingRoutingModule } from './time-tracking.routing';
@@ -33,7 +34,13 @@ export const MY_FORMATS = {
 };
 
 @NgModule({
-  declarations: [TimeTrackingComponent, DayComponent, AddEntryDialogComponent, TimeEntryComponent, DayTimeGridComponent],
+  declarations: [
+    TimeTrackingComponent,
+    DayComponent,
+    AddEntryDialogComponent,
+    TimeEntryComponent,
+    DayTimeGridComponent,
+  ],
   imports: [
     CommonModule,
     TimeTrackingRoutingModule,
@@ -49,6 +56,7 @@ export const MY_FORMATS = {
     MatDatepickerModule,
     FormsModule,
     MomentDateModule,
+    MatMenuModule,
   ],
   providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }],
 })
