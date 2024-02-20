@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
 import { User } from 'src/app/features/users/models/user.model';
 import { ITimeEntry, TimeEntry } from '../../models/time-entry.model';
-import { DayEntry } from '../../models/day-entry.model';
+import { timeValidator } from 'src/app/shared/validators/time.validator';
 
 @Component({
   selector: 'app-add-entry-dialog',
@@ -35,13 +36,16 @@ export class AddEntryDialogComponent {
     private store: Store,
     private dialogRef: MatDialogRef<AddEntryDialogComponent>
   ) {
-    this.form = this.fb.group({
-      title: ['', Validators.required],
-      start_time: [this.data.period.start, Validators.required],
-      end_time: [this.data.period.end, Validators.required],
-      color: ['#0c963c', Validators.required],
-      notes: [''],
-    });
+    this.form = this.fb.group(
+      {
+        title: ['', Validators.required],
+        start_time: [this.data.period.start, Validators.required],
+        end_time: [this.data.period.end, Validators.required],
+        color: ['#0c963c', Validators.required],
+        notes: [''],
+      },
+      { validators: [timeValidator] }
+    );
 
     if (this.data.entry) {
       this.dialogTitle = 'Edit Entry';
@@ -50,18 +54,20 @@ export class AddEntryDialogComponent {
   }
 
   submit(): void {
-    const dayEntry = {
-      ...this.form.value,
-      date: this.data.date,
-      user_id: this.data.user.id,
-      company_id: this.data.user.company_id,
-      id: this.data.entry?.id,
-    };
+    if (this.form.valid) {
+      const dayEntry = {
+        ...this.form.value,
+        date: this.data.date,
+        user_id: this.data.user.id,
+        company_id: this.data.user.company_id,
+        id: this.data.entry?.id,
+      };
 
-    if (this.data.entry) {
-      this.updateEntry(dayEntry);
-    } else {
-      this.createEntry(dayEntry);
+      if (this.data.entry) {
+        this.updateEntry(dayEntry);
+      } else {
+        this.createEntry(dayEntry);
+      }
     }
   }
 

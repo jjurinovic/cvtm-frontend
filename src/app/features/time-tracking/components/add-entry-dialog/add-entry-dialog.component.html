@@ -11,6 +11,11 @@
           formControlName="title"
           placeholder="Title"
         />
+
+        <!-- Error -->
+        @if (form.get('title')?.hasError('required')) {
+        <mat-error>Title is required!</mat-error>
+        }
       </mat-form-field>
     </div>
 
@@ -27,6 +32,12 @@
           placeholder="Start time"
           readonly
         />
+
+        <!-- Error -->
+        @if (form.get('start_time')?.hasError('timeError')) {
+        <mat-error>Start time must be before end time</mat-error>
+        }
+
         <mat-icon matSuffix (click)="startPicker.open()">
           watch_later
         </mat-icon>
@@ -47,6 +58,12 @@
           placeholder="End Time"
           readonly
         />
+
+        <!-- Error -->
+        @if (form.get('end_time')?.hasError('timeError')) {
+        <mat-error>End time must be after start time</mat-error>
+        }
+
         <mat-icon matSuffix (click)="endPicker.open()"> watch_later </mat-icon>
       </mat-form-field>
       <ngx-mat-timepicker color="primary" #endPicker></ngx-mat-timepicker>
