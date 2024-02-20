@@ -74,7 +74,7 @@ export class TimeTrackingEffects {
       ),
       map(([_, date, user]) => ({
         type: TimeTrackingActionTypes.GetTimeEntries,
-        payload: { date: date, user_id: user.id },
+        payload: { date: date, user_id: user.id, company_id: user.company_id },
       }))
     )
   );
@@ -116,7 +116,7 @@ export class TimeTrackingEffects {
       ),
       map(([_, date, user]) => ({
         type: TimeTrackingActionTypes.GetTimeEntries,
-        payload: { date: date, user_id: user.id },
+        payload: { date: date, user_id: user.id, company_id: user.company_id },
       }))
     )
   );
@@ -154,7 +154,7 @@ export class TimeTrackingEffects {
       ),
       map(([_, date, user]) => ({
         type: TimeTrackingActionTypes.GetTimeEntries,
-        payload: { date: date, user_id: user.id },
+        payload: { date: date, user_id: user.id, company_id: user.company_id },
       }))
     )
   );
