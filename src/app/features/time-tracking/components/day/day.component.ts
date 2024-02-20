@@ -150,7 +150,11 @@ export class DayComponent implements AfterViewInit {
   getTimeEntries(): void {
     this.store.dispatch(
       TimeTrackingActions.getTimeEntries({
-        payload: { date: this.getDate(), user_id: this.currentUser.id },
+        payload: {
+          date: this.getDate(),
+          user_id: this.currentUser.id,
+          company_id: this.currentUser.company_id,
+        },
       })
     );
   }

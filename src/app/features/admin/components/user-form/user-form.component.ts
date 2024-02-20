@@ -21,6 +21,7 @@ export class UserFormComponent implements OnDestroy {
   form: FormGroup;
   userId: number | null = null;
   companyId?: number;
+  addressId?: number;
   currentUser!: User;
 
   private returnUrl?: string;
@@ -60,7 +61,10 @@ export class UserFormComponent implements OnDestroy {
     });
 
     this.store.select(selectUserData).subscribe((user) => {
-      if (user) this.form.patchValue(user);
+      if (user) {
+        this.form.patchValue(user);
+        this.addressId = user.address?.id;
+      }
 
       if (user?.inactive || user?.deleted) {
         this.form.disable();
@@ -88,6 +92,7 @@ export class UserFormComponent implements OnDestroy {
               id: this.userId,
               returnUrl: this.returnUrl,
               myId: this.currentUser.id,
+              address: { ...this.form.value.address, id: this.addressId },
             },
           })
         );

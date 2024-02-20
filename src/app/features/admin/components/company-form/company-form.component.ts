@@ -19,6 +19,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 export class CompanyFormComponent implements OnDestroy {
   form: FormGroup;
   companyId: number | null = null;
+  addressId: number | null = null;
   selectedTabIndex: number = 0;
 
   constructor(
@@ -52,7 +53,10 @@ export class CompanyFormComponent implements OnDestroy {
     });
 
     this.store.select(selectCurrentCompany).subscribe((company) => {
-      if (company) this.form.patchValue(company);
+      if (company) {
+        this.form.patchValue(company);
+        this.addressId = company.address.id;
+      }
 
       // disable form depending on form status
       if (company?.inactive) {
@@ -78,6 +82,7 @@ export class CompanyFormComponent implements OnDestroy {
           CompanyActions.updateCompany({
             ...this.form.value,
             id: this.companyId,
+            address: { id: this.addressId, ...this.form.value.address },
           })
         );
       } else {
