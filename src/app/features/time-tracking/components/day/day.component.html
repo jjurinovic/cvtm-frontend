@@ -1,48 +1,59 @@
-<button mat-flat-button color="primary" (click)="addEntry()">Add Entry</button>
-<mat-form-field appearance="outline">
-  <mat-label>Choose a date</mat-label>
-  <input
-    matInput
-    [matDatepicker]="datepicker"
-    [(ngModel)]="dateObj"
-    (dateChange)="dateChange()"
-    readonly
-    (click)="datepicker.open()"
-  />
-  <mat-datepicker-toggle
-    matIconSuffix
-    [for]="datepicker"
-  ></mat-datepicker-toggle>
-  <mat-datepicker #datepicker>
-    <mat-datepicker-actions>
-      <button mat-button matDatepickerCancel>Cancel</button>
-      <button mat-raised-button color="primary" matDatepickerApply>
-        Apply
-      </button>
-    </mat-datepicker-actions>
-  </mat-datepicker>
-</mat-form-field>
+<div class="day-container">
+  <div class="day-container__timeline">
+    <button mat-flat-button color="primary" (click)="addEntry()">
+      Add Entry
+    </button>
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="datepicker"
+        [(ngModel)]="dateObj"
+        (dateChange)="dateChange()"
+        readonly
+        (click)="datepicker.open()"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="datepicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>Cancel</button>
+          <button mat-raised-button color="primary" matDatepickerApply>
+            Apply
+          </button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+    </mat-form-field>
 
-<div class="day">
-  <div class="day__title">
-    {{ getDate() | date : "cccc, dd.MM.yyyy" }}
-  </div>
-  <div class="day__timeline" #timelineEl>
-    <div class="day__timeline-content">
-      <!-- Current time line -->
-      <div class="day__timeline-now" [style.top.px]="totalMinutes"></div>
+    <div class="day">
+      <div class="day__title">
+        {{ getDate() | date : "cccc, dd.MM.yyyy" }}
+      </div>
+      <div class="day__timeline" #timelineEl>
+        <div class="day__timeline-content">
+          <!-- Current time line -->
+          <div class="day__timeline-now" [style.top.px]="totalMinutes"></div>
 
-      <!-- Timeline Grid -->
-      <app-day-time-grid (periodClick)="openDialog($event)"></app-day-time-grid>
+          <!-- Timeline Grid -->
+          <app-day-time-grid
+            (periodClick)="openDialog($event)"
+          ></app-day-time-grid>
 
-      <!-- Add all timeline items for day -->
-      @for (item of items; track $index) {
-      <app-time-entry
-        [timeEntry]="item"
-        (onEdit)="editEntry($event)"
-        (onDelete)="openConfirmDialog($event)"
-      ></app-time-entry>
-      }
+          <!-- Add all timeline items for day -->
+          @for (item of items; track $index) {
+          <app-time-entry
+            [timeEntry]="item"
+            (onEdit)="editEntry($event)"
+            (onDelete)="openConfirmDialog($event)"
+          ></app-time-entry>
+          }
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Some data -->
+  <div class="day-container__data">Total: {{ totalTime() }}</div>
 </div>

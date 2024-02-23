@@ -158,4 +158,14 @@ export class DayComponent implements AfterViewInit {
       })
     );
   }
+
+  totalTime(): string {
+    const hours = parseInt(((this.day?.total as number) / 60).toString());
+    const minutes = (this.day?.total as number) % 60;
+
+    const hourString = hours === 0 ? '' : hours + 'h';
+    const minutesString = minutes === 0 ? '' : minutes + 'm';
+
+    return hourString + ' ' + minutesString;
+  }
 }
