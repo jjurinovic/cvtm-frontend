@@ -8,6 +8,15 @@ Welcome to the frontend application for time management, built using Angular and
 
 ##
 
+### You can test app on [https://cvtm.netlify.app/](https://cvtm.netlify.app/)
+
+_(Backend can delay requests by 50 seconds or more.)_
+
+#### Test user:
+
+- username: test@cvtm.cvtm
+- password: test
+
 ## Backend
 
 Backend is avaiable on [Github](https://github.com/jjurinovic/cvtm-backend)
