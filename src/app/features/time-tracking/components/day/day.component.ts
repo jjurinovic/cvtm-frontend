@@ -164,8 +164,10 @@ export class DayComponent implements AfterViewInit {
     const minutes = (this.day?.total as number) % 60;
 
     const hourString = hours === 0 ? '' : hours + 'h';
-    const minutesString = minutes === 0 ? '' : minutes + 'm';
+    const minutesString = minutes === 0 ? '0' : minutes + 'm';
 
-    return hourString + ' ' + minutesString;
+    return hours === 0 && minutes === 0
+      ? '0'
+      : hourString + ' ' + minutesString;
   }
 }
