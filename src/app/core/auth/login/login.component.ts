@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -7,19 +7,49 @@ import {
   selectError,
   selectIsLoading,
 } from 'src/app/state/auth/auth.selectors';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
+  animations: [
+    trigger('logoAnimate', [
+      state(
+        'hasPadding',
+        style({
+          paddingBottom: '200px',
+          opacity: 0,
+        })
+      ),
+      state(
+        'noPadding',
+        style({
+          paddingBottom: 0,
+          opacity: 1,
+        })
+      ),
+      transition('hasPadding => noPadding', [animate('.5s')]),
+      transition('noPadding => hasPadding', [animate('0.5s')]),
+    ]),
+  ],
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
   public form: FormGroup;
   public hide: boolean = true;
   public isLoading: boolean = false;
   public error: string = '';
+  public animationDone: boolean;
 
   constructor(private store: Store, private fb: FormBuilder) {
+    this.animationDone = true;
+
     this.form = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -34,6 +64,12 @@ export class LoginComponent {
     this.store
       .select(selectError)
       .subscribe((err: string) => (this.error = err));
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.animationDone = false;
+    });
   }
 
   public submit(): void {

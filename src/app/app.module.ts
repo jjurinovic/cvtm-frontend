@@ -1,6 +1,9 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  provideAnimations,
+} from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -61,6 +64,7 @@ import { TimeTrackingEffects } from './features/time-tracking/state/time-trackin
       useClass: ErrorInterceptor,
       multi: true,
     },
+    provideAnimations(),
   ],
   bootstrap: [AppComponent],
 })

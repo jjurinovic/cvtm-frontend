@@ -3,7 +3,11 @@
   <img src="assets/login-bg.png" alt="BG" class="login-bg-2" />
 
   <div class="login-container">
-    <img src="assets/logo.png" alt="Logo" />
+    <img
+      src="assets/logo.png"
+      alt="Logo"
+      [@logoAnimate]="animationDone ? 'hasPadding' : 'noPadding'"
+    />
     <h2>Login</h2>
 
     <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
