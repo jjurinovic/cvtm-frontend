@@ -5,7 +5,8 @@
   <div class="main-content">
     <app-page-title></app-page-title>
     <router-outlet></router-outlet>
-    {{ isLoading() }}
+
+    <!-- LOADING -->
     @if(isLoading()) {
     <app-loader></app-loader>
     }
