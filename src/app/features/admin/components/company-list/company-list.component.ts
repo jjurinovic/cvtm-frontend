@@ -54,8 +54,6 @@ export class CompanyListComponent implements OnInit, AfterViewInit {
     this.store.select(selectCompanyPageFilter).subscribe((pageFilter) => {
       this.pageFilter = { ...(pageFilter as PageFilter) };
     });
-
-    this.getData();
   }
 
   ngAfterViewInit() {
