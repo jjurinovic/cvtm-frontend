@@ -35,6 +35,9 @@
     </div>
 
     <div class="day">
+      @if (isLoading) {
+      <app-loader></app-loader>
+      }
       <div class="day__title">
         {{ getDate() | date : "cccc, dd.MM.yyyy" }}
       </div>

@@ -9,7 +9,10 @@ import { AddEntryDialogComponent } from '../add-entry-dialog/add-entry-dialog.co
 import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { User } from 'src/app/features/users/models/user.model';
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
-import { selectDay } from '../../state/time-tracking.selectors';
+import {
+  selectDay,
+  selectDayLoading,
+} from '../../state/time-tracking.selectors';
 import { DATE_FORMAT, MS_PER_MINUTE, getNowTime } from 'src/app/utils/date';
 import { DayEntry } from '../../models/day-entry.model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
@@ -26,6 +29,7 @@ export class DayComponent implements AfterViewInit {
   currentUser!: User;
   dateObj: Date = new Date();
   day?: DayEntry;
+  isLoading: boolean = false;
 
   items: TimeEntry[] = [];
 
@@ -58,6 +62,10 @@ export class DayComponent implements AfterViewInit {
         });
       }
     });
+
+    this.store
+      .select(selectDayLoading)
+      .subscribe((loading) => (this.isLoading = loading));
   }
 
   ngAfterViewInit(): void {

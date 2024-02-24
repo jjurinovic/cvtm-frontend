@@ -16,3 +16,8 @@ export const selectDate = createSelector(
   selectTImeTracking,
   (state) => state.date
 );
+
+export const selectDayLoading = createSelector(
+  selectTImeTracking,
+  (state) => state.isLoading
+);

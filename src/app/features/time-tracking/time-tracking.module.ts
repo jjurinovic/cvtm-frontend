@@ -21,6 +21,7 @@ import { AddEntryDialogComponent } from './components/add-entry-dialog/add-entry
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { TimeEntryComponent } from './components/time-entry/time-entry.component';
 import { DayTimeGridComponent } from './components/day-time-grid/day-time-grid.component';
+import { LoaderComponent } from 'src/app/shared/components/loader/loader.component';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -57,6 +58,7 @@ export const MY_FORMATS = {
     FormsModule,
     MomentDateModule,
     MatMenuModule,
+    LoaderComponent,
   ],
   providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }],
 })
