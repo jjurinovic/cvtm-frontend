@@ -30,6 +30,7 @@ import { UserEffects } from './features/users/state/user.effects';
 import { ProfileComponent } from './general/profile/profile.component';
 import { PasswordChangeDialogComponent } from './general/password-change-dialog/password-change-dialog.component';
 import { TimeTrackingEffects } from './features/time-tracking/state/time-tracking.effects';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [AppComponent, ProfileComponent, PasswordChangeDialogComponent],
@@ -52,6 +53,7 @@ import { TimeTrackingEffects } from './features/time-tracking/state/time-trackin
     ReactiveFormsModule,
     MatInputModule,
     MatDialogModule,
+    LoaderComponent,
   ],
   providers: [
     {

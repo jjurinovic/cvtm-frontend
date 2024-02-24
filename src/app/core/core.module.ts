@@ -19,6 +19,7 @@ import { NavigationComponent } from './layout/navigation/navigation.component';
 import { HasRoleDirective } from '../shared/directives/has-role.directive';
 import { PageTitleComponent } from './layout/page-title/page-title.component';
 import { PageTitleStrategy } from './strategies/page-title-strategy';
+import { LoaderComponent } from '../shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { PageTitleStrategy } from './strategies/page-title-strategy';
     RouterModule,
     MatListModule,
     HasRoleDirective,
+    LoaderComponent,
   ],
   providers: [
     {

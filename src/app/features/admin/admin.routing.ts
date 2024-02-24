@@ -4,12 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './components/admin/admin.component';
 import { CompanyFormComponent } from './components/company-form/company-form.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
+import { companyListResolver } from './resolvers/company-list.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
     title: `Admin Settings`,
+    resolve: {
+      companies: companyListResolver,
+    },
   },
   {
     path: 'company/:id/edit',
