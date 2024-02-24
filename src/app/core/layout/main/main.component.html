@@ -5,5 +5,9 @@
   <div class="main-content">
     <app-page-title></app-page-title>
     <router-outlet></router-outlet>
+    {{ isLoading() }}
+    @if(isLoading()) {
+    <app-loader></app-loader>
+    }
   </div>
 </mat-drawer-container>
