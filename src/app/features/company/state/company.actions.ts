@@ -25,6 +25,7 @@ export enum CompanyActionTypes {
   DeleteCompanySuccess = '[Company] Delete company Success',
   DeleteCompanyFail = '[Company] Delete company Fail',
   ResetCompanyForm = '[Company] Reset form',
+  SetCompanyId = '[Company] Set company id',
 }
 
 export const getAll = createAction(
@@ -119,4 +120,9 @@ export const deleteCompanyFail = createAction(
 
 export const resetCompanyForm = createAction(
   CompanyActionTypes.ResetCompanyForm
+);
+
+export const setCompanyId = createAction(
+  CompanyActionTypes.SetCompanyId,
+  props<{ payload: number }>
 );

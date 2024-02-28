@@ -6,10 +6,10 @@ import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 
 import { User } from 'src/app/features/users/models/user.model';
-import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import * as UserActions from '../../features/users/state/users.actions';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { PasswordChangeDialogComponent } from '../password-change-dialog/password-change-dialog.component';
+import { selectCurrentUser } from 'src/app/features/users/state/user.selectors';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +27,7 @@ export class ProfileComponent {
     private dialog: MatDialog
   ) {
     this.store.select(selectCurrentUser).subscribe((data) => {
-      this.user = data;
+      this.user = data as User;
 
       if (this.user) {
         this.form = this.fb.group({

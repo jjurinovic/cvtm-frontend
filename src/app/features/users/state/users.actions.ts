@@ -36,6 +36,10 @@ export enum UserActionTypes {
   Restore = '[User] Restore user',
   RestoreSuccess = '[User] Restore user Success',
   RestoreFail = '[User] Restore user Fail',
+  CurrentUser = '[User] Current user',
+  CurrentUserSuccess = '[User] Current user Success',
+  CurrentUserFail = '[User] Current user Fail',
+  RemoveCurrentUser = '[User] Remove current user',
 }
 
 export const createUser = createAction(
@@ -172,4 +176,20 @@ export const restoreSuccess = createAction(
 export const restoreFail = createAction(
   UserActionTypes.RestoreFail,
   props<{ payload: BaseError }>()
+);
+
+export const currentUser = createAction(UserActionTypes.CurrentUser);
+
+export const currentUserSuccess = createAction(
+  UserActionTypes.CurrentUserSuccess,
+  props<{ payload: User }>()
+);
+
+export const currentUserFail = createAction(
+  UserActionTypes.CurrentUserFail,
+  props<{ payload: BaseError }>()
+);
+
+export const removeCurrentUser = createAction(
+  UserActionTypes.RemoveCurrentUser
 );

@@ -1,20 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 
 import * as LoginActions from './auth.actions';
-import { User } from 'src/app/features/users/models/user.model';
 
 export interface State {
   isLoggedIn: boolean;
   error: string | null;
   isLoading: boolean;
-  user: User | null;
 }
 
 export const initialState: State = {
   isLoggedIn: false,
   error: null,
   isLoading: false,
-  user: null,
 };
 
 export const reducer = createReducer(
@@ -34,24 +31,5 @@ export const reducer = createReducer(
     error: payload.detail,
     isLoading: false,
   })),
-  on(LoginActions.currentUser, (state: State) => ({
-    ...state,
-    isLoading: true,
-  })),
-  on(LoginActions.currentUserSuccess, (state: State, { payload }) => ({
-    ...state,
-    isLoggedIn: true,
-    isLoading: false,
-    user: payload,
-  })),
-  on(LoginActions.currentUserFail, (state: State, { payload }) => ({
-    ...state,
-    error: payload.detail,
-    isLoading: false,
-  })),
-  on(LoginActions.logout, (state: State) => initialState),
-  on(LoginActions.removeCurrentUser, (state: State) => ({
-    ...state,
-    user: null,
-  }))
+  on(LoginActions.logout, (state: State) => initialState)
 );

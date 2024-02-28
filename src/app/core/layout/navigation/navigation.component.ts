@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { NavItem } from '../../models/nav-item.model';
 import { Role } from 'src/app/features/users/enums/role.enum';
-import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
+import { selectCurrentUser } from 'src/app/features/users/state/user.selectors';
 
 @Component({
   selector: 'app-navigation',

@@ -7,9 +7,11 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { Role } from 'src/app/features/users/enums/role.enum';
 import * as UserActions from '../../../users/state/users.actions';
-import { selectUserData } from 'src/app/features/users/state/user.selectors';
+import {
+  selectCurrentUser,
+  selectUserData,
+} from 'src/app/features/users/state/user.selectors';
 import { User } from 'src/app/features/users/models/user.model';
-import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -75,7 +77,7 @@ export class UserFormComponent implements OnDestroy {
 
     this.store
       .select(selectCurrentUser)
-      .subscribe((user) => (this.currentUser = user));
+      .subscribe((user) => (this.currentUser = user as User));
   }
 
   ngOnDestroy(): void {

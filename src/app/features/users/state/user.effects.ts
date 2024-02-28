@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import {
@@ -10,20 +11,24 @@ import {
   tap,
   mergeMap,
   concatMap,
+  switchMap,
+  filter,
+  withLatestFrom,
 } from 'rxjs/operators';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { UserActionTypes } from './users.actions';
+import {
+  UserActionTypes,
+  currentUser,
+  removeCurrentUser,
+} from './users.actions';
 import { UsersService } from '../services/users.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserWithLocalParams } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error.model';
-import {
-  AuthActionTypes,
-  currentUser,
-  removeCurrentUser,
-} from 'src/app/state/auth/auth.actions';
+import { selectCurrentUser } from './user.selectors';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Injectable()
 export class UserEffects {
@@ -331,11 +336,46 @@ export class UserEffects {
     { dispatch: false }
   );
 
+  currentUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActionTypes.CurrentUser),
+      withLatestFrom(this.store.select(selectCurrentUser)),
+      filter(([action, currentUser]) => !currentUser),
+      switchMap(() =>
+        this._user.getCurrentUser().pipe(
+          map((data) => ({
+            type: UserActionTypes.CurrentUserSuccess,
+            payload: data,
+          })),
+          catchError(({ error }) =>
+            of({
+              type: UserActionTypes.CurrentUserFail,
+              payload: { error: error.detail },
+            })
+          )
+        )
+      )
+    )
+  );
+
+  currentUserSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActionTypes.CurrentUserSuccess),
+        tap((action: any) => {
+          this._auth.setRole(action.payload.role);
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private _user: UsersService,
     private router: Router,
     private _snackbar: SnackbarService,
-    private dialogRef: MatDialog
+    private dialogRef: MatDialog,
+    private _auth: AuthService,
+    private store: Store
   ) {}
 }

@@ -27,3 +27,8 @@ export const selectIsLoading = createSelector(
   selectCompany,
   (state) => state.isLoading
 );
+
+export const selectCompanyId = createSelector(
+  selectCompany,
+  (state) => state.companyId
+);

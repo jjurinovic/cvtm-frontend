@@ -17,7 +17,7 @@ import { TimeTrackingActionTypes } from './time-tracking.actions';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { TimeTrackingService } from '../services/time-tracking.service';
 import { selectDate } from './time-tracking.selectors';
-import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
+import { selectCurrentUser } from '../../users/state/user.selectors';
 
 @Injectable()
 export class TimeTrackingEffects {
@@ -74,7 +74,11 @@ export class TimeTrackingEffects {
       ),
       map(([_, date, user]) => ({
         type: TimeTrackingActionTypes.GetTimeEntries,
-        payload: { date: date, user_id: user.id, company_id: user.company_id },
+        payload: {
+          date: date,
+          user_id: user?.id,
+          company_id: user?.company_id,
+        },
       }))
     )
   );
@@ -116,7 +120,11 @@ export class TimeTrackingEffects {
       ),
       map(([_, date, user]) => ({
         type: TimeTrackingActionTypes.GetTimeEntries,
-        payload: { date: date, user_id: user.id, company_id: user.company_id },
+        payload: {
+          date: date,
+          user_id: user?.id,
+          company_id: user?.company_id,
+        },
       }))
     )
   );
@@ -154,7 +162,11 @@ export class TimeTrackingEffects {
       ),
       map(([_, date, user]) => ({
         type: TimeTrackingActionTypes.GetTimeEntries,
-        payload: { date: date, user_id: user.id, company_id: user.company_id },
+        payload: {
+          date: date,
+          user_id: user?.id,
+          company_id: user?.company_id,
+        },
       }))
     )
   );

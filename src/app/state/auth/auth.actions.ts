@@ -6,14 +6,11 @@ import { BaseError } from 'src/app/shared/models/error.model';
 import { User } from 'src/app/features/users/models/user.model';
 
 export enum AuthActionTypes {
-  Login = '[Login Page] Login',
-  LoginSuccess = '[Login Page] Login Success',
-  LoginFail = '[Login Page] Login Fail',
-  Logout = '[Base Component] Logout',
-  CurrentUser = '[Users] Current user',
-  CurrentUserSuccess = '[Users] Current user Success',
-  CurrentUserFail = '[Users] Current user Fail',
-  RemoveCurrentUser = '[Users] Remove current user',
+  Login = '[Auth] Login',
+  LoginSuccess = '[Auth] Login Success',
+  LoginFail = '[Auth] Login Fail',
+  Logout = '[Auth] Logout',
+  SetCompanyId = '[Auth',
 }
 
 export const login = createAction(
@@ -34,20 +31,4 @@ export const loginFailure = createAction(
 export const logout = createAction(
   AuthActionTypes.Logout,
   props<{ payload?: boolean }>()
-);
-
-export const currentUser = createAction(AuthActionTypes.CurrentUser);
-
-export const currentUserSuccess = createAction(
-  AuthActionTypes.CurrentUserSuccess,
-  props<{ payload: User }>()
-);
-
-export const currentUserFail = createAction(
-  AuthActionTypes.CurrentUserFail,
-  props<{ payload: BaseError }>()
-);
-
-export const removeCurrentUser = createAction(
-  AuthActionTypes.RemoveCurrentUser
 );

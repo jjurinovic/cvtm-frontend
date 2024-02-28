@@ -22,3 +22,8 @@ export const selectIsLoading = createSelector(
   selectUser,
   (state) => state.isLoading
 );
+
+export const selectCurrentUser = createSelector(
+  selectUser,
+  (state) => state?.currentUser
+);

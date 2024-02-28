@@ -5,9 +5,9 @@ import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
-import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { User } from 'src/app/features/users/models/user.model';
 import { logout } from 'src/app/state/auth/auth.actions';
+import { selectCurrentUser } from 'src/app/features/users/state/user.selectors';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +21,7 @@ export class HeaderComponent {
   constructor(public dialog: MatDialog, private store: Store) {
     this.store
       .select(selectCurrentUser)
-      .subscribe((user) => (this.currentUser = user));
+      .subscribe((user) => (this.currentUser = user as User));
   }
 
   logout(): void {

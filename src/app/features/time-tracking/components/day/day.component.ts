@@ -6,7 +6,6 @@ import * as moment from 'moment';
 
 import { TimeEntry } from '../../models/time-entry.model';
 import { AddEntryDialogComponent } from '../add-entry-dialog/add-entry-dialog.component';
-import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { User } from 'src/app/features/users/models/user.model';
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
 import {
@@ -16,6 +15,7 @@ import {
 import { DATE_FORMAT, MS_PER_MINUTE, getNowTime } from 'src/app/utils/date';
 import { DayEntry } from '../../models/day-entry.model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { selectCurrentUser } from 'src/app/features/users/state/user.selectors';
 
 @Component({
   selector: 'app-day',
@@ -46,7 +46,7 @@ export class DayComponent implements AfterViewInit {
     // Select current user from
     this.store.select(selectCurrentUser).subscribe((user) => {
       if (user) {
-        this.currentUser = user;
+        this.currentUser = user as User;
         this.getTimeEntries();
       }
     });

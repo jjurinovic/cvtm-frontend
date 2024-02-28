@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { currentUser } from '../../../state/auth/auth.actions';
+import { currentUser } from 'src/app/features/users/state/users.actions';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 
 @Component({

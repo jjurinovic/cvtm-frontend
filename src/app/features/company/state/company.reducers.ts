@@ -10,6 +10,7 @@ export interface State {
   isLoading: boolean;
   error: string | null;
   currentCompany: Company | null;
+  companyId: number | null;
 }
 
 export const initialState: State = {
@@ -25,6 +26,7 @@ export const initialState: State = {
     sort: null,
     sort_field: null,
   },
+  companyId: null,
 };
 
 export const reducer = createReducer(
