@@ -29,6 +29,7 @@ import { UserWithLocalParams } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error.model';
 import { selectCurrentUser } from './user.selectors';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CompanyActionTypes } from '../../company/state/company.actions';
 
 @Injectable()
 export class UserEffects {
@@ -358,15 +359,17 @@ export class UserEffects {
     )
   );
 
-  currentUserSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(UserActionTypes.CurrentUserSuccess),
-        tap((action: any) => {
-          this._auth.setRole(action.payload.role);
-        })
-      ),
-    { dispatch: false }
+  currentUserSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActionTypes.CurrentUserSuccess),
+      tap((action: any) => {
+        this._auth.setRole(action.payload.role);
+      }),
+      map(({ payload }) => ({
+        type: CompanyActionTypes.SetCompanyId,
+        payload: payload.company_id,
+      }))
+    )
   );
 
   constructor(

@@ -100,5 +100,9 @@ export const reducer = createReducer(
     ...state,
     isLoading: false,
     currentCompany: null,
+  })),
+  on(CompanyActions.setCompanyId, (state, { payload }) => ({
+    ...state,
+    companyId: payload,
   }))
 );

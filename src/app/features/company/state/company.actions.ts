@@ -124,5 +124,5 @@ export const resetCompanyForm = createAction(
 
 export const setCompanyId = createAction(
   CompanyActionTypes.SetCompanyId,
-  props<{ payload: number }>
+  props<{ payload: number }>()
 );
