@@ -44,14 +44,6 @@ export class UserFormComponent implements OnDestroy {
       role: [Role.USER],
       inactive: [false],
       deleted: [false],
-      address: this.fb.group({
-        address1: [null, Validators.required],
-        address2: [null],
-        city: [null, Validators.required],
-        postcode: [null, Validators.required],
-        county: [null],
-        country: [null, Validators.required],
-      }),
     });
 
     this.route.params.subscribe((params) => {

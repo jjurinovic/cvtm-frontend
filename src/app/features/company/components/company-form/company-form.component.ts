@@ -1,4 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  OnDestroy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -18,8 +23,12 @@ import { Role } from 'src/app/features/users/enums/role.enum';
   templateUrl: './company-form.component.html',
   styleUrl: './company-form.component.scss',
 })
-export class CompanyFormComponent implements OnDestroy {
-  form: FormGroup;
+export class CompanyFormComponent implements OnDestroy, AfterViewInit {
+  form: FormGroup = this.fb.group({
+    name: [null, Validators.required],
+    vat: [null],
+    inactive: [false],
+  });
   companyId: number | null = null;
   addressId: number | null = null;
   selectedTabIndex: number = 0;
@@ -31,19 +40,6 @@ export class CompanyFormComponent implements OnDestroy {
     private dialog: MatDialog,
     private _auth: AuthService
   ) {
-    this.form = this.fb.group({
-      name: [null, Validators.required],
-      vat: [null],
-      inactive: [false],
-      address: this.fb.group({
-        address1: [null, Validators.required],
-        address2: [null],
-        city: [null, Validators.required],
-        postcode: [null, Validators.required],
-        county: [null],
-        country: [null, Validators.required],
-      }),
-    });
     // if root get id from path id
     if (this._auth.getRole() === Role.ROOT) {
       this.route.params.subscribe((params) => {
@@ -59,9 +55,20 @@ export class CompanyFormComponent implements OnDestroy {
       this.store.dispatch(CompanyActions.getCompanyById({}));
     }
 
+    this.store
+      .select(selectAdminCompanyTabIndex)
+      .subscribe((index) => (this.selectedTabIndex = index));
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(CompanyActions.resetCompanyForm());
+  }
+
+  ngAfterViewInit(): void {
     this.store.select(selectCurrentCompany).subscribe((company) => {
       if (company) {
         this.form.patchValue(company);
+        this.form.get('address')?.patchValue(company.address);
         this.addressId = company.address.id;
       }
 
@@ -72,14 +79,6 @@ export class CompanyFormComponent implements OnDestroy {
         this.form.enable();
       }
     });
-
-    this.store
-      .select(selectAdminCompanyTabIndex)
-      .subscribe((index) => (this.selectedTabIndex = index));
-  }
-
-  ngOnDestroy(): void {
-    this.store.dispatch(CompanyActions.resetCompanyForm());
   }
 
   public submit(): void {

@@ -26,6 +26,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LoaderComponent } from './components/loader/loader.component';
 import { HasRoleDirective } from './directives/has-role.directive';
 import { RolePipe } from './pipes/role.pipe';
+import { AdressFormComponent } from './components/adress-form/adress-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export const MY_FORMATS = {
   parse: {
@@ -62,6 +64,7 @@ export const MY_FORMATS = {
     MatMenuModule,
     MatSnackBarModule,
     MatSlideToggleModule,
+    ReactiveFormsModule,
   ],
   exports: [
     MatInputModule,
@@ -88,8 +91,14 @@ export const MY_FORMATS = {
     HasRoleDirective,
     LoaderComponent,
     RolePipe,
+    AdressFormComponent,
   ],
-  declarations: [HasRoleDirective, LoaderComponent, RolePipe],
+  declarations: [
+    HasRoleDirective,
+    LoaderComponent,
+    RolePipe,
+    AdressFormComponent,
+  ],
   providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }],
 })
 export class SharedModule {}
