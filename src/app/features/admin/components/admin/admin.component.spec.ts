@@ -9,8 +9,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
 import { AdminComponent } from './admin.component';
-import { CompanyListComponent } from '../company-list/company-list.component';
-import { UserListComponent } from '../user-list/user-list.component';
+import { CompanyListComponent } from '../../../company/components/company-list/company-list.component';
+import { UserListComponent } from '../../../users/components/user-list/user-list.component';
 import { selectAdminTabIndex } from '../../state/admin.selectors';
 import { By } from '@angular/platform-browser';
 
