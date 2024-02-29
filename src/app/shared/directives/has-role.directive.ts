@@ -10,7 +10,6 @@ import { Role } from 'src/app/features/users/enums/role.enum';
 
 @Directive({
   selector: '[appHasRole]',
-  standalone: true,
 })
 export class HasRoleDirective implements OnInit {
   @Input() set appHasRole(role: Role | undefined) {
