@@ -5,9 +5,11 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
 
-import { CompanyActionTypes } from './company.actions';
+import { CompanyActionTypes, setCompanyId } from './company.actions';
 import { CompanyService } from '../services/company.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Role } from '../../users/enums/role.enum';
 
 @Injectable()
 export class CompanyEffects {
@@ -89,7 +91,7 @@ export class CompanyEffects {
         ofType(CompanyActionTypes.UpdateCompanySuccess),
         tap(() => {
           this._snackbar.success('Company successfully updated!', 10000);
-          this.router.navigateByUrl('/admin');
+          this.router.navigateByUrl('/company');
         })
       ),
     { dispatch: false }
@@ -120,7 +122,7 @@ export class CompanyEffects {
       this.actions$.pipe(
         ofType(CompanyActionTypes.GetCompanyByIdFail),
         tap(() => {
-          this.router.navigateByUrl('/admin');
+          this.router.navigateByUrl('/company');
         })
       ),
     { dispatch: false }
@@ -192,10 +194,24 @@ export class CompanyEffects {
     { dispatch: false }
   );
 
+  setCompanyId$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CompanyActionTypes.SetCompanyId),
+        tap(({ payload }) => {
+          if (payload && this._auth.getRole() === Role.ROOT) {
+            localStorage.setItem('cvtm-companyId', payload);
+          }
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private _company: CompanyService,
     private router: Router,
-    private _snackbar: SnackbarService
+    private _snackbar: SnackbarService,
+    private _auth: AuthService
   ) {}
 }

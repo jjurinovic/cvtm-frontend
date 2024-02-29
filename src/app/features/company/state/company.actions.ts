@@ -75,7 +75,7 @@ export const updateCompanyFail = createAction(
 
 export const getCompanyById = createAction(
   CompanyActionTypes.GetCompanyById,
-  props<{ payload: number }>()
+  props<{ payload?: number }>()
 );
 
 export const getCompanyByIdSuccess = createAction(

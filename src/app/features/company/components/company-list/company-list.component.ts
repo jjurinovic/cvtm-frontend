@@ -23,6 +23,8 @@ import {
 } from 'src/app/features/company/state/company.selectors';
 import { CompanyPageFilter } from 'src/app/features/company/models/company-page-filter.model';
 import { PageFilter } from 'src/app/shared/models/page-filter.mode';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Role } from 'src/app/features/users/enums/role.enum';
 
 @Component({
   selector: 'app-company-list',
@@ -44,7 +46,7 @@ export class CompanyListComponent implements OnInit, AfterViewInit {
 
   @ViewChild('input') input?: ElementRef;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private _auth: AuthService) {}
 
   ngOnInit(): void {
     this.store.select(selectAllCompanies).subscribe((data) => {
@@ -110,5 +112,9 @@ export class CompanyListComponent implements OnInit, AfterViewInit {
   clearSearch(): void {
     this.pageFilter.q = null;
     this.getData();
+  }
+
+  editLink(id: number): string {
+    return this._auth.getRole() === Role.ROOT ? `${id}/edit` : 'edit';
   }
 }

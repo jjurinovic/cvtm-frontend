@@ -10,6 +10,8 @@ import { selectCurrentCompany } from 'src/app/features/company/state/company.sel
 import { selectAdminCompanyTabIndex } from '../../../admin/state/admin.selectors';
 import { setAdminCompanyTab } from '../../../admin/state/admin.actions';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Role } from 'src/app/features/users/enums/role.enum';
 
 @Component({
   selector: 'app-company-form',
@@ -26,7 +28,8 @@ export class CompanyFormComponent implements OnDestroy {
     private fb: FormBuilder,
     private store: Store,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _auth: AuthService
   ) {
     this.form = this.fb.group({
       name: [null, Validators.required],
@@ -41,16 +44,20 @@ export class CompanyFormComponent implements OnDestroy {
         country: [null, Validators.required],
       }),
     });
+    // if root get id from path id
+    if (this._auth.getRole() === Role.ROOT) {
+      this.route.params.subscribe((params) => {
+        this.companyId = params['id'];
 
-    this.route.params.subscribe((params) => {
-      this.companyId = params['id'];
-
-      if (this.companyId) {
-        this.store.dispatch(
-          CompanyActions.getCompanyById({ payload: this.companyId })
-        );
-      }
-    });
+        if (this.companyId) {
+          this.store.dispatch(
+            CompanyActions.getCompanyById({ payload: this.companyId })
+          );
+        }
+      });
+    } else {
+      this.store.dispatch(CompanyActions.getCompanyById({}));
+    }
 
     this.store.select(selectCurrentCompany).subscribe((company) => {
       if (company) {

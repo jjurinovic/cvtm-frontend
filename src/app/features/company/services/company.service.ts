@@ -36,7 +36,9 @@ export class CompanyService {
       params = params.append('q', req.q);
     }
 
-    return this.http.get<PageResponse<Company>>(this.baseUrl, { params });
+    return this.http.get<PageResponse<Company>>(this.baseUrl + '/list', {
+      params,
+    });
   }
 
   /**
@@ -44,8 +46,8 @@ export class CompanyService {
    * @param {number} id company id
    * @returns {Observable<Company>} Return observable with company data
    */
-  public getCompanyById(id: number): Observable<Company> {
-    return this.http.get<Company>(this.baseUrl + '/' + id);
+  public getCompanyById(id?: number): Observable<Company> {
+    return this.http.get<Company>(this.baseUrl + '/' + (id ? id : ''));
   }
 
   /**
