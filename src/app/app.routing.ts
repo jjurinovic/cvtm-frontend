@@ -40,6 +40,11 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'users',
+        loadChildren: () =>
+          import('./features/users/users.module').then((m) => m.UsersModule),
+      },
+      {
         path: 'time-tracking',
         loadChildren: () =>
           import('./features/time-tracking/time-tracking.module').then(

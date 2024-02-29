@@ -2,38 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminComponent } from './components/admin/admin.component';
-import { CompanyFormComponent } from './components/company-form/company-form.component';
-import { UserFormComponent } from './components/user-form/user-form.component';
-import { companyListResolver } from './resolvers/company-list.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
     title: `Admin Settings`,
-    resolve: {
-      companies: companyListResolver,
-    },
-  },
-  {
-    path: 'company/:id/edit',
-    component: CompanyFormComponent,
-    title: 'Edit Company',
-  },
-  {
-    path: 'company/create',
-    component: CompanyFormComponent,
-    title: 'Create Company',
-  },
-  {
-    path: 'company/:companyId/user/:id/edit',
-    component: UserFormComponent,
-    title: 'Edit User',
-  },
-  {
-    path: 'company/:companyId/user/create',
-    component: UserFormComponent,
-    title: 'Create User',
   },
 ];
 
