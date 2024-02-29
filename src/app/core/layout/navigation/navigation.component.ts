@@ -25,7 +25,6 @@ export class NavigationComponent {
     {
       link: '/company',
       title: 'Company',
-      excludeRole: Role.ROOT,
     },
     {
       link: '/time-tracking',
