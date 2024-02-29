@@ -13,7 +13,7 @@ import {
   selectAllUsers,
   selectUsersPageFilter,
 } from 'src/app/features/users/state/user.selectors';
-import * as UserActions from '../../../users/state/users.actions';
+import * as UserActions from '../../state/users.actions';
 import { SortDirection } from '@angular/material/sort';
 import { PageFilter } from 'src/app/shared/models/page-filter.mode';
 

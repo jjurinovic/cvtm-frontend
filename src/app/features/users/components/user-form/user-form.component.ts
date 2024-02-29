@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Role } from 'src/app/features/users/enums/role.enum';
-import * as UserActions from '../../../users/state/users.actions';
+import * as UserActions from '../../state/users.actions';
 import {
   selectCurrentUser,
   selectUserData,
