@@ -4,22 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, TitleStrategy } from '@angular/router';
 
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-
 import { BaseComponent } from './layout/base/base.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { MainComponent } from './layout/main/main.component';
 import { LoginComponent } from './auth/login/login.component';
 import { NavigationComponent } from './layout/navigation/navigation.component';
-import { HasRoleDirective } from '../shared/directives/has-role.directive';
 import { PageTitleComponent } from './layout/page-title/page-title.component';
 import { PageTitleStrategy } from './strategies/page-title-strategy';
-import { LoaderComponent } from '../shared/components/loader/loader.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,15 +26,8 @@ import { LoaderComponent } from '../shared/components/loader/loader.component';
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatSidenavModule,
     RouterModule,
-    MatListModule,
-    HasRoleDirective,
-    LoaderComponent,
+    SharedModule,
   ],
   providers: [
     {
