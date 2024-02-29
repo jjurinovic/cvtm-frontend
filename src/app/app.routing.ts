@@ -45,6 +45,13 @@ const routes: Routes = [
           import('./features/users/users.module').then((m) => m.UsersModule),
       },
       {
+        path: 'projects',
+        loadChildren: () =>
+          import('./features/projects/projects.module').then(
+            (m) => m.ProjectsModule
+          ),
+      },
+      {
         path: 'time-tracking',
         loadChildren: () =>
           import('./features/time-tracking/time-tracking.module').then(

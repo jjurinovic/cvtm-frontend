@@ -42,6 +42,11 @@ export class NavigationComponent {
       minRole: Role.MODERATOR,
     },
     {
+      link: '/projects',
+      title: 'Projects',
+      minRole: Role.MODERATOR,
+    },
+    {
       link: '/time-tracking',
       title: 'Time Tracking',
     },
