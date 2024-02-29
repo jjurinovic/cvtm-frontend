@@ -13,6 +13,7 @@ import {
 } from 'src/app/features/users/state/user.selectors';
 import { User } from 'src/app/features/users/models/user.model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { selectCompanyId } from 'src/app/features/company/state/company.selectors';
 
 @Component({
   selector: 'app-user-form',
@@ -26,7 +27,9 @@ export class UserFormComponent implements OnDestroy {
   addressId?: number;
   currentUser!: User;
 
-  private returnUrl?: string;
+  rootRole: Role = Role.ROOT;
+
+  private returnUrl: string = 'users';
 
   constructor(
     private fb: FormBuilder,
@@ -53,9 +56,6 @@ export class UserFormComponent implements OnDestroy {
 
     this.route.params.subscribe((params) => {
       this.userId = params['id'];
-      this.companyId = params['companyId'];
-
-      this.returnUrl = `/admin/company/${this.companyId}/edit`;
 
       if (this.userId) {
         this.store.dispatch(UserActions.getUserById({ payload: this.userId }));
@@ -78,6 +78,10 @@ export class UserFormComponent implements OnDestroy {
     this.store
       .select(selectCurrentUser)
       .subscribe((user) => (this.currentUser = user as User));
+
+    this.store.select(selectCompanyId).subscribe((companyId) => {
+      if (companyId) this.companyId = companyId;
+    });
   }
 
   ngOnDestroy(): void {
@@ -92,7 +96,6 @@ export class UserFormComponent implements OnDestroy {
             payload: {
               ...this.form.value,
               id: this.userId,
-              returnUrl: this.returnUrl,
               myId: this.currentUser.id,
               address: { ...this.form.value.address, id: this.addressId },
             },

@@ -16,6 +16,9 @@ import {
 import * as UserActions from '../../state/users.actions';
 import { SortDirection } from '@angular/material/sort';
 import { PageFilter } from 'src/app/shared/models/page-filter.mode';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Role } from '../../enums/role.enum';
+import { selectCompanyId } from 'src/app/features/company/state/company.selectors';
 
 @Component({
   selector: 'app-user-list',
@@ -42,11 +45,11 @@ export class UserListComponent {
   };
   private debounceTime = 500;
 
-  @Input() companyId!: number;
+  companyId!: number;
   @Input() companyInactive: boolean = false;
   @ViewChild('input') input?: ElementRef;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private _auth: AuthService) {}
 
   ngOnInit(): void {
     this.store.select(selectAllUsers).subscribe((data) => {
@@ -57,7 +60,14 @@ export class UserListComponent {
       .select(selectUsersPageFilter)
       .subscribe((pageFilter) => (this.pageFilter = { ...pageFilter }));
 
-    this.getData();
+    if (this._auth.getRole() === Role.ROOT) {
+      this.store.select(selectCompanyId).subscribe((companyId) => {
+        if (companyId) this.companyId = companyId;
+        this.getData();
+      });
+    } else {
+      this.getData();
+    }
   }
 
   ngAfterViewInit() {

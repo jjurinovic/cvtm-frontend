@@ -30,6 +30,7 @@ import { BaseError } from 'src/app/shared/models/error.model';
 import { selectCurrentUser } from './user.selectors';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CompanyActionTypes } from '../../company/state/company.actions';
+import { Role } from '../enums/role.enum';
 
 @Injectable()
 export class UserEffects {
@@ -365,10 +366,19 @@ export class UserEffects {
       tap((action: any) => {
         this._auth.setRole(action.payload.role);
       }),
-      map(({ payload }) => ({
-        type: CompanyActionTypes.SetCompanyId,
-        payload: payload.company_id,
-      }))
+      map(({ payload }) => {
+        let companyId = payload.company_id;
+
+        if (payload.role === Role.ROOT) {
+          companyId = localStorage.getItem('cvtm-companyId');
+          companyId = companyId ? parseInt(companyId) : companyId;
+        }
+
+        return {
+          type: CompanyActionTypes.SetCompanyId,
+          payload: companyId,
+        };
+      })
     )
   );
 

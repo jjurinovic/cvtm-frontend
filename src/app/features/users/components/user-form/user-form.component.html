@@ -58,7 +58,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Role</mat-label>
         <mat-select formControlName="role" id="role">
-          <mat-option [value]="0">ROOT</mat-option>
+          <mat-option [value]="0" *appHasRole="rootRole">ROOT</mat-option>
           <mat-option [value]="1">ADMIN</mat-option>
           <mat-option [value]="2">MODERATOR</mat-option>
           <mat-option [value]="3">USER</mat-option>
@@ -182,6 +182,7 @@
       type="button"
       id="restore"
       (click)="openDialog('restore')"
+      *appHasRole="rootRole"
     >
       Restore
     </button>
@@ -193,6 +194,7 @@
       color="warn"
       type="button"
       id="user-hard-delete"
+      *appHasRole="rootRole"
       (click)="openDialog('deleteHard')"
     >
       Delete (No Undo)

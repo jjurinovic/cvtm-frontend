@@ -93,9 +93,12 @@ export class UsersService {
    */
   public getAll(req: UsersPageFilter): Observable<PageResponse<User>> {
     let params = new HttpParams();
-    params = params.append('company_id', req.companyId);
     params = params.append('size', req.size);
     params = params.append('page', req.page);
+
+    if (req.companyId) {
+      params = params.append('company_id', req.companyId);
+    }
 
     if (req.sort && req.sort_field) {
       params = params.append('sort', req.sort);
@@ -105,7 +108,9 @@ export class UsersService {
     if (req.q) {
       params = params.append('q', req.q);
     }
-    return this.http.get<PageResponse<User>>(this.baseUrl, { params });
+    return this.http.get<PageResponse<User>>(this.baseUrl + '/list', {
+      params,
+    });
   }
 
   /**
