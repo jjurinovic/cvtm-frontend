@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, TitleStrategy } from '@angular/router';
 
 import { BaseComponent } from './layout/base/base.component';
@@ -26,6 +26,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     RouterModule,
     SharedModule,
   ],
