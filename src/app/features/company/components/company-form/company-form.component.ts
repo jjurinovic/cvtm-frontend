@@ -5,10 +5,10 @@ import { Store } from '@ngrx/store';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import * as CompanyActions from '../../../company/state/company.actions';
+import * as CompanyActions from '../../state/company.actions';
 import { selectCurrentCompany } from 'src/app/features/company/state/company.selectors';
-import { selectAdminCompanyTabIndex } from '../../state/admin.selectors';
-import { setAdminCompanyTab } from '../../state/admin.actions';
+import { selectAdminCompanyTabIndex } from '../../../admin/state/admin.selectors';
+import { setAdminCompanyTab } from '../../../admin/state/admin.actions';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({

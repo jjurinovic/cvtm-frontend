@@ -17,15 +17,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 
 import { CompanyFormComponent } from './company-form.component';
-import { UserListComponent } from '../user-list/user-list.component';
+import { UserListComponent } from '../../../users/components/user-list/user-list.component';
 import { testCompany } from 'src/test-data/data';
-import { initialState } from '../../../company/state/company.reducers';
+import { initialState } from '../../state/company.reducers';
 import { selectCurrentCompany } from 'src/app/features/company/state/company.selectors';
 import {
   changeStatus,
   deleteCompany,
 } from 'src/app/features/company/state/company.actions';
-import { setAdminCompanyTab } from '../../state/admin.actions';
+import { setAdminCompanyTab } from '../../../admin/state/admin.actions';
 
 describe('CompanyFormComponent', () => {
   let component: CompanyFormComponent;

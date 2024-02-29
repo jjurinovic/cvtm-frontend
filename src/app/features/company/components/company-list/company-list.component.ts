@@ -16,7 +16,7 @@ import {
 } from 'rxjs';
 
 import { Company } from 'src/app/features/company/models/company.model';
-import * as CompanyActions from '../../../company/state/company.actions';
+import * as CompanyActions from '../../state/company.actions';
 import {
   selectAllCompanies,
   selectCompanyPageFilter,
