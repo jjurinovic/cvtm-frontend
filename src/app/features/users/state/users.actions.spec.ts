@@ -345,3 +345,37 @@ describe('RestoreFail', () => {
     });
   });
 });
+
+describe('Current User', () => {
+  it('should create an action', () => {
+    const action = UserActions.currentUser();
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.CurrentUser,
+    });
+  });
+});
+
+describe('Current User Success', () => {
+  it('should create an action', () => {
+    const payload: User = testUser;
+    const action = UserActions.currentUserSuccess({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.CurrentUserSuccess,
+      payload,
+    });
+  });
+});
+
+describe('Current User Fail', () => {
+  it('should create an action', () => {
+    const payload: BaseError = testError;
+    const action = UserActions.currentUserFail({ payload });
+
+    expect({ ...action }).toEqual({
+      type: UserActionTypes.CurrentUserFail,
+      payload,
+    });
+  });
+});

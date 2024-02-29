@@ -54,37 +54,3 @@ describe('Logout', () => {
     });
   });
 });
-
-describe('Current User', () => {
-  it('should create an action', () => {
-    const action = AuthActions.currentUser();
-
-    expect({ ...action }).toEqual({
-      type: AuthActionTypes.CurrentUser,
-    });
-  });
-});
-
-describe('Current User Success', () => {
-  it('should create an action', () => {
-    const payload: User = testUser;
-    const action = AuthActions.currentUserSuccess({ payload });
-
-    expect({ ...action }).toEqual({
-      type: AuthActionTypes.CurrentUserSuccess,
-      payload,
-    });
-  });
-});
-
-describe('Current User Fail', () => {
-  it('should create an action', () => {
-    const payload: BaseError = testError;
-    const action = AuthActions.currentUserFail({ payload });
-
-    expect({ ...action }).toEqual({
-      type: AuthActionTypes.CurrentUserFail,
-      payload,
-    });
-  });
-});

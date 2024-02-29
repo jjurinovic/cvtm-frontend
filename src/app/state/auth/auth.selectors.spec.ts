@@ -1,6 +1,5 @@
 import { testUser } from 'src/test-data/data';
 import {
-  selectCurrentUser,
   selectError,
   selectIsLoading,
   selectIsLoggedIn,
@@ -27,10 +26,5 @@ describe('Auth Selectors', () => {
   it('should selectIsLoading return loading state', () => {
     expect(selectIsLoading.projector(state)).toBeDefined();
     expect(selectIsLoading.projector(state)).toBeFalse();
-  });
-
-  it('should selectCurrentUser return loading state', () => {
-    expect(selectCurrentUser.projector(state)).toBeDefined();
-    expect(selectCurrentUser.projector(state)).toEqual(testUser);
   });
 });

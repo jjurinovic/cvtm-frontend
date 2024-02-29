@@ -24,7 +24,6 @@ export const reducer = createReducer(
     ...state,
     isLoggedIn: true,
     isLoading: false,
-    user: payload.user,
   })),
   on(LoginActions.loginFailure, (state: State, { payload }) => ({
     ...state,

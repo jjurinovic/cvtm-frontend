@@ -6,14 +6,8 @@ import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
-import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 
 import { CompanyFormComponent } from './company-form.component';
@@ -25,7 +19,7 @@ import {
   changeStatus,
   deleteCompany,
 } from 'src/app/features/company/state/company.actions';
-import { setAdminCompanyTab } from '../../../admin/state/admin.actions';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('CompanyFormComponent', () => {
   let component: CompanyFormComponent;
@@ -41,14 +35,9 @@ describe('CompanyFormComponent', () => {
       imports: [
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        MatInputModule,
-        MatCardModule,
         RouterTestingModule,
-        MatTabsModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatButtonModule,
+        SharedModule,
+        HttpClientTestingModule,
       ],
       providers: [
         provideMockStore({
@@ -79,11 +68,6 @@ describe('CompanyFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should render tab groups', () => {
-    const tabGroup = fixture.debugElement.query(By.directive(MatTabGroup));
-    expect(tabGroup).toBeTruthy();
   });
 
   it('should render form', () => {
@@ -125,7 +109,7 @@ describe('CompanyFormComponent', () => {
   it('should call submit() and dispatch on form submit on not empty form', () => {
     const submitSpy = spyOn(component, 'submit').and.callThrough();
     const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
-    component.form.setValue(testCompany);
+    component.form.patchValue(testCompany);
     const btn = fixture.debugElement.query(By.css('#company-submit'));
 
     btn.nativeElement.click();
@@ -145,7 +129,7 @@ describe('CompanyFormComponent', () => {
 
   it('should have valid form if with form data', () => {
     const btn = fixture.debugElement.query(By.css('button'));
-    component.form.setValue(testCompany);
+    component.form.patchValue(testCompany);
 
     btn.nativeElement.click();
 
@@ -184,6 +168,9 @@ describe('CompanyFormComponent', () => {
   it('should Activate/Deactivate button open confirm dialog', () => {
     const openDialogSpy = spyOn(component, 'openDialog').and.callThrough();
     const dialogOpenSpy = spyOn(dialog, 'open').and.callThrough();
+    component.companyId = 999;
+    fixture.detectChanges();
+
     const btn = fixture.debugElement.query(By.css('#company-toggle-status'));
     btn.nativeElement.click();
 
@@ -194,6 +181,10 @@ describe('CompanyFormComponent', () => {
   it('should Delete button open confirm dialog', () => {
     const openDialogSpy = spyOn(component, 'openDialog').and.callThrough();
     const dialogOpenSpy = spyOn(dialog, 'open').and.callThrough();
+
+    component.companyId = 999;
+    fixture.detectChanges();
+
     const btn = fixture.debugElement.query(By.css('#company-delete'));
     btn.nativeElement.click();
 
@@ -241,21 +232,6 @@ describe('CompanyFormComponent', () => {
     expect(dispatchSpy).toHaveBeenCalledOnceWith(
       deleteCompany({
         payload: { id: component.companyId as number, returnUrl: '/admin' },
-      })
-    );
-  });
-
-  it('should changeTab() dispatch action', () => {
-    const changeTabSpy = spyOn(component, 'changeTab').and.callThrough();
-    const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
-
-    component.changeTab(1);
-
-    expect(changeTabSpy).toHaveBeenCalled();
-    expect(component.selectedTabIndex).toEqual(1);
-    expect(dispatchSpy).toHaveBeenCalledOnceWith(
-      setAdminCompanyTab({
-        payload: component.selectedTabIndex,
       })
     );
   });

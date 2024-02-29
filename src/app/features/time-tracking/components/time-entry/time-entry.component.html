@@ -1,3 +1,4 @@
+@if(timeEntry) {
 <div
   class="time-entry"
   [style.top.px]="timeEntry.totalStartMinutes() * 2"
@@ -15,6 +16,7 @@
 >
   <span>{{ timeEntry.title }}</span>
 </div>
+}
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="editEntry()">

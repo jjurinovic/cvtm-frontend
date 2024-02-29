@@ -180,7 +180,7 @@ describe('CompanyEffects', () => {
     effects.updateCompanySuccess$.subscribe(() => done());
 
     expect(snackService.success).toHaveBeenCalled();
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/admin');
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/company');
   });
 
   /** GET COMPANY */
@@ -220,7 +220,7 @@ describe('CompanyEffects', () => {
     actions$ = of(CompanyActions.getCompanyByIdFail({ payload }));
     effects.getCompanyByIdFail$.subscribe(() => done());
 
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/admin');
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/company');
   });
 
   /** CHANGE STATUS */

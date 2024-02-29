@@ -2,13 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { UserListComponent } from './user-list.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -20,11 +17,9 @@ describe('UserListComponent', () => {
       declarations: [UserListComponent],
       imports: [
         BrowserAnimationsModule,
-        MatInputModule,
-        MatPaginatorModule,
-        MatTableModule,
-        MatSortModule,
+        SharedModule,
         RouterTestingModule,
+        HttpClientTestingModule,
       ],
       providers: [provideMockStore()],
     }).compileComponents();

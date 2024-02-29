@@ -12,12 +12,10 @@ import { UserWithLocalParams } from '../models/user.model';
 import { BaseError } from 'src/app/shared/models/error.model';
 import { UserEffects } from './user.effects';
 import { UsersService } from '../services/users.service';
-import { selectCurrentUser } from '../../../state/auth/auth.selectors';
 import * as UserActions from './users.actions';
 import { UserActionTypes } from './users.actions';
 import { PasswordChange } from '../models/password-change.model';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { AuthActionTypes } from 'src/app/state/auth/auth.actions';
 import { initialState } from './user.reducers';
 import {
   passChangeObj,
@@ -25,11 +23,11 @@ import {
   testIdWithParams,
   testPageResponse,
   testUser,
-  testUsersRequest,
   userWithLocalParams,
 } from 'src/test-data/data';
 import { UsersPageFilter } from '../models/users-page-filter.model';
 import { testPageFilter } from '../../../../test-data/data';
+import { selectCurrentUser } from './user.selectors';
 
 describe('UserEffects', () => {
   let actions$: Observable<Action>;
@@ -172,8 +170,8 @@ describe('UserEffects', () => {
     actions$ = of(UserActions.updateUserSuccess({ payload }));
     let counter = 0;
     const actions: Array<
-      AuthActionTypes.CurrentUser | AuthActionTypes.RemoveCurrentUser
-    > = [AuthActionTypes.RemoveCurrentUser, AuthActionTypes.CurrentUser];
+      UserActionTypes.CurrentUser | UserActionTypes.RemoveCurrentUser
+    > = [UserActionTypes.RemoveCurrentUser, UserActionTypes.CurrentUser];
 
     effects.updateUserSuccess$.subscribe({
       next: (action) => {

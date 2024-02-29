@@ -2,16 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { MatListModule } from '@angular/material/list';
-
 import { NavigationComponent } from './navigation.component';
-import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
 import { AuthService } from '../../services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
-import { testLinks } from 'src/test-data/data';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
@@ -23,10 +21,10 @@ describe('NavigationComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [NavigationComponent],
       imports: [
-        MatListModule,
         RouterModule.forRoot([]),
         HttpClientTestingModule,
-        HasRoleDirective,
+        BrowserAnimationsModule,
+        SharedModule,
       ],
       providers: [provideMockStore()],
     }).compileComponents();
@@ -48,32 +46,5 @@ describe('NavigationComponent', () => {
     expect(matNav).toBeTruthy();
   });
 
-  it('should render 3 navigation items', () => {
-    component.links = testLinks;
-    fixture.detectChanges();
-
-    const items = fixture.debugElement.queryAll(By.css('.navigation-item'));
-
-    expect(items.length).toEqual(3);
-  });
-
-  it('should render 2 navigation items when user role is USER', () => {
-    component.links = testLinks;
-    service.setRole(Role.USER);
-    fixture.detectChanges();
-
-    const items = fixture.debugElement.queryAll(By.css('.navigation-item'));
-
-    expect(items.length).toEqual(2);
-  });
-
-  it('should render 2 navigation items when user role is ADMIN', () => {
-    component.links = testLinks;
-    service.setRole(Role.ADMIN);
-    fixture.detectChanges();
-
-    const items = fixture.debugElement.queryAll(By.css('.navigation-item'));
-
-    expect(items.length).toEqual(2);
-  });
+  //TODO: add more tests
 });

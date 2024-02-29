@@ -2,6 +2,7 @@ import { testPageFilter, testUser } from 'src/test-data/data';
 import { State } from './user.reducers';
 import {
   selectAllUsers,
+  selectCurrentUser,
   selectError,
   selectIsLoading,
   selectUserData,
@@ -15,6 +16,7 @@ describe('User Selectors', () => {
     pageFilter: testPageFilter,
     user: testUser,
     users: [testUser],
+    currentUser: testUser,
   };
 
   it('should selectAllUsers return users array', () => {
@@ -41,5 +43,10 @@ describe('User Selectors', () => {
   it('should selectIsLoading return false', () => {
     expect(selectIsLoading.projector(state)).toBeDefined();
     expect(selectIsLoading.projector(state)).toBeFalse();
+  });
+
+  it('should selectCurrentUser return loading state', () => {
+    expect(selectCurrentUser.projector(state)).toBeDefined();
+    expect(selectCurrentUser.projector(state)).toEqual(testUser);
   });
 });

@@ -4,13 +4,11 @@ import { By } from '@angular/platform-browser';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-
 import { HeaderComponent } from './header.component';
-import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { logout } from 'src/app/state/auth/auth.actions';
 import { testUser } from 'src/test-data/data';
+import { selectCurrentUser } from 'src/app/features/users/state/user.selectors';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -27,7 +25,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      imports: [HttpClientModule, MatToolbarModule, MatIconModule],
+      imports: [HttpClientModule, SharedModule],
       providers: [
         provideMockStore({
           initialState,

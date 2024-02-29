@@ -6,21 +6,16 @@ import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-
 import { BaseComponent } from './base.component';
 import { HeaderComponent } from '../header/header.component';
 import { MainComponent } from '../main/main.component';
 import { NavigationComponent } from '../navigation/navigation.component';
-import { currentUser } from 'src/app/state/auth/auth.actions';
-import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
 import { AuthService } from '../../services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { PageTitleComponent } from '../page-title/page-title.component';
 import { initialState } from '../../../state/auth/auth.reducers';
+import { currentUser } from 'src/app/features/users/state/users.actions';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('BaseComponent', () => {
   let component: BaseComponent;
@@ -40,13 +35,9 @@ describe('BaseComponent', () => {
       imports: [
         BrowserAnimationsModule,
         StoreModule,
-        HttpClientModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSidenavModule,
         RouterModule.forRoot([]),
-        MatListModule,
-        HasRoleDirective,
+        HttpClientModule,
+        SharedModule,
       ],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();

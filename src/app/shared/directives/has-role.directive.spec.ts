@@ -7,13 +7,11 @@ import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
-  standalone: true,
   template: `
     <div>
       <div class="test" *appHasRole="role"></div>
     </div>
   `,
-  imports: [HasRoleDirective],
 })
 class TestComponent {
   role: Role = Role.USER;
@@ -26,7 +24,8 @@ describe('HasRoleDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HasRoleDirective, TestComponent, HttpClientTestingModule],
+      declarations: [HasRoleDirective, TestComponent],
+      imports: [HttpClientTestingModule],
     });
     fixture = TestBed.createComponent(TestComponent);
     service = TestBed.inject(AuthService);

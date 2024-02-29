@@ -39,8 +39,8 @@ export class AddEntryDialogComponent {
     this.form = this.fb.group(
       {
         title: ['', Validators.required],
-        start_time: [this.data.period.start, Validators.required],
-        end_time: [this.data.period.end, Validators.required],
+        start_time: [this.data.period?.start, Validators.required],
+        end_time: [this.data.period?.end, Validators.required],
         color: ['#0c963c', Validators.required],
         notes: [''],
       },

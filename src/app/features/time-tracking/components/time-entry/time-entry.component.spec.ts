@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TimeEntryComponent } from './time-entry.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('TimeEntryComponent', () => {
   let component: TimeEntryComponent;
@@ -8,10 +9,10 @@ describe('TimeEntryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TimeEntryComponent]
-    })
-    .compileComponents();
-    
+      declarations: [TimeEntryComponent],
+      imports: [SharedModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TimeEntryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

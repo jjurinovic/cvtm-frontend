@@ -1,43 +1,42 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { MatTable, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatIconModule } from '@angular/material/icon';
+import { MatTable } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { CompanyListComponent } from './company-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { testCompanies } from 'src/test-data/data';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Role } from 'src/app/features/users/enums/role.enum';
 
 describe('CompanyListComponent', () => {
   let component: CompanyListComponent;
   let fixture: ComponentFixture<CompanyListComponent>;
   let store: MockStore;
+  let service: AuthService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CompanyListComponent],
       imports: [
         BrowserAnimationsModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatInputModule,
-        MatSortModule,
-        ReactiveFormsModule,
-        MatIconModule,
+        SharedModule,
         RouterTestingModule,
+        HttpClientTestingModule,
       ],
       providers: [provideMockStore()],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
+    service = TestBed.inject(AuthService);
     fixture = TestBed.createComponent(CompanyListComponent);
     component = fixture.componentInstance;
+    service.setRole(Role.ROOT)
     fixture.detectChanges();
   });
 

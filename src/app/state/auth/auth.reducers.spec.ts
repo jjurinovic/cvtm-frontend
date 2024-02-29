@@ -36,7 +36,6 @@ describe('Auth reducers', () => {
 
       const newState: fromReducer.State = {
         ...initialState,
-        user: testUser,
         isLoggedIn: true,
       };
 
@@ -63,62 +62,6 @@ describe('Auth reducers', () => {
       };
 
       const action = AuthActions.loginFailure({
-        payload: {
-          detail: 'error',
-        },
-      });
-      const state = fromReducer.reducer(initialState, action);
-
-      expect(state).toEqual(newState);
-      expect(state).not.toEqual(initialState);
-    });
-  });
-
-  describe('currentUser action', () => {
-    it('should return the new state with loading', () => {
-      const { initialState } = fromReducer;
-
-      const newState: fromReducer.State = {
-        ...initialState,
-        isLoading: true,
-      };
-
-      const action = AuthActions.currentUser();
-      const state = fromReducer.reducer(initialState, action);
-
-      expect(state).toEqual(newState);
-      expect(state).not.toEqual(initialState);
-    });
-  });
-
-  describe('currentUserSuccess action', () => {
-    it('should return the new state with user', () => {
-      const { initialState } = fromReducer;
-
-      const newState: fromReducer.State = {
-        ...initialState,
-        isLoggedIn: true,
-        user: testUser,
-      };
-
-      const action = AuthActions.currentUserSuccess({ payload: testUser });
-      const state = fromReducer.reducer(initialState, action);
-
-      expect(state).toEqual(newState);
-      expect(state).not.toEqual(initialState);
-    });
-  });
-
-  describe('currentUserFail action', () => {
-    it('should return the new state with error', () => {
-      const { initialState } = fromReducer;
-
-      const newState: fromReducer.State = {
-        ...initialState,
-        error: 'error',
-      };
-
-      const action = AuthActions.currentUserFail({
         payload: {
           detail: 'error',
         },

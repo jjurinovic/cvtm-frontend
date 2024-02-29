@@ -8,11 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 
 import { ProfileComponent } from './profile.component';
 import { initialState } from '../../features/users/state/user.reducers';
-import { selectCurrentUser } from 'src/app/state/auth/auth.selectors';
 import { By } from '@angular/platform-browser';
 import { testUserWithAddress } from 'src/test-data/data';
-
-const testState = { ...initialState, user: testUserWithAddress };
+import { selectCurrentUser } from 'src/app/features/users/state/user.selectors';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;

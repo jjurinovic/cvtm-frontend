@@ -10,18 +10,10 @@ import { Observable, of } from 'rxjs';
 
 import { AuthEffects } from './auth.effects';
 import { AuthService } from 'src/app/core/services/auth.service';
-import {
-  AuthActionTypes,
-  currentUser,
-  currentUserSuccess,
-  login,
-  loginSuccess,
-  logout,
-} from './auth.actions';
+import { AuthActionTypes, login, loginSuccess, logout } from './auth.actions';
 import { Auth } from 'src/app/core/models/auth.model';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { UsersService } from 'src/app/features/users/services/users.service';
-import { selectCurrentUser } from './auth.selectors';
 import { initialState } from './auth.reducers';
 import { testAuthResponse, testError, testUser } from 'src/test-data/data';
 
@@ -58,8 +50,7 @@ describe('AuthEffects', () => {
           useValue: authServiceSpy,
         },
         provideMockStore({
-          initialState: initialState,
-          selectors: [{ selector: selectCurrentUser, value: null }],
+          initialState,
         }),
       ],
     });
@@ -134,43 +125,5 @@ describe('AuthEffects', () => {
 
     expect(authServiceSpy.removeToken).toHaveBeenCalled();
     expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
-  });
-
-  it('should call currentUser$ and return response from endpoint', (done) => {
-    userServiceSpy.getCurrentUser.and.returnValue(of(testUser));
-    store.refreshState();
-
-    actions$ = of(currentUser());
-    effects.currentUser$.subscribe((action) => {
-      expect(action).toEqual({
-        type: AuthActionTypes.CurrentUserSuccess,
-        payload: testUser,
-      });
-      done();
-    });
-  });
-
-  it('should call currentUser$ and return error', (done) => {
-    store.setState({});
-    store.refreshState();
-    userServiceSpy.getCurrentUser.and.throwError(testError);
-
-    actions$ = of(currentUser());
-    effects.currentUser$.subscribe({
-      next: () => {},
-      error: (error) => {
-        expect(error).toEqual(testError);
-        done();
-      },
-    });
-  });
-
-  it('should call currentUserSuccess$ and set role', () => {
-    actions$ = of(currentUserSuccess({ payload: testUser }));
-
-    // subscribe to execute the Effect
-    effects.currentUserSuccess$.subscribe();
-
-    expect(authServiceSpy.setRole).toHaveBeenCalled();
   });
 });

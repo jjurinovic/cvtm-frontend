@@ -15,6 +15,7 @@ describe('Company Selectors', () => {
     error: 'error',
     isLoading: false,
     pageFilter: testPageFilter,
+    companyId: 999,
   };
 
   it('should selectAllCompanies return users array', () => {
@@ -44,4 +45,5 @@ describe('Company Selectors', () => {
     expect(selectIsLoading.projector(state)).toBeDefined();
     expect(selectIsLoading.projector(state)).toEqual(false);
   });
+  //TODO: add missing test for
 });

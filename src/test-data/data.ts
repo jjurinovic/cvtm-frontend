@@ -8,6 +8,7 @@ export const testUser = {
 };
 
 export const testAddress = {
+  id: 999,
   address1: 'Teststr. 67',
   address2: 'Extra address',
   city: 'Legoland',
