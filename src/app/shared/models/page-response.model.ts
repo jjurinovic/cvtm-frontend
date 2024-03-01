@@ -1,4 +1,4 @@
-import { PageFilter } from './page-filter.mode';
+import { PageFilter } from './page-filter.model';
 
 export interface PageResponse<T> {
   results: T[];

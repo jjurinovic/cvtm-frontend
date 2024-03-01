@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import * as UserActions from './users.actions';
 import { User } from '../models/user.model';
-import { PageFilter } from 'src/app/shared/models/page-filter.mode';
+import { PageFilter } from 'src/app/shared/models/page-filter.model';
 import { currentUser } from './users.actions';
 
 export interface State {

@@ -22,7 +22,7 @@ import {
   selectCompanyPageFilter,
 } from 'src/app/features/company/state/company.selectors';
 import { CompanyPageFilter } from 'src/app/features/company/models/company-page-filter.model';
-import { PageFilter } from 'src/app/shared/models/page-filter.mode';
+import { PageFilter } from 'src/app/shared/models/page-filter.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Role } from 'src/app/features/users/enums/role.enum';
 

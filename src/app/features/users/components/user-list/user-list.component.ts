@@ -15,7 +15,7 @@ import {
 } from 'src/app/features/users/state/user.selectors';
 import * as UserActions from '../../state/users.actions';
 import { SortDirection } from '@angular/material/sort';
-import { PageFilter } from 'src/app/shared/models/page-filter.mode';
+import { PageFilter } from 'src/app/shared/models/page-filter.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Role } from '../../enums/role.enum';
 import { selectCompanyId } from 'src/app/features/company/state/company.selectors';
