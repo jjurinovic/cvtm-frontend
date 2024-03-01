@@ -25,6 +25,7 @@ import { UserEffects } from './features/users/state/user.effects';
 import { ProfileComponent } from './general/profile/profile.component';
 import { PasswordChangeDialogComponent } from './general/password-change-dialog/password-change-dialog.component';
 import { TimeTrackingEffects } from './features/time-tracking/state/time-tracking.effects';
+import { ProjectEffects } from './features/projects/state/projects.effects';
 
 @NgModule({
   declarations: [AppComponent, ProfileComponent, PasswordChangeDialogComponent],
@@ -37,6 +38,7 @@ import { TimeTrackingEffects } from './features/time-tracking/state/time-trackin
       CompanyEffects,
       UserEffects,
       TimeTrackingEffects,
+      ProjectEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     CoreModule,
