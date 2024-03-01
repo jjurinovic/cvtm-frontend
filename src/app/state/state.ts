@@ -6,6 +6,7 @@ import * as company from '../features/company/state/company.reducers';
 import * as admin from '../features/admin/state/admin.reducers';
 import * as user from '../features/users/state/user.reducers';
 import * as timeTracking from '../features/time-tracking/state/time-tracking.reducers';
+import * as project from '../features/projects/state/projects.reducers';
 
 export interface State {
   auth: auth.State;
@@ -13,6 +14,7 @@ export interface State {
   admin: admin.State;
   user: user.State;
   timeTracking: timeTracking.State;
+  projects: project.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -21,4 +23,5 @@ export const reducers: ActionReducerMap<State> = {
   admin: admin.reducer,
   user: user.reducer,
   timeTracking: timeTracking.reducer,
+  projects: project.reducer,
 };

@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Project } from '../models/project.model';
 import { PageResponse } from 'src/app/shared/models/page-response.model';
 import { ProjectPageFilter } from '../models/project-page-filter.model';
-import { ProjectAssignUsers } from '../models/project-assign-users.model';
+import { ProjectUsers } from '../models/project-users.model';
 
 @Injectable({
   providedIn: 'root',
@@ -72,19 +72,19 @@ export class ProjectsService {
 
   /**
    * Assign users to the project
-   * @param {ProjectAssignUsers} assignUsers object with project id and user id list
+   * @param {ProjectUsers} assignUsers object with project id and user id list
    * @returns Project with assigned users
    */
-  public assignUsers(assignUsers: ProjectAssignUsers): Observable<Project> {
+  public assignUsers(assignUsers: ProjectUsers): Observable<Project> {
     return this.http.post<Project>(this.baseUrl + '/assign-users', assignUsers);
   }
 
   /**
    * Remove users from the project
-   * @param {ProjectAssignUsers} assignUsers object with project id and user id list
+   * @param {ProjectUsers} assignUsers object with project id and user id list
    * @returns Project with updated users
    */
-  public removeUsers(removeUsers: ProjectAssignUsers): Observable<Project> {
+  public removeUsers(removeUsers: ProjectUsers): Observable<Project> {
     return this.http.post<Project>(this.baseUrl + '/remove-users', removeUsers);
   }
 
