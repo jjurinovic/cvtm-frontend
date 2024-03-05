@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectListComponent } from './components/project-list/project-list.component';
@@ -9,6 +10,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectListComponent, ProjectFormComponent],
-  imports: [CommonModule, ProjectsRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    ProjectsRoutingModule,
+    SharedModule,
+    ReactiveFormsModule,
+  ],
 })
 export class ProjectsModule {}

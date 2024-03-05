@@ -1,1 +1,132 @@
-<p>project-form works!</p>
+<mat-card class="project-form">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <h4 class="form-title">Project Info</h4>
+    <div class="form-row">
+      <div class="w-50">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Name" formControlName="name" id="name" />
+          @if (form.get('name')?.hasError('required')) {
+          <mat-error>Name is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="w-50">
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input
+            matInput
+            placeholder="Description"
+            formControlName="description"
+            id="description"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="w-50">
+        <mat-form-field appearance="outline">
+          <mat-label>Start date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepickerStart"
+            formControlName="start_date"
+            readonly
+            (click)="datepickerStart.open()"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="datepickerStart"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #datepickerStart>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>Cancel</button>
+              <button mat-raised-button color="primary" matDatepickerApply>
+                Apply
+              </button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="w-50">
+        <mat-form-field appearance="outline">
+          <mat-label>End date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepickerEnd"
+            formControlName="end_date"
+            readonly
+            (click)="datepickerEnd.open()"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="datepickerEnd"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #datepickerEnd>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>Cancel</button>
+              <button mat-raised-button color="primary" matDatepickerApply>
+                Apply
+              </button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="w-50">
+        <mat-form-field appearance="outline">
+          <mat-label>Estimated date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepickerEstimated"
+            formControlName="estimated_date"
+            readonly
+            (click)="datepickerEstimated.open()"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="datepickerEstimated"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #datepickerEstimated>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>Cancel</button>
+              <button mat-raised-button color="primary" matDatepickerApply>
+                Apply
+              </button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="w-50 project-active-toggle">
+        <mat-slide-toggle
+          formControlName="active"
+          color="primary"
+          labelPosition="before"
+          >Active:</mat-slide-toggle
+        >
+      </div>
+    </div>
+
+    <!-- Save -->
+    <button mat-flat-button color="primary" type="submit" id="user-submit">
+      Save
+    </button>
+
+    <!-- Hard delete  -->
+    <button
+      mat-flat-button
+      color="warn"
+      type="button"
+      id="user-hard-delete"
+      *appHasRole="adminRole"
+      (click)="openDialog()"
+    >
+      Delete (No Undo)
+    </button>
+  </form>
+</mat-card>
