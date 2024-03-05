@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 export const MS_PER_MINUTE = 60000;
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
@@ -16,4 +18,8 @@ export const getNowTime = (add?: number) => {
   let minutes: any = now.getMinutes();
   minutes = minutes < 10 ? '0' + minutes : minutes;
   return hours + ':' + minutes;
+};
+
+export const dateToString = (date?: Date): string | null => {
+  return date ? moment(date).format(DATE_FORMAT) : null;
 };
