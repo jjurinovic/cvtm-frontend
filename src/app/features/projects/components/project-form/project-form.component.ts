@@ -1,15 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 
-import { Store } from '@ngrx/store';
-
-import { selectCompanyId } from 'src/app/features/company/state/company.selectors';
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { dateToString } from 'src/app/utils/date';
-import * as ProjectActions from '../../state/projects.actions';
 import { Project } from '../../models/project.model';
-import { selectProject } from '../../state/projects.selectors';
 
 @Component({
   selector: 'app-project-form',
@@ -19,14 +13,19 @@ import { selectProject } from '../../state/projects.selectors';
 export class ProjectFormComponent {
   form: FormGroup;
   adminRole: Role = Role.ADMIN;
-  projectId?: number;
-  companyId!: number;
-
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private store: Store
+  @Input({ required: true }) projectId?: number;
+  @Input({ required: true }) companyId!: number;
+  @Input({ required: true, alias: 'project' }) set project(
+    project: Project | undefined
   ) {
+    if (project) {
+      this.form.patchValue(project);
+    }
+  }
+  @Output() create: EventEmitter<Project> = new EventEmitter();
+  @Output() update: EventEmitter<Project> = new EventEmitter();
+
+  constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       name: ['', Validators.required],
       description: [''],
@@ -35,39 +34,6 @@ export class ProjectFormComponent {
       estimated_date: [null],
       active: [true],
     });
-
-    this.route.params.subscribe((params) => {
-      const id = params['id'];
-
-      if (!!id) {
-        this.projectId = +id;
-        this.getProject(this.projectId as number);
-      }
-    });
-
-    this.store.select(selectCompanyId).subscribe((id) => {
-      if (id) {
-        this.companyId = id;
-      }
-    });
-
-    this.store.select(selectProject).subscribe((project) => {
-      if (project) {
-        this.form.patchValue(project);
-      }
-    });
-  }
-
-  private getProject(projectId: number): void {
-    this.store.dispatch(ProjectActions.getProject({ payload: projectId }));
-  }
-
-  private createProject(project: Project): void {
-    this.store.dispatch(ProjectActions.createProject({ payload: project }));
-  }
-
-  private updateProject(project: Project): void {
-    this.store.dispatch(ProjectActions.updateProject({ payload: project }));
   }
 
   submit(): void {
@@ -81,9 +47,9 @@ export class ProjectFormComponent {
 
     if (this.projectId) {
       value = { ...value, id: this.projectId };
-      this.updateProject(value);
+      this.update.emit(value);
     } else {
-      this.createProject(value);
+      this.create.emit(value);
     }
   }
 

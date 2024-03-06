@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectListComponent } from './components/project-list/project-list.component';
-import { ProjectFormComponent } from './components/project-form/project-form.component';
+import { ProjectInfoComponent } from './components/project-info/project-info.component';
 
 const routes: Routes = [
   {
@@ -17,12 +17,12 @@ const routes: Routes = [
       },
       {
         path: ':id/edit',
-        component: ProjectFormComponent,
+        component: ProjectInfoComponent,
         title: 'Project Edit',
       },
       {
         path: 'create',
-        component: ProjectFormComponent,
+        component: ProjectInfoComponent,
         title: 'Project Create',
       },
     ],

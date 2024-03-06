@@ -1,0 +1,23 @@
+<mat-card class="project-form">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="Info">
+      <div class="tab-content">
+        <app-project-form
+          [project]="project"
+          [projectId]="projectId"
+          [companyId]="companyId"
+          (create)="createProject($event)"
+          (update)="updateProject($event)"
+        ></app-project-form>
+      </div>
+    </mat-tab>
+
+    @if (projectId && project) {
+    <mat-tab label="Users">
+      <div class="tab-content">
+        <app-project-users [users]="project.users"></app-project-users>
+      </div>
+    </mat-tab>
+    }
+  </mat-tab-group>
+</mat-card>

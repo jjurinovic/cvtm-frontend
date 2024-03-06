@@ -9,6 +9,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { ProjectsService } from '../services/projects.service';
 import { BaseError } from 'src/app/shared/models/error.model';
 import { Project } from '../models/project.model';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ProjectEffects {
@@ -58,6 +59,7 @@ export class ProjectEffects {
         ofType(ProjectActionTypes.CreateProjectSuccess),
         tap(({ payload }: { payload: Project }) => {
           this._snackbar.success('Project successfully created!', 10000);
+          this.router.navigateByUrl(`projects/${payload.id}/edit`);
         })
       ),
     { dispatch: false }
@@ -206,6 +208,7 @@ export class ProjectEffects {
   constructor(
     private actions$: Actions,
     private _snackbar: SnackbarService,
-    private _project: ProjectsService
+    private _project: ProjectsService,
+    private router: Router
   ) {}
 }
