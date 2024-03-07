@@ -120,7 +120,7 @@ export class ProjectEffects {
   assignUsers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProjectActionTypes.AssignUsers),
-      exhaustMap((payload: any) =>
+      exhaustMap(({ payload }) =>
         this._project.assignUsers(payload).pipe(
           map((data) => ({
             type: ProjectActionTypes.AssignUsersSuccess,

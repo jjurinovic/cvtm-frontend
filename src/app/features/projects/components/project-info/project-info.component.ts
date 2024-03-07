@@ -13,7 +13,7 @@ import * as ProjectActions from '../../state/projects.actions';
   styleUrl: './project-info.component.scss',
 })
 export class ProjectInfoComponent {
-  projectId?: number;
+  projectId!: number;
   companyId!: number;
   project?: Project;
 
@@ -50,5 +50,21 @@ export class ProjectInfoComponent {
 
   updateProject(project: Project): void {
     this.store.dispatch(ProjectActions.updateProject({ payload: project }));
+  }
+
+  assignUsers(userIds: number[]): void {
+    this.store.dispatch(
+      ProjectActions.assignUsers({
+        payload: { project_id: this.projectId, users: userIds },
+      })
+    );
+  }
+
+  removeUser(userId: number): void {
+    this.store.dispatch(
+      ProjectActions.removeUsers({
+        payload: { project_id: this.projectId, users: [userId] },
+      })
+    );
   }
 }

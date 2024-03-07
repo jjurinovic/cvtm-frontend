@@ -15,7 +15,11 @@
     @if (projectId && project) {
     <mat-tab label="Users">
       <div class="tab-content">
-        <app-project-users [users]="project.users"></app-project-users>
+        <app-project-users
+          [users]="project.users"
+          (assignUsers)="assignUsers($event)"
+          (removeUser)="removeUser($event)"
+        ></app-project-users>
       </div>
     </mat-tab>
     }

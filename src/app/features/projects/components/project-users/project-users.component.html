@@ -1,5 +1,26 @@
+<div class="project-users__header">
+  <mat-form-field appearance="outline">
+    <mat-label>Users</mat-label>
+    <mat-select multiple [(value)]="selectedIds">
+      @for (user of allUsersFiltered; track $index) {
+      <mat-option [value]="user.id">{{
+        user.first_name + " " + user.last_name
+      }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="assignUsers.emit(selectedIds)"
+  >
+    Assign
+  </button>
+</div>
+
 <div class="mat-elevation-z8">
-  <table matSort mat-table [dataSource]="users">
+  <table matSort mat-table [dataSource]="_users">
     <!-- First Name Column -->
     <ng-container matColumnDef="first_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
