@@ -34,7 +34,7 @@ const routes: Routes = [
         component: ProjectInfoComponent,
         title: 'Project Create',
         data: {
-          breadcrumb: 'Edit',
+          breadcrumb: 'Create',
         },
       },
     ],
