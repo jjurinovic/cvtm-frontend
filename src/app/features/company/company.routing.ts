@@ -14,40 +14,53 @@ const routes: Routes = [
   {
     path: '',
     component: CompanyComponent,
+    data: {
+      breadcrumb: 'Company',
+    },
     children: [
       {
         path: '',
         component: CompanyListComponent,
         canActivate: [companyListGuard],
+        title: 'Company List',
+        data: {
+          breadcrumb: 'List',
+        },
         resolve: {
           companies: companyListResolver,
         },
-        title: 'Company List',
       },
       {
         path: ':id/edit',
         component: CompanyFormComponent,
         title: 'Edit Company',
+        data: {
+          breadcrumb: 'Edit',
+        },
       },
       {
         path: 'edit',
         component: CompanyFormComponent,
         title: 'Edit Company',
+        data: {
+          breadcrumb: 'Edit',
+        },
       },
       {
         path: 'create',
         component: CompanyFormComponent,
         title: 'Create Company',
+        data: {
+          breadcrumb: 'Create',
+        },
       },
       {
         path: 'info',
         component: CompanyInfoComponent,
         title: 'Company Info',
-      },
-      {
-        path: 'edit',
-        component: CompanyEditComponent,
-        title: 'Company Edit',
+        data: {
+          breadcrumb: 'Info',
+        },
       },
     ],
   },

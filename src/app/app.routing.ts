@@ -16,7 +16,14 @@ const routes: Routes = [
     canActivate: [authGuard],
     canActivateChild: [authGuard],
     children: [
-      { path: 'profile', component: ProfileComponent, title: 'My Profile' },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        title: 'My Profile',
+        data: {
+          breadcrumb: 'My Profile',
+        },
+      },
       {
         path: '',
         loadChildren: () =>

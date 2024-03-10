@@ -1,0 +1,19 @@
+<div class="breadcrumb">
+  <mat-icon>home</mat-icon>
+  <ul>
+    <span class="divider">/</span>
+    @for (breadcrumb of breadcrumbs; track $index; let last = $last) {
+    <li>
+      @if (!last) {
+      <a [routerLink]="breadcrumb.url">
+        {{ breadcrumb.label }}
+      </a>
+
+      <span class="divider">/</span>
+      } @else {
+      <span class="active">{{ breadcrumb.label }}</span>
+      }
+    </li>
+    }
+  </ul>
+</div>

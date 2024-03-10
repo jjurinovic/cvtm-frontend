@@ -8,6 +8,9 @@ const routes: Routes = [
     path: '',
     component: TimeTrackingComponent,
     title: `Time Tracking`,
+    data: {
+      breadcrumb: 'Time Tracking',
+    },
   },
 ];
 

@@ -9,21 +9,33 @@ const routes: Routes = [
   {
     path: '',
     component: UsersComponent,
+    data: {
+      breadcrumb: 'Users',
+    },
     children: [
       {
         path: '',
         component: UserListComponent,
         title: 'User List',
+        data: {
+          breadcrumb: 'List',
+        },
       },
       {
         path: ':id/edit',
         component: UserFormComponent,
         title: 'User Edit',
+        data: {
+          breadcrumb: 'Edit',
+        },
       },
       {
         path: 'create',
         component: UserFormComponent,
         title: 'User Create',
+        data: {
+          breadcrumb: 'Create',
+        },
       },
     ],
   },

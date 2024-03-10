@@ -8,6 +8,9 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     title: `Admin Settings`,
+    data: {
+      breadcrumb: 'Admin',
+    },
   },
 ];
 

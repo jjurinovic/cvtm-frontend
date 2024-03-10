@@ -1,0 +1,46 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+
+  mat-icon {
+    margin-right: 5pxpx;
+    font-size: 14px;
+    height: 14px;
+    width: 14px;
+    color: #adadad;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .divider {
+      margin: 0 7px;
+      color: #adadad;
+    }
+
+    li {
+      display: inline-block;
+      font-size: 14px;
+
+      a {
+        color: #adadad;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      span {
+        color: #adadad;
+
+        &.active {
+          color: #0c963c;
+        }
+      }
+    }
+  }
+}

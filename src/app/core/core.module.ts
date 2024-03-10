@@ -12,6 +12,7 @@ import { NavigationComponent } from './layout/navigation/navigation.component';
 import { PageTitleComponent } from './layout/page-title/page-title.component';
 import { PageTitleStrategy } from './strategies/page-title-strategy';
 import { SharedModule } from '../shared/shared.module';
+import { BreadcrumbComponent } from './layout/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModule } from '../shared/shared.module';
     LoginComponent,
     NavigationComponent,
     PageTitleComponent,
+    BreadcrumbComponent,
   ],
   imports: [
     CommonModule,
