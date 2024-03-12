@@ -15,7 +15,6 @@ export class BreadcrumbComponent {
       .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe(() => {
         this.breadcrumbs = this.createBreadcrumbs(this.route.root);
-        console.log(this.breadcrumbs);
       });
   }
 
@@ -39,7 +38,6 @@ export class BreadcrumbComponent {
       }
 
       const label = child.snapshot.data['breadcrumb'];
-      console.log(child.snapshot.title);
       if (!!label) {
         breadcrumbs.push({ label, url });
       }
