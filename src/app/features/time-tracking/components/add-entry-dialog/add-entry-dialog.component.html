@@ -69,6 +69,18 @@
       <ngx-mat-timepicker color="primary" #endPicker></ngx-mat-timepicker>
     </div>
 
+    <!-- Projects -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Project</mat-label>
+        <mat-select formControlName="project_id" id="project_id">
+          @for (project of projects; track $index) {
+          <mat-option [value]="project.id">{{ project.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <!-- Color -->
     <div class="form-row">
       <mat-form-field appearance="outline">

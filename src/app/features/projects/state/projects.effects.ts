@@ -192,7 +192,7 @@ export class ProjectEffects {
         this._project.getProjectsByUser(payload).pipe(
           map((data) => ({
             type: ProjectActionTypes.GetByUserSuccess,
-            payload: { ...data, returnUrl: payload.returnUrl },
+            payload: data,
           })),
           catchError(({ error }) =>
             of({

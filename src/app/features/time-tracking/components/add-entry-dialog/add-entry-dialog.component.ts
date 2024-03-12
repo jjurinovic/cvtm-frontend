@@ -5,9 +5,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
 import * as TimeTrackingActions from './../../state/time-tracking.actions';
+import * as ProjectActions from '../../../projects/state/projects.actions';
 import { User } from 'src/app/features/users/models/user.model';
 import { ITimeEntry, TimeEntry } from '../../models/time-entry.model';
 import { timeValidator } from 'src/app/shared/validators/time.validator';
+import { selectProjects } from 'src/app/features/projects/state/projects.selectors';
+import { Project } from 'src/app/features/projects/models/project.model';
 
 @Component({
   selector: 'app-add-entry-dialog',
@@ -23,6 +26,7 @@ export class AddEntryDialogComponent {
     { name: 'Red', value: '#f35221' },
     { name: 'Yellow', value: '#cfbd1a' },
   ];
+  projects: Project[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +40,12 @@ export class AddEntryDialogComponent {
     private store: Store,
     private dialogRef: MatDialogRef<AddEntryDialogComponent>
   ) {
+    // get projects from user
+    this.getProjects(this.data.user.id);
+    this.store.select(selectProjects).subscribe((projects) => {
+      this.projects = projects;
+    });
+
     this.form = this.fb.group(
       {
         title: ['', Validators.required],
@@ -43,14 +53,20 @@ export class AddEntryDialogComponent {
         end_time: [this.data.period?.end, Validators.required],
         color: ['#0c963c', Validators.required],
         notes: [''],
+        project_id: [null, Validators.required],
       },
       { validators: [timeValidator] }
     );
 
     if (this.data.entry) {
       this.dialogTitle = 'Edit Entry';
+      console.log(this.data.entry);
       this.form.patchValue(this.data.entry);
     }
+  }
+
+  private getProjects(user_id: number): void {
+    this.store.dispatch(ProjectActions.getByUser({ payload: user_id }));
   }
 
   submit(): void {

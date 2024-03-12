@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import { Project } from '../../projects/models/project.model';
 
 export interface ITimeEntry {
   id?: number;
@@ -11,6 +11,8 @@ export interface ITimeEntry {
   notes?: string;
   user_id: number;
   company_id: number;
+  project_id: number;
+  project: Project;
 }
 
 export class TimeEntry implements ITimeEntry {
@@ -24,6 +26,8 @@ export class TimeEntry implements ITimeEntry {
   notes?: string;
   user_id: number;
   company_id: number;
+  project_id: number;
+  project: Project;
 
   constructor(timeEntry: ITimeEntry) {
     this.id = timeEntry.id;
@@ -40,6 +44,8 @@ export class TimeEntry implements ITimeEntry {
     this.notes = timeEntry.notes;
     this.date = timeEntry.date;
     this.color = timeEntry.color;
+    this.project = timeEntry.project;
+    this.project_id = timeEntry.project_id;
   }
 
   getStartHours(): number {
