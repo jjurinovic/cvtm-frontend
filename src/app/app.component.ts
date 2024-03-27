@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   NavigationCancel,
   NavigationEnd,
@@ -7,6 +7,7 @@ import {
   Router,
   RouterEvent,
 } from '@angular/router';
+
 import { LoadingService } from './shared/services/loading.service';
 
 @Component({
@@ -14,10 +15,13 @@ import { LoadingService } from './shared/services/loading.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   private loading = true;
 
-  constructor(private router: Router, private _loading: LoadingService) {
+  private router = inject(Router);
+  private _loading = inject(LoadingService);
+
+  ngOnInit(): void {
     this.router.events.subscribe((e: any) => {
       // show main loading only if app isn't loaded yet
       if (!this._loading.isAppLoaded) {

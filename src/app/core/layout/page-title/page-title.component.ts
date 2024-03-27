@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { PageService } from '../../services/page.service';
 
@@ -9,7 +9,8 @@ import { PageService } from '../../services/page.service';
 })
 export class PageTitleComponent implements OnInit {
   pageTitle: string = '';
-  constructor(private _page: PageService) {}
+
+  private _page = inject(PageService);
 
   ngOnInit(): void {
     this.pageTitle = this._page.getTitle();

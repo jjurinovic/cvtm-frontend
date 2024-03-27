@@ -1,4 +1,10 @@
-import { AfterViewChecked, AfterViewInit, Component } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -40,14 +46,17 @@ import {
     ]),
   ],
 })
-export class LoginComponent implements AfterViewInit {
-  public form: FormGroup;
+export class LoginComponent implements AfterViewInit, OnInit {
+  public form!: FormGroup;
   public hide: boolean = true;
   public isLoading: boolean = false;
   public error: string = '';
-  public animationDone: boolean;
+  public animationDone: boolean = false;
 
-  constructor(private store: Store, private fb: FormBuilder) {
+  private store = inject(Store);
+  private fb = inject(FormBuilder);
+
+  ngOnInit(): void {
     this.animationDone = true;
 
     this.form = this.fb.group({
