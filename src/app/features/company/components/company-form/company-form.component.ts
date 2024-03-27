@@ -2,9 +2,11 @@ import {
   AfterContentInit,
   AfterViewInit,
   Component,
+  Input,
   OnDestroy,
+  inject,
+  numberAttribute,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
@@ -23,34 +25,30 @@ import { Role } from 'src/app/features/users/enums/role.enum';
   templateUrl: './company-form.component.html',
   styleUrl: './company-form.component.scss',
 })
-export class CompanyFormComponent implements OnDestroy, AfterViewInit {
+export class CompanyFormComponent {
+  @Input({ transform: numberAttribute, alias: 'id' }) companyId?: number;
+  private fb = inject(FormBuilder);
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private _auth = inject(AuthService);
+
   form: FormGroup = this.fb.group({
     name: [null, Validators.required],
     vat: [null],
     inactive: [false],
   });
-  companyId: number | null = null;
   addressId: number | null = null;
   selectedTabIndex: number = 0;
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store,
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private _auth: AuthService
-  ) {
+  ngOnInit() {
+    console.log(this.companyId);
     // if root get id from path id
     if (this._auth.getRole() === Role.ROOT) {
-      this.route.params.subscribe((params) => {
-        this.companyId = params['id'];
-
-        if (this.companyId) {
-          this.store.dispatch(
-            CompanyActions.getCompanyById({ payload: this.companyId })
-          );
-        }
-      });
+      if (this.companyId) {
+        this.store.dispatch(
+          CompanyActions.getCompanyById({ payload: this.companyId })
+        );
+      }
     } else {
       this.store.dispatch(CompanyActions.getCompanyById({}));
     }
