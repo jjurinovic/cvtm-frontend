@@ -18,31 +18,25 @@ import { selectCurrentUser } from 'src/app/features/users/state/user.selectors';
 })
 export class ProfileComponent {
   user!: User;
-  form!: FormGroup;
+  form: FormGroup = this.fb.group({
+    first_name: [null, Validators.required],
+    last_name: [null, Validators.required],
+    email: [null, [Validators.required, Validators.email]],
+  });
   currentUser!: User;
 
   constructor(
     private fb: FormBuilder,
     private store: Store,
     private dialog: MatDialog
-  ) {
+  ) {}
+
+  ngAfterViewInit() {
     this.store.select(selectCurrentUser).subscribe((data) => {
       this.user = data as User;
-
       if (this.user) {
-        this.form = this.fb.group({
-          first_name: [this.user.first_name, Validators.required],
-          last_name: [this.user.last_name, Validators.required],
-          email: [this.user.email, [Validators.required, Validators.email]],
-          address: this.fb.group({
-            address1: [this.user.address?.address1, Validators.required],
-            address2: [this.user.address?.address2],
-            city: [this.user.address?.city, Validators.required],
-            postcode: [this.user.address?.postcode, Validators.required],
-            county: [this.user.address?.county],
-            country: [this.user.address?.country, Validators.required],
-          }),
-        });
+        this.form.patchValue(this.user);
+        this.form.get('address')?.patchValue(this.user.address);
       }
     });
   }

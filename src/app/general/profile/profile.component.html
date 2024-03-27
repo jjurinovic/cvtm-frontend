@@ -1,12 +1,13 @@
 <mat-card class="profile-form">
-  @if(form) {
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="company-create__basic">
       <h4 class="form-title">Info</h4>
       <div class="form-row">
         <div class="profile-row w-50">
           <span class="profile-row-title">Company:</span>
-          <span class="profile-row-value">{{ user.company?.name }}</span>
+          <span class="profile-row-value">{{
+            user ? user.company?.name : ""
+          }}</span>
         </div>
         <div class="profile-row w-50">
           <span class="profile-row-title">Role:</span>
@@ -69,83 +70,12 @@
     >
       Change password
     </button>
-    <!-- ADRESS  -->
-    <div formGroupName="address" class="company-create__address">
-      <h4 class="form-title">Address</h4>
-      <div class="form-row">
-        <mat-form-field appearance="outline">
-          <mat-label>Address 1</mat-label>
-          <input
-            matInput
-            placeholder="Address 1"
-            formControlName="address1"
-            id="address1"
-          />
-          @if (form.get('address.address1')?.hasError('required')) {
-          <mat-error>Address1 is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
-      </div>
-      <div class="form-row">
-        <mat-form-field appearance="outline">
-          <mat-label>Address 2</mat-label>
-          <input
-            matInput
-            placeholder="Address 2"
-            formControlName="address2"
-            id="address2"
-          />
-        </mat-form-field>
-      </div>
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="w-50">
-          <mat-label>City</mat-label>
-          <input matInput placeholder="City" formControlName="city" id="city" />
-          @if (form.get('address.city')?.hasError('required')) {
-          <mat-error>City is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-50">
-          <mat-label>Postcode</mat-label>
-          <input
-            matInput
-            placeholder="Postcode"
-            formControlName="postcode"
-            id="postcode"
-          />
-          @if (form.get('address.postcode')?.hasError('required')) {
-          <mat-error>Postcode is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
-      </div>
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="w-50">
-          <mat-label>County</mat-label>
-          <input
-            matInput
-            placeholder="County"
-            formControlName="county"
-            id="county"
-          />
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-50">
-          <mat-label>Country</mat-label>
-          <input
-            matInput
-            placeholder="Country"
-            formControlName="country"
-            id="country"
-          />
-          @if (form.get('address.country')?.hasError('required')) {
-          <mat-error>Country is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
-      </div>
-    </div>
+
+    <!-- ADDRESS  -->
+    <app-adress-form controlKey="address"></app-adress-form>
 
     <button mat-flat-button color="primary" type="submit" id="profile-submit">
       Save
     </button>
   </form>
-  }
 </mat-card>
