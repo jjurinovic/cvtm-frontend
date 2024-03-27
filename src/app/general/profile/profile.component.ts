@@ -47,6 +47,7 @@ export class ProfileComponent {
             id: this.user.id,
             company_id: this.user.company_id,
             myId: this.user.id,
+            address: { ...this.form.value.address, id: this.user.address?.id },
           },
         })
       );
