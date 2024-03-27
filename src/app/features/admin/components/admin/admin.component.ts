@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { selectAdminTabIndex } from '../../state/admin.selectors';
@@ -10,9 +10,10 @@ import * as AdminActions from '../../state/admin.actions';
   styleUrl: './admin.component.scss',
 })
 export class AdminComponent {
+  private store = inject(Store);
   selectedTabIndex: number = 1;
 
-  constructor(private store: Store) {
+  ngOnInit(): void {
     this.store
       .select(selectAdminTabIndex)
       .subscribe((index) => (this.selectedTabIndex = index));

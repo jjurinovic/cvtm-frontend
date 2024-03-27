@@ -16,6 +16,7 @@ import { PageTitleComponent } from '../page-title/page-title.component';
 import { initialState } from '../../../state/auth/auth.reducers';
 import { currentUser } from 'src/app/features/users/state/users.actions';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 
 describe('BaseComponent', () => {
   let component: BaseComponent;
@@ -31,6 +32,7 @@ describe('BaseComponent', () => {
         MainComponent,
         NavigationComponent,
         PageTitleComponent,
+        BreadcrumbComponent,
       ],
       imports: [
         BrowserAnimationsModule,

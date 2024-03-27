@@ -193,7 +193,7 @@ describe('CompanyFormComponent', () => {
   });
 
   it('should show only save button if no companyId', () => {
-    component.companyId = null;
+    component.companyId = undefined;
     fixture.detectChanges();
 
     const saveBtn = fixture.debugElement.query(By.css('#company-submit'));

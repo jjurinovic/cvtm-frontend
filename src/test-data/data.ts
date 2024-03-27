@@ -1,3 +1,5 @@
+import { ITimeEntry } from 'src/app/features/time-tracking/models/time-entry.model';
+
 export const testUser = {
   id: 999,
   first_name: 'John',
@@ -145,7 +147,20 @@ export const testTimeEntriesRequest = {
   company_id: 999,
 };
 
-export const testTimeEntry = {
+export const testProject = {
+  start_date: '2024-02-14',
+  end_date: '2024-04-14',
+  estimated_date: undefined,
+  company_id: 999,
+  name: 'test project',
+  description: 'test project description',
+  id: 999,
+  users: [],
+  active: true,
+  created_date: '2024-02-14',
+};
+
+export const testTimeEntry: ITimeEntry = {
   start_time: '10:00',
   end_time: '12:00',
   notes: 'test',
@@ -156,6 +171,8 @@ export const testTimeEntry = {
   company_id: 999,
   id: 999,
   date: '2024-02-14',
+  project_id: 999,
+  project: testProject,
 };
 
 export const testDayEntry = {
