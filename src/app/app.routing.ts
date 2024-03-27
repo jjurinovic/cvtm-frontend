@@ -9,9 +9,17 @@ import { Role } from './features/users/enums/role.enum';
 import { ProfileComponent } from './general/profile/profile.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, title: 'Login' },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login',
+    data: { aninimation: 'Login' },
+  },
   {
     path: '',
+    data: {
+      animation: 'App',
+    },
     component: BaseComponent,
     canActivate: [authGuard],
     canActivateChild: [authGuard],
@@ -22,6 +30,7 @@ const routes: Routes = [
         title: 'My Profile',
         data: {
           breadcrumb: 'My Profile',
+          animation: 'HomePage',
         },
       },
       {
@@ -35,7 +44,7 @@ const routes: Routes = [
         path: 'admin',
         canActivate: [roleGuard, authGuard],
         canActivateChild: [roleGuard],
-        data: { role: Role.ROOT },
+        data: { role: Role.ROOT, animation: 'AboutPage' },
         loadChildren: () =>
           import('./features/admin/admin.module').then((m) => m.AdminModule),
       },
@@ -71,7 +80,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableViewTransitions: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
