@@ -13,13 +13,9 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     title: 'Login',
-    data: { aninimation: 'Login' },
   },
   {
     path: '',
-    data: {
-      animation: 'App',
-    },
     component: BaseComponent,
     canActivate: [authGuard],
     canActivateChild: [authGuard],
