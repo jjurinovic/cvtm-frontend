@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 
 import { NavItem } from '../../models/nav-item.model';
+import { NAVIGATION_LINKS } from 'src/app/constants/navigation';
+
 import { Role } from 'src/app/features/users/enums/role.enum';
 import { selectCurrentUser } from 'src/app/features/users/state/user.selectors';
 import { Company } from 'src/app/features/company/models/company.model';
 import { AuthService } from '../../services/auth.service';
-import {
-  getAll,
-  setCompanyId,
-} from 'src/app/features/company/state/company.actions';
+import * as CompanyActions from 'src/app/features/company/state/company.actions';
 import {
   selectAllCompanies,
   selectCompanyId,
@@ -22,42 +21,17 @@ import {
   styleUrl: './navigation.component.scss',
 })
 export class NavigationComponent {
-  links: NavItem[] = [
-    {
-      link: '/admin',
-      title: 'Admin',
-      minRole: Role.ROOT,
-    },
-    {
-      link: '/dashboard',
-      title: 'Dashboard',
-    },
-    {
-      link: '/company',
-      title: 'Company',
-    },
-    {
-      link: '/users',
-      title: 'Users',
-      minRole: Role.MODERATOR,
-    },
-    {
-      link: '/projects',
-      title: 'Projects',
-      minRole: Role.MODERATOR,
-    },
-    {
-      link: '/time-tracking',
-      title: 'Time Tracking',
-    },
-  ];
+  private store: Store = inject(Store);
+  private _auth: AuthService = inject(AuthService);
+
+  links: NavItem[] = NAVIGATION_LINKS;
 
   userRole!: Role;
   companies: Company[] = [];
   rootRole: Role = Role.ROOT;
   companyId?: number;
 
-  constructor(private store: Store, private _auth: AuthService) {
+  ngOnInit(): void {
     this.store.select(selectCurrentUser).subscribe((user) => {
       if (user) {
         this.userRole = user.role;
@@ -66,7 +40,7 @@ export class NavigationComponent {
 
     if (this._auth.getRole() === Role.ROOT) {
       this.store.dispatch(
-        getAll({
+        CompanyActions.getAll({
           payload: {
             page: 1,
             size: 100,
@@ -85,6 +59,6 @@ export class NavigationComponent {
   }
 
   companyChange(companyId: number): void {
-    this.store.dispatch(setCompanyId({ payload: companyId }));
+    this.store.dispatch(CompanyActions.setCompanyId({ payload: companyId }));
   }
 }
