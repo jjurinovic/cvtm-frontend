@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
   ControlContainer,
   FormBuilder,
@@ -17,15 +17,15 @@ import {
     },
   ],
 })
-export class AdressFormComponent implements OnInit, OnDestroy {
+export class AdressFormComponent {
+  private fb = inject(FormBuilder);
+
   parentContainer = inject(ControlContainer);
   @Input() public controlKey = '';
 
   get parentFormGroup(): FormGroup {
     return this.parentContainer.control as FormGroup;
   }
-
-  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.parentFormGroup.addControl(

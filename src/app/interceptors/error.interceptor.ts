@@ -5,7 +5,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, catchError, throwError } from 'rxjs';
 
@@ -14,7 +14,9 @@ import { SnackbarService } from '../shared/services/snackbar.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private store: Store, private snackBar: SnackbarService) {}
+  private store = inject(Store);
+  private snackBar = inject(SnackbarService);
+
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
